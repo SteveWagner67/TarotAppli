@@ -56,6 +56,8 @@ public class ClassementFrag extends Fragment {
         pos = getArguments().getInt("Distributeur");
         nbJoueur = listPlayer.size();
 
+        playerArrayList = new ArrayList<>();
+
         playerArrayList = getArguments().getParcelableArrayList("playerlist");
 
         switch(playerArrayList.size())

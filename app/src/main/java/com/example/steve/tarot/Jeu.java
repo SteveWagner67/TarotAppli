@@ -401,7 +401,8 @@ public class Jeu extends Player {
 
     public ArrayList<Player> setPlayerInOrder()
     {
-        int i=0, j=0, placeListOut=0, indexPlayer=-1;
+        boolean playerToAdd = false;
+        int i=0, j=0, placeListOut=0, indexPlayer=0;
         ArrayList<Player> playerListIn, playerListOut;
 
 
@@ -425,13 +426,17 @@ public class Jeu extends Player {
             {
                 if(playerListIn.get(j).getScore() > playerListIn.get(i).getScore())
                 {
-                    playerListOut.add(i, playerListIn.get(j));
-                    indexPlayer=j;
+                    if(playerListIn.get(j).getScore() > playerListIn.get(indexPlayer).getScore())
+                    {
+                        indexPlayer=j;
+                        playerToAdd = true;
+                    }
                 }
                 j++;
             }
-            if(indexPlayer != -1)
+            if(playerToAdd == true)
             {
+                playerListOut.add(i, playerListIn.get(indexPlayer));
                 playerListIn.remove(indexPlayer);
             }
 
@@ -443,7 +448,8 @@ public class Jeu extends Player {
 
 
             placeListOut--;
-            indexPlayer=-1;
+            indexPlayer=0;
+            playerToAdd = false;
             j=0;
         }
 

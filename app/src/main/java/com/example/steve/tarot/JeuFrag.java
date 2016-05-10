@@ -22,46 +22,48 @@ import java.util.ArrayList;
 
 public class JeuFrag extends Fragment {
 
-    View view;
-    Spinner preneurSpinn, enchereSpinn, annonceSpinn, joueurSpinn, annonce2Spinn, joueur2Spinn, calculScoreSpinn, nbBoutSpinn;
-    TextView donneurTxt, preneurTxt, enchereTxt, annonceTitle, joueurTitle, annonceSelected, joueurSelected, annonce2Selected, joueur2Selected, calculScoreTitle, nbBoutTitle, scoreTitle, nbBoutTxt, calculScoreTxt, scoreTxt, finishTxt;
-    ArrayAdapter<String> adaptPlayerList, adaptEnchere, adaptAnnonce, adaptJoueur, adaptAnnoncList, adapt2Annonce, adapt2Joueur, adaptCalculScore, adaptnbBout;
-    int pos, nbJoueur;
-    Button valider, ajouter, ajouter2, terminer, terminer2, calculerBtn, finishBtn;
+    private View view;
+    private Spinner preneurSpinn, enchereSpinn, annonceSpinn, joueurSpinn, annonce2Spinn, joueur2Spinn, calculScoreSpinn, nbBoutSpinn;
+    private TextView donneurTxt, preneurTxt, enchereTxt, annonceTitle, joueurTitle, annonceSelected, joueurSelected, annonce2Selected, joueur2Selected, calculScoreTitle, nbBoutTitle, scoreTitle, nbBoutTxt, calculScoreTxt, scoreTxt, finishTxt;
+    private ArrayAdapter<String> adaptPlayerList, adaptEnchere, adaptAnnonce, adaptJoueur, adaptAnnoncList, adapt2Annonce, adapt2Joueur, adaptCalculScore, adaptnbBout;
+    private int pos, nbJoueur;
+    private Button valider, ajouter, ajouter2, terminer, terminer2, calculerBtn, finishBtn;
 
-    EditText scoreEdit;
+    private EditText scoreEdit;
 
-    Jeu jeu;
+    private Jeu jeu;
 
-    int part;
+    private int part;
 
-    int nbBout;
-    double score;
+    private int nbBout;
+    private double score;
 
-    boolean preneurPersonne;
+    private boolean preneurPersonne;
 
-    String enchereTab[] = {"Petite", "Pouce", "Garde", "Garde sans chien", "Garde contre chien"};
-    String annonceTab[] = {"-", "Simple misère", "Double misère", "Poignet (10)", "Poignet (13)", "Poignet (15)"};
-    String scorePartieTab[] = {"Preneur", "Défenseurs"};
-    String nbBoutTab[] = {"   0    ", "   1   ", "   2   ", "   3  "};
+    private String enchereTab[] = {"Petite", "Pouce", "Garde", "Garde sans chien", "Garde contre chien"};
+    private String annonceTab[] = {"-", "Simple misère", "Double misère", "Poignet (10)", "Poignet (13)", "Poignet (15)"};
+    private String scorePartieTab[] = {"Preneur", "Défenseurs"};
+    private String nbBoutTab[] = {"   0    ", "   1   ", "   2   ", "   3  "};
 
-    String annonceTxt, joueurTxt, annonce2Txt, joueur2Txt;
+    private String annonceTxt, joueurTxt, annonce2Txt, joueur2Txt;
 
-    setPreneur mCallbackPreneur;
-    setEnchere mCallbackEnchere;
-    setAnnonceList mCallBackAnnonceList;
-    setJoueurList mCallBackJoueurList;
-    setPlayers mCallbackPlayers;
+    private setPreneur mCallbackPreneur;
+    private setEnchere mCallbackEnchere;
+    private setAnnonceList mCallBackAnnonceList;
+    private setJoueurList mCallBackJoueurList;
+    private setPlayers mCallbackPlayers;
 
-    ArrayList<String> annonceArrayList, joueurArrayList;
+    private ArrayList<String> annonceArrayList, joueurArrayList;
 
-    ListView annonceListView;
+    private ListView annonceListView;
 
-    Player player1, player2, player3, player4, player5, player6, player7;
+    private Player player1, player2, player3, player4, player5, player6, player7;
 
-    ArrayList<Player> playersArrayList;
+    private ArrayList<Player> playersArrayList;
 
-    String preneurName;
+    private String preneurName;
+
+    private ArrayList<Player> playerList;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -962,7 +964,7 @@ public class JeuFrag extends Fragment {
                 }
 
 
-                ArrayList<Player> playerList;
+
                 playerList = new ArrayList<Player>();
 
                 playerList = jeu.setPlayerInOrder();

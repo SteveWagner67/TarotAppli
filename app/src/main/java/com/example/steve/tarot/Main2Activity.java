@@ -182,14 +182,14 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
     public void setAnnonceList(ArrayList<String> listAnnonce)
     {
         //Reset the annonce list
-        //listSelecAnnonce = new ArrayList<>();
+        listSelecAnnonce = new ArrayList<>();
         listSelecAnnonce.addAll(listAnnonce);
     }
 
     public void setJoueurList (ArrayList<String> listJoueur)
     {
         //Reset the joueur list
-        //listSelecJoueur = new ArrayList<>();
+        listSelecJoueur = new ArrayList<>();
         listSelecJoueur.addAll(listJoueur);
     }
 
