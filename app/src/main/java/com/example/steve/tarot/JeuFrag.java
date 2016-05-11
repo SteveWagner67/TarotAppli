@@ -587,6 +587,10 @@ public class JeuFrag extends Fragment {
                         adb.show();
                     } else {
 
+                        // Reset the annonce joueur Arraylist
+                        annonceArrayList = new ArrayList<String>();
+                        joueurArrayList = new ArrayList<String>();
+
                         annonceArrayList.add(0, annonceTxt);
                         joueurArrayList.add(0, joueurTxt);
 
@@ -702,9 +706,6 @@ public class JeuFrag extends Fragment {
                         mCallBackAnnonceList.setAnnonceList(annonceArrayList);
                         mCallBackJoueurList.setJoueurList(joueurArrayList);
 
-                        //annonceSelected.setText(annonceTxt);
-                        //joueurSelected.setText(joueurTxt);
-
                         annonce2Selected.setVisibility(View.VISIBLE);
                         annonce2Spinn.setVisibility(View.INVISIBLE);
 
@@ -713,6 +714,14 @@ public class JeuFrag extends Fragment {
 
                         ajouter2.setVisibility(View.INVISIBLE);
                         terminer2.setVisibility(View.INVISIBLE);
+
+                        calculScoreTitle.setVisibility(View.VISIBLE);
+                        calculScoreSpinn.setVisibility(View.VISIBLE);
+                        nbBoutTitle.setVisibility(View.VISIBLE);
+                        nbBoutSpinn.setVisibility(View.VISIBLE);
+                        scoreTitle.setVisibility(View.VISIBLE);
+                        scoreEdit.setVisibility(View.VISIBLE);
+                        calculerBtn.setVisibility(View.VISIBLE);
 
                         part = 5;
                     }
@@ -745,6 +754,8 @@ public class JeuFrag extends Fragment {
                 scoreTitle.setVisibility(View.VISIBLE);
                 scoreEdit.setVisibility(View.VISIBLE);
                 calculerBtn.setVisibility(View.VISIBLE);
+
+
 
                 part = 3;
 
@@ -967,6 +978,12 @@ public class JeuFrag extends Fragment {
 
                 playerList = new ArrayList<Player>();
 
+
+                if((annonceArrayList.size() != 0) && (joueurArrayList.size() != 0))
+                {
+                    jeu.setAnnonceToScore(annonceArrayList, joueurArrayList);
+                }
+
                 playerList = jeu.setPlayerInOrder();
 
                 mCallbackPlayers.setPlayers(playerList);
@@ -1039,6 +1056,9 @@ public class JeuFrag extends Fragment {
 
                 finishTxt.setVisibility(View.INVISIBLE);
                 finishBtn.setVisibility(View.INVISIBLE);
+
+                // Reset all
+
             }
         });
 

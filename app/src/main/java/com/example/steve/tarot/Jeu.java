@@ -391,6 +391,153 @@ public class Jeu extends Player {
         }
     }
 
+    public void setAnnonceToScore(ArrayList<String> annonceList, ArrayList<String> playerList)
+    {
+        int size=0, i=0, score=0;
+        String annonce="";
+        boolean fourIsTrue=false;
+
+        size = annonceList.size();
+
+        while(size > 0)
+        {
+            if(nbJoueur >= 5)
+            {
+                if(annonceList.get(i) == "Poignet (8)")
+                {
+                    annonce = "Poignet petite";
+                }
+
+                else if(annonceList.get(i) == "Poignet (10)")
+                {
+                    annonce = "Poignet moyenne";
+                }
+
+                else if(annonceList.get(i) == "Poignet (13)")
+                {
+                    annonce = "Poignet grande";
+                }
+
+                else
+                {
+                    annonce = annonceList.get(i);
+                }
+            }
+
+            else if((nbJoueur == 4) || (nbJoueur == 3))
+            {
+                if(annonceList.get(i) == "Poignet (10)")
+                {
+                    annonce = "Poignet petite";
+                }
+
+                else if(annonceList.get(i) == "Poignet (13)")
+                {
+                    annonce = "Poignet moyenne";
+                }
+
+                else if(annonceList.get(i) == "Poignet (15)")
+                {
+                    annonce = "Poignet grande";
+                }
+
+                else
+                {
+                    annonce = annonceList.get(i);
+                }
+            }
+
+            switch(annonce)
+            {
+                case "Simple misère":
+                    score = 10;
+                    break;
+
+                case "Double misère":
+                    score = 20;
+                    break;
+
+                case "Poignet petite":
+                    score = 20;
+                    break;
+
+                case "Poignet moyenne":
+                    score = 30;
+                    break;
+
+                case "Poignet grande":
+                    score = 40;
+                    break;
+            }
+
+
+            switch(nbJoueur)
+            {
+                case 7:
+                case 6:
+                case 5:
+                case 4:
+                    if(playerList.get(i) == player4.getNomJoueur())
+                    {
+                        player4.setScore(3*score);
+                        player3.setScore((-1)*score);
+                        player2.setScore((-1)*score);
+                        player1.setScore((-1)*score);
+                    }
+
+                    fourIsTrue=true;
+
+                case 3:
+
+                    if(playerList.get(i) == player3.getNomJoueur())
+                    {
+                        player3.setScore(2*score);
+                        player2.setScore((-1)*score);
+                        player1.setScore((-1)*score);
+
+                        if(fourIsTrue == true)
+                        {
+                            player3.setScore(score);
+                            player4.setScore((-1)*score);
+                        }
+                    }
+
+                    if(playerList.get(i) == player2.getNomJoueur())
+                    {
+                        player2.setScore(2*score);
+                        player1.setScore((-1)*score);
+                        player3.setScore((-1)*score);
+
+                        if(fourIsTrue == true)
+                        {
+                            player2.setScore(score);
+                            player4.setScore((-1)*score);
+                        }
+                    }
+
+
+                    if(playerList.get(i) == player1.getNomJoueur())
+                    {
+                        player1.setScore(2*score);
+                        player2.setScore((-1)*score);
+                        player3.setScore((-1)*score);
+
+                        if(fourIsTrue == true)
+                        {
+                            player1.setScore(score);
+                            player4.setScore((-1)*score);
+                        }
+                    }
+
+                    break;
+            }
+
+            size--;
+            i++;
+        }
+
+    }
+
     public Player getPlayer1() { return player1; }
     public Player getPlayer2() { return player2; }
     public Player getPlayer3() { return player3; }
