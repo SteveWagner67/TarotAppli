@@ -449,7 +449,6 @@ public class JeuFrag extends Fragment {
         adaptnbBout.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
 
-
         preneurSpinn.setAdapter(adaptPlayerList);
         preneurSpinn.setSelection(jeu.getPlayerListSize() - 1);
 
@@ -480,10 +479,9 @@ public class JeuFrag extends Fragment {
                 } else {
                     // First part of the game
                     if (part == 0) {
-                        //enchereSpinn.setSelection(0);
+                        enchereSpinn.setSelection(0);
                         enchereSpinn.setVisibility(View.VISIBLE);
                         enchereTxt.setVisibility(View.INVISIBLE);
-                        //preneurPersonne = false;
                     }
                 }
             }
@@ -511,8 +509,6 @@ public class JeuFrag extends Fragment {
         valider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //pos = jeu.getNextPlayer(pos);
-                //donneurTxt.setText(jeu.getPlayerName(pos));
 
                 preneurSpinn.setVisibility(View.INVISIBLE);
                 preneurTxt.setVisibility(View.VISIBLE);
@@ -1058,7 +1054,24 @@ public class JeuFrag extends Fragment {
                 finishBtn.setVisibility(View.INVISIBLE);
 
                 // Reset all
+                // Set the order with the distributor as player1
+                pos = jeu.getNextPlayer(pos);
 
+                ArrayList<String> list = new ArrayList<String>();
+                list = getArguments().getStringArrayList("List");
+
+                donneurTxt.setText(list.get(pos));
+
+                preneurSpinn.setSelection(jeu.getPlayerListSize() - 1);
+                annonceSpinn.setSelection(0);
+                joueurSpinn.setSelection(jeu.getPlayerListSize() - 1);
+                annonce2Spinn.setSelection(0);
+                joueur2Spinn.setSelection(jeu.getPlayerListSize() - 1);
+                calculScoreSpinn.setSelection(0);
+                nbBoutSpinn.setSelection(0);
+                scoreEdit.setText("");
+
+                part=0;
             }
         });
 

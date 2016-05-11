@@ -98,7 +98,8 @@ public class Jeu extends Player {
         int max = listJoueur.size();
         posActu++;
 
-        if (posActu > (max - 1)) {
+        // Remove 2 because we want to remove "Personne" and because we count by starting with 0
+        if (posActu > (max - 2)) {
             posActu = 0;
         }
 
