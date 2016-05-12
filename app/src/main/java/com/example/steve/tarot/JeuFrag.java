@@ -383,8 +383,6 @@ public class JeuFrag extends Fragment {
 
         nbJoueur = jeu.getNbJoueur();
 
-        //Toast.makeText(getContext(), "JeuFrag", Toast.LENGTH_SHORT).show();
-
         switch (jeu.getNbJoueur()) {
             case 7:
 
@@ -1063,6 +1061,9 @@ public class JeuFrag extends Fragment {
                 donneurTxt.setText(list.get(pos));
 
                 preneurSpinn.setSelection(jeu.getPlayerListSize() - 1);
+                enchereSpinn.setSelection(2);
+                enchereSpinn.setVisibility(View.INVISIBLE);
+                enchereTxt.setVisibility(View.VISIBLE);
                 annonceSpinn.setSelection(0);
                 joueurSpinn.setSelection(jeu.getPlayerListSize() - 1);
                 annonce2Spinn.setSelection(0);
