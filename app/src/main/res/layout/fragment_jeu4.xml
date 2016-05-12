@@ -297,6 +297,28 @@
         android:layout_toEndOf="@+id/calculScoreTitle"
         android:visibility="invisible"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Score le plus élevé pour: "
+        android:id="@+id/preneurForPersonneTitle"
+        android:layout_alignBottom="@+id/ajouter2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="20dp"
+        android:visibility="invisible"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/preneurForPersonneSpinn"
+        android:layout_below="@+id/calculScoreTitle"
+        android:layout_alignBottom="@+id/preneurForPersonneTitle"
+        android:layout_toRightOf="@+id/preneurForPersonneTitle"
+        android:layout_toEndOf="@+id/preneurForPersonneTitle"
+        android:visibility="invisible"/>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -314,11 +336,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nbBoutSpinn"
-        android:layout_below="@+id/calculScoreTitle"
         android:layout_alignBottom="@+id/nbBoutTitle"
         android:layout_toRightOf="@+id/nbBoutTitle"
-        android:layout_toEndOf="@+id/nbBoutTitle"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:layout_alignTop="@+id/preneurForPersonneTitle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
     <TextView
@@ -366,6 +389,18 @@
         android:layout_toRightOf="@+id/calculScoreTitle"
         android:layout_toEndOf="@+id/calculScoreTitle"
         android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Preneur ?"
+        android:id="@+id/preneurForPersonneTxt"
+        android:layout_below="@+id/calculScoreTitle"
+        android:layout_alignBottom="@+id/preneurForPersonneTitle"
+        android:layout_toRightOf="@+id/preneurForPersonneTitle"
+        android:layout_toEndOf="@+id/preneurForPersonneTitle"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="wrap_content"
