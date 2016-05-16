@@ -23,11 +23,11 @@ import java.util.ArrayList;
 public class JeuFrag extends Fragment {
 
     private View view;
-    private Spinner preneurSpinn, enchereSpinn, annonceSpinn, joueurSpinn, annonce2Spinn, joueur2Spinn, calculScoreSpinn, nbBoutSpinn, preneurForPersonneSpinn;
-    private TextView donneurTxt, preneurTxt, enchereTxt, annonceTitle, joueurTitle, annonceSelected, joueurSelected, annonce2Selected, joueur2Selected, calculScoreTitle, nbBoutTitle, scoreTitle, nbBoutTxt, calculScoreTxt, scoreTxt, finishTxt, preneurForPersonneTitle, preneurForPersonneTxt;
-    private ArrayAdapter<String> adaptPlayerList, adaptEnchere, adaptAnnonce, adaptJoueur, adaptAnnoncList, adapt2Annonce, adapt2Joueur, adaptCalculScore, adaptnbBout, adaptPreneurForPersonne;
+    private Spinner preneurSpinn, enchereSpinn, annonceSpinn, joueurSpinn, annonce2Spinn, joueur2Spinn, calculScoreSpinn, nbBoutSpinn, preneurForPersonneSpinn, associeSpinn;
+    private TextView donneurTxt, preneurTxt, enchereTxt, annonceTitle, joueurTitle, annonceSelected, joueurSelected, annonce2Selected, joueur2Selected, calculScoreTitle, nbBoutTitle, scoreTitle, nbBoutTxt, calculScoreTxt, scoreTxt, finishTxt, preneurForPersonneTitle, preneurForPersonneTxt, associeTitle, associeTxt;
+    private ArrayAdapter<String> adaptPlayerList, adaptEnchere, adaptAnnonce, adaptJoueur, adaptAnnoncList, adapt2Annonce, adapt2Joueur, adaptCalculScore, adaptnbBout, adaptPreneurForPersonne, adaptAssocie;
     private int pos, nbJoueur;
-    private Button valider, ajouter, ajouter2, terminer, terminer2, calculerBtn, finishBtn;
+    private Button valideFirstPartBtn, ajouter, ajouter2, terminer, terminer2, calculerBtn, finishBtn, valideAssocieBtn;
 
     private EditText scoreEdit;
 
@@ -79,7 +79,7 @@ public class JeuFrag extends Fragment {
                     enchereSpinn.setVisibility(View.VISIBLE);
                     enchereTxt.setVisibility(View.INVISIBLE);
 
-                    valider.setVisibility(View.VISIBLE);
+                    valideFirstPartBtn.setVisibility(View.VISIBLE);
 
                     annonceTitle.setVisibility(View.INVISIBLE);
                     annonceSpinn.setVisibility(View.INVISIBLE);
@@ -131,7 +131,7 @@ public class JeuFrag extends Fragment {
                     enchereSpinn.setVisibility(View.INVISIBLE);
                     enchereTxt.setVisibility(View.VISIBLE);
 
-                    valider.setVisibility(View.INVISIBLE);
+                    valideFirstPartBtn.setVisibility(View.INVISIBLE);
 
                     annonceTitle.setVisibility(View.VISIBLE);
                     annonceSpinn.setVisibility(View.VISIBLE);
@@ -175,7 +175,7 @@ public class JeuFrag extends Fragment {
                     enchereSpinn.setVisibility(View.INVISIBLE);
                     enchereTxt.setVisibility(View.VISIBLE);
 
-                    valider.setVisibility(View.INVISIBLE);
+                    valideFirstPartBtn.setVisibility(View.INVISIBLE);
 
                     annonceTitle.setVisibility(View.VISIBLE);
                     joueurTitle.setVisibility(View.VISIBLE);
@@ -224,7 +224,7 @@ public class JeuFrag extends Fragment {
                     enchereSpinn.setVisibility(View.INVISIBLE);
                     enchereTxt.setVisibility(View.VISIBLE);
 
-                    valider.setVisibility(View.INVISIBLE);
+                    valideFirstPartBtn.setVisibility(View.INVISIBLE);
 
                     annonceTitle.setVisibility(View.VISIBLE);
                     joueurTitle.setVisibility(View.VISIBLE);
@@ -274,7 +274,7 @@ public class JeuFrag extends Fragment {
                     enchereSpinn.setVisibility(View.INVISIBLE);
                     enchereTxt.setVisibility(View.VISIBLE);
 
-                    valider.setVisibility(View.INVISIBLE);
+                    valideFirstPartBtn.setVisibility(View.INVISIBLE);
 
                     annonceTitle.setVisibility(View.VISIBLE);
                     joueurTitle.setVisibility(View.VISIBLE);
@@ -342,7 +342,7 @@ public class JeuFrag extends Fragment {
         joueur2Selected = (TextView) view.findViewById(R.id.selectedJoueur2);
 
 
-        valider = (Button) view.findViewById(R.id.valid);
+        valideFirstPartBtn = (Button) view.findViewById(R.id.valid);
         ajouter = (Button) view.findViewById(R.id.ajouter);
         ajouter2 = (Button) view.findViewById(R.id.ajouter2);
         terminer = (Button) view.findViewById(R.id.terminer);
@@ -352,6 +352,12 @@ public class JeuFrag extends Fragment {
         annonceSelected = (TextView) view.findViewById(R.id.annonceSelected);
 
         joueurSelected = (TextView) view.findViewById(R.id.joueurSelected);
+
+        associeTitle = (TextView) view.findViewById(R.id.associeTitle);
+        associeSpinn = (Spinner) view.findViewById(R.id.associeSpinn);
+        associeTxt = (TextView) view.findViewById(R.id.associeTxt);
+
+        valideAssocieBtn = (Button) view.findViewById(R.id.valideAssocie);
 
         preneurForPersonneTitle = (TextView) view.findViewById(R.id.preneurForPersonneTitle);
         preneurForPersonneSpinn = (Spinner) view.findViewById(R.id.preneurForPersonneSpinn);
@@ -392,11 +398,9 @@ public class JeuFrag extends Fragment {
 
         switch (jeu.getNbJoueur()) {
             case 7:
-
                 player7 = new Player();
 
             case 6:
-
                 player6 = new Player();
 
             case 5:
@@ -406,7 +410,6 @@ public class JeuFrag extends Fragment {
                 player4 = new Player();
 
             case 3:
-
                 player3 = new Player();
                 player2 = new Player();
                 player1 = new Player();
@@ -426,6 +429,8 @@ public class JeuFrag extends Fragment {
         adapt2Joueur = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, jeu.getPlayerList());
 
         adaptPreneurForPersonne = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, joueurForScoreArraylist);
+
+        adaptAssocie = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, joueurForScoreArraylist);
 
         adaptCalculScore = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, scorePartieTab);
         adaptnbBout = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, nbBoutTab);
@@ -448,6 +453,9 @@ public class JeuFrag extends Fragment {
                 (android.R.layout.simple_spinner_dropdown_item);
 
         adapt2Joueur.setDropDownViewResource
+                (android.R.layout.simple_spinner_dropdown_item);
+
+        adaptAssocie.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
 
         adaptPreneurForPersonne.setDropDownViewResource
@@ -473,6 +481,8 @@ public class JeuFrag extends Fragment {
         joueur2Spinn.setSelection(jeu.getPlayerListSize() - 1);
 
         preneurForPersonneSpinn.setAdapter(adaptPreneurForPersonne);
+
+        associeSpinn.setAdapter(adaptAssocie);
 
         calculScoreSpinn.setAdapter(adaptCalculScore);
         nbBoutSpinn.setAdapter(adaptnbBout);
@@ -518,7 +528,7 @@ public class JeuFrag extends Fragment {
             }
         });
 
-        valider.setOnClickListener(new View.OnClickListener() {
+        valideFirstPartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -528,7 +538,7 @@ public class JeuFrag extends Fragment {
                 enchereSpinn.setVisibility(View.INVISIBLE);
                 enchereTxt.setVisibility(View.VISIBLE);
 
-                valider.setVisibility(View.INVISIBLE);
+                valideFirstPartBtn.setVisibility(View.INVISIBLE);
 
                 annonceTitle.setVisibility(View.VISIBLE);
                 annonceSpinn.setVisibility(View.VISIBLE);
@@ -652,11 +662,21 @@ public class JeuFrag extends Fragment {
                 ajouter.setVisibility(View.INVISIBLE);
                 terminer.setVisibility(View.INVISIBLE);
 
-                if(preneurTxt.getText().toString().equals("Personne"))
+
+                if((nbJoueur >= 5) && (!preneurTxt.getText().toString().equals("Personne")))
+                {
+                    associeTitle.setVisibility(View.VISIBLE);
+                    associeSpinn.setVisibility(View.VISIBLE);
+                    valideAssocieBtn.setVisibility(View.VISIBLE);
+                }
+
+                else if(preneurTxt.getText().toString().equals("Personne"))
                 {
                     preneurForPersonneTitle.setVisibility(View.VISIBLE);
                     preneurForPersonneSpinn.setVisibility(View.VISIBLE);
+                    calculerBtn.setVisibility(View.VISIBLE);
                 }
+                
                 else
                 {
                     calculScoreTitle.setVisibility(View.VISIBLE);
@@ -665,11 +685,10 @@ public class JeuFrag extends Fragment {
                     nbBoutSpinn.setVisibility(View.VISIBLE);
                     scoreTitle.setVisibility(View.VISIBLE);
                     scoreEdit.setVisibility(View.VISIBLE);
+                    calculerBtn.setVisibility(View.VISIBLE);
                 }
 
-                calculerBtn.setVisibility(View.VISIBLE);
-
-
+                
                 part = 3;
             }
         });
@@ -732,19 +751,31 @@ public class JeuFrag extends Fragment {
 
                         ajouter2.setVisibility(View.INVISIBLE);
                         terminer2.setVisibility(View.INVISIBLE);
-                        if (preneurTxt.getText().toString().equals("Personne")) {
+
+                        if((nbJoueur >= 5) && (!preneurTxt.getText().toString().equals("Personne")))
+                        {
+                            associeTitle.setVisibility(View.VISIBLE);
+                            associeSpinn.setVisibility(View.VISIBLE);
+                            valideAssocieBtn.setVisibility(View.VISIBLE);
+                        }
+
+                        else if(preneurTxt.getText().toString().equals("Personne"))
+                        {
                             preneurForPersonneTitle.setVisibility(View.VISIBLE);
                             preneurForPersonneSpinn.setVisibility(View.VISIBLE);
-                        } else {
+                            calculerBtn.setVisibility(View.VISIBLE);
+                        }
+
+                        else
+                        {
                             calculScoreTitle.setVisibility(View.VISIBLE);
                             calculScoreSpinn.setVisibility(View.VISIBLE);
                             nbBoutTitle.setVisibility(View.VISIBLE);
                             nbBoutSpinn.setVisibility(View.VISIBLE);
                             scoreTitle.setVisibility(View.VISIBLE);
                             scoreEdit.setVisibility(View.VISIBLE);
+                            calculerBtn.setVisibility(View.VISIBLE);
                         }
-
-                        calculerBtn.setVisibility(View.VISIBLE);
 
                         part = 5;
                     }
@@ -770,10 +801,18 @@ public class JeuFrag extends Fragment {
                 ajouter2.setVisibility(View.INVISIBLE);
                 terminer2.setVisibility(View.INVISIBLE);
 
-                if(preneurTxt.getText().toString().equals("Personne"))
+                if((nbJoueur >= 5) && (!preneurTxt.getText().toString().equals("Personne")))
+                {
+                    associeTitle.setVisibility(View.VISIBLE);
+                    associeSpinn.setVisibility(View.VISIBLE);
+                    valideAssocieBtn.setVisibility(View.VISIBLE);
+                }
+
+                else if(preneurTxt.getText().toString().equals("Personne"))
                 {
                     preneurForPersonneTitle.setVisibility(View.VISIBLE);
                     preneurForPersonneSpinn.setVisibility(View.VISIBLE);
+                    calculerBtn.setVisibility(View.VISIBLE);
                 }
 
                 else
@@ -784,12 +823,42 @@ public class JeuFrag extends Fragment {
                     nbBoutSpinn.setVisibility(View.VISIBLE);
                     scoreTitle.setVisibility(View.VISIBLE);
                     scoreEdit.setVisibility(View.VISIBLE);
+                    calculerBtn.setVisibility(View.VISIBLE);
                 }
-
-                calculerBtn.setVisibility(View.VISIBLE);
 
                 part = 3;
 
+
+            }
+        });
+        
+        associeSpinn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                associeTxt.setText(parent.getItemAtPosition(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        valideAssocieBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                associeSpinn.setVisibility(View.INVISIBLE);
+                valideAssocieBtn.setVisibility(View.INVISIBLE);
+
+                associeTxt.setVisibility(View.VISIBLE);
+                calculScoreTitle.setVisibility(View.VISIBLE);
+                calculScoreSpinn.setVisibility(View.VISIBLE);
+                nbBoutTitle.setVisibility(View.VISIBLE);
+                nbBoutSpinn.setVisibility(View.VISIBLE);
+                scoreTitle.setVisibility(View.VISIBLE);
+                scoreEdit.setVisibility(View.VISIBLE);
+                calculerBtn.setVisibility(View.VISIBLE);
 
             }
         });
@@ -948,6 +1017,9 @@ public class JeuFrag extends Fragment {
                 if(preneurTxt.getText().toString().equals("Personne"))
                 {
                     jeu.setPreneur(preneurForPersonneTxt.getText().toString());
+
+                    //nbBout isn't set (default: 3) so we set the score to have something loose to 0
+                    score=55.0;
                 }
 
                 else
@@ -958,6 +1030,11 @@ public class JeuFrag extends Fragment {
                 jeu.setEnchere(enchereTxt.getText().toString());
                 jeu.setNbBout(nbBout);
                 jeu.setScore(score);
+
+                if(nbJoueur >= 5)
+                {
+                    jeu.setAssocie(associeTxt.getText().toString());
+                }
 
 
                 double value;
@@ -1023,6 +1100,8 @@ public class JeuFrag extends Fragment {
                 if(preneurTxt.getText().toString().equals("Personne"))
                 {
                     preneurName = preneurForPersonneTxt.getText().toString();
+                    value = -0.0;
+                    roundValue = 0;
                 }
 
                 if (jeu.getResult() == true) {
@@ -1030,7 +1109,6 @@ public class JeuFrag extends Fragment {
                 } else {
                     finishTxt.setText(preneurName + " a perdu de " + Double.toString((-1) * value) + " donc de " + Integer.toString(roundValue));
                 }
-
 
 
                 playerList = new ArrayList<Player>();
@@ -1086,7 +1164,7 @@ public class JeuFrag extends Fragment {
                 enchereSpinn.setVisibility(View.VISIBLE);
                 enchereTxt.setVisibility(View.INVISIBLE);
 
-                valider.setVisibility(View.VISIBLE);
+                valideFirstPartBtn.setVisibility(View.VISIBLE);
 
                 annonceTitle.setVisibility(View.INVISIBLE);
                 annonceSpinn.setVisibility(View.INVISIBLE);
@@ -1110,6 +1188,10 @@ public class JeuFrag extends Fragment {
 
                 annonce2Selected.setVisibility(View.INVISIBLE);
                 joueur2Selected.setVisibility(View.INVISIBLE);
+
+                associeTitle.setVisibility(View.INVISIBLE);
+                associeSpinn.setSelection(0);
+                associeTxt.setVisibility(View.INVISIBLE);
 
                 preneurForPersonneTitle.setVisibility(View.INVISIBLE);
                 preneurForPersonneSpinn.setVisibility(View.INVISIBLE);

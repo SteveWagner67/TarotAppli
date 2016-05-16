@@ -276,16 +276,63 @@
         android:layout_toEndOf="@+id/textView9"
         android:visibility="invisible"/>
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Associé(e): "
+        android:id="@+id/associeTitle"
+        android:layout_alignTop="@+id/ajouter2"
+        android:layout_below="@+id/selectedAnnonce2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/associeSpinn"
+        android:layout_alignBottom="@+id/associeTitle"
+        android:layout_toRightOf="@+id/associeTitle"
+        android:layout_toEndOf="@+id/associeTitle"
+        android:visibility="invisible"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Associé(e) ?"
+        android:id="@+id/associeTxt"
+        android:layout_alignBottom="@+id/associeTitle"
+        android:layout_toRightOf="@+id/associeTitle"
+        android:layout_toEndOf="@+id/associeTitle"
+        android:visibility="invisible" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valider"
+        android:id="@+id/valideAssocie"
+        android:layout_below="@+id/associeSpinn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Calcul score de:"
         android:id="@+id/calculScoreTitle"
-        android:layout_alignTop="@+id/ajouter2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@id/associeTitle"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
         android:visibility="invisible"/>
 
     <Spinner
@@ -297,28 +344,6 @@
         android:layout_toEndOf="@+id/calculScoreTitle"
         android:visibility="invisible"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Score le plus élevé pour: "
-        android:id="@+id/preneurForPersonneTitle"
-        android:layout_alignBottom="@+id/ajouter2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginRight="20dp"
-        android:visibility="invisible"/>
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/preneurForPersonneSpinn"
-        android:layout_below="@+id/calculScoreTitle"
-        android:layout_alignBottom="@+id/preneurForPersonneTitle"
-        android:layout_toRightOf="@+id/preneurForPersonneTitle"
-        android:layout_toEndOf="@+id/preneurForPersonneTitle"
-        android:visibility="invisible"/>
-
 
     <TextView
         android:layout_width="wrap_content"
@@ -326,7 +351,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Nombre bout(s):"
         android:id="@+id/nbBoutTitle"
-        android:layout_alignBottom="@+id/ajouter2"
+        android:layout_below="@id/calculScoreTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginRight="20dp"
@@ -338,10 +363,8 @@
         android:id="@+id/nbBoutSpinn"
         android:layout_alignBottom="@+id/nbBoutTitle"
         android:layout_toRightOf="@+id/nbBoutTitle"
-        android:visibility="invisible"
-        android:layout_alignTop="@+id/preneurForPersonneTitle"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toEndOf="@+id/nbBoutTitle"
+        android:visibility="invisible" />
 
 
     <TextView
@@ -394,9 +417,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Score le plus élevé pour: "
+        android:id="@+id/preneurForPersonneTitle"
+        android:layout_alignBottom="@id/nbBoutTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="20dp"
+        android:visibility="invisible"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/preneurForPersonneSpinn"
+        android:layout_alignBottom="@+id/preneurForPersonneTitle"
+        android:layout_toRightOf="@+id/preneurForPersonneTitle"
+        android:layout_toEndOf="@+id/preneurForPersonneTitle"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Preneur ?"
         android:id="@+id/preneurForPersonneTxt"
-        android:layout_below="@+id/calculScoreTitle"
         android:layout_alignBottom="@+id/preneurForPersonneTitle"
         android:layout_toRightOf="@+id/preneurForPersonneTitle"
         android:layout_toEndOf="@+id/preneurForPersonneTitle"
@@ -444,7 +487,7 @@
         android:layout_above="@+id/finishBtn"
         android:layout_toRightOf="@+id/preneurName"
         android:layout_toEndOf="@+id/preneurName"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="15dp"
         android:visibility="invisible"/>
 
 
