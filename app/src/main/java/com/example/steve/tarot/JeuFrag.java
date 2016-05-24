@@ -41,7 +41,8 @@ public class JeuFrag extends Fragment {
     private boolean preneurPersonne;
 
     private String enchereTab[] = {"Petite", "Pouce", "Garde", "Garde sans chien", "Garde contre chien"};
-    private String annonceTab[] = {"-", "Simple misère", "Double misère", "Poignet (10)", "Poignet (13)", "Poignet (15)"};
+    private String annonce4Tab[] = {"-", "Simple misère", "Double misère", "Poignet (10)", "Poignet (13)", "Poignet (15)"};
+    private String annonce5Tab[] = {"-", "Simple misère", "Double misère", "Poignet (8)", "Poignet (10)", "Poignet (13)"};
     private String scorePartieTab[] = {"Preneur", "Défenseurs"};
     private String nbBoutTab[] = {"   0    ", "   1   ", "   2   ", "   3  "};
 
@@ -421,11 +422,30 @@ public class JeuFrag extends Fragment {
 
         adaptPlayerList = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, jeu.getPlayerList());
         adaptEnchere = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, enchereTab);
-        adaptAnnonce = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, annonceTab);
+
+        if(nbJoueur >= 5)
+        {
+            adaptAnnonce = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, annonce5Tab);
+        }
+
+        else
+        {
+            adaptAnnonce = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, annonce4Tab);
+        }
+
         adaptJoueur = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, jeu.getPlayerList());
         adaptAnnoncList = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, annonceArrayList);
 
-        adapt2Annonce = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, annonceTab);
+        if(nbJoueur >= 5)
+        {
+            adapt2Annonce = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, annonce5Tab);
+        }
+
+        else
+        {
+            adapt2Annonce = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, annonce4Tab);
+        }
+
         adapt2Joueur = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, jeu.getPlayerList());
 
         adaptPreneurForPersonne = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, joueurForScoreArraylist);
@@ -1018,6 +1038,11 @@ public class JeuFrag extends Fragment {
                 {
                     jeu.setPreneur(preneurForPersonneTxt.getText().toString());
 
+                    if(nbJoueur >= 5)
+                    {
+                        jeu.setAssocie(preneurForPersonneTxt.getText().toString());
+                    }
+
                     //nbBout isn't set (default: 3) so we set the score to have something loose to 0
                     score=55.0;
                 }
@@ -1025,18 +1050,17 @@ public class JeuFrag extends Fragment {
                 else
                 {
                     jeu.setPreneur(preneurTxt.getText().toString());
+
+                    if(nbJoueur >= 5)
+                    {
+                        jeu.setAssocie(associeTxt.getText().toString());
+                    }
                 }
 
                 jeu.setEnchere(enchereTxt.getText().toString());
                 jeu.setNbBout(nbBout);
                 jeu.setScore(score);
-
-                if(nbJoueur >= 5)
-                {
-                    jeu.setAssocie(associeTxt.getText().toString());
-                }
-
-
+                
                 double value;
                 int roundValue;
 

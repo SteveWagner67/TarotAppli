@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(v.getContext(), "Nb of player = " + nbPlayer, Toast.LENGTH_SHORT).show();
-                if(nbPlayer < 4)
+                if(nbPlayer < 3)
                 {
                     AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
                     adb.setTitle("Nombre de joueurs insuffisant");
