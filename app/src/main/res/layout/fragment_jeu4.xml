@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Donneur: "
-        android:id="@+id/donneurName"
+        android:id="@+id/donneurTitle"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -22,9 +22,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Donneur"
         android:id="@+id/donneurSpinn"
-        android:layout_alignBottom="@+id/donneurName"
-        android:layout_toRightOf="@+id/donneurName"
-        android:layout_toEndOf="@+id/donneurName" />
+        android:layout_alignBottom="@+id/donneurTitle"
+        android:layout_toRightOf="@+id/donneurTitle"
+        android:layout_toEndOf="@+id/donneurTitle" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Preneur:"
         android:id="@+id/preneurName"
-        android:layout_below="@+id/donneurName"
+        android:layout_below="@+id/donneurTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         />

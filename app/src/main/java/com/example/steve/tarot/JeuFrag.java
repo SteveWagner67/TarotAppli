@@ -24,9 +24,9 @@ public class JeuFrag extends Fragment {
 
     private View view;
     private Spinner preneurSpinn, enchereSpinn, annonceSpinn, joueurSpinn, annonce2Spinn, joueur2Spinn, calculScoreSpinn, nbBoutSpinn, preneurForPersonneSpinn, associeSpinn;
-    private TextView donneurTxt, preneurTxt, enchereTxt, annonceTitle, joueurTitle, annonceSelected, joueurSelected, annonce2Selected, joueur2Selected, calculScoreTitle, nbBoutTitle, scoreTitle, nbBoutTxt, calculScoreTxt, scoreTxt, finishTxt, preneurForPersonneTitle, preneurForPersonneTxt, associeTitle, associeTxt;
+    private TextView donneurTitle, donneurTxt, preneurTxt, enchereTxt, annonceTitle, joueurTitle, annonceSelected, joueurSelected, annonce2Selected, joueur2Selected, calculScoreTitle, nbBoutTitle, scoreTitle, nbBoutTxt, calculScoreTxt, scoreTxt, finishTxt, preneurForPersonneTitle, preneurForPersonneTxt, associeTitle, associeTxt;
     private ArrayAdapter<String> adaptPlayerList, adaptEnchere, adaptAnnonce, adaptJoueur, adaptAnnoncList, adapt2Annonce, adapt2Joueur, adaptCalculScore, adaptnbBout, adaptPreneurForPersonne, adaptAssocie;
-    private int pos, nbJoueur;
+    private int pos, firstPos, nbJoueur;
     private Button valideFirstPartBtn, ajouter, ajouter2, terminer, terminer2, calculerBtn, finishBtn, valideAssocieBtn;
 
     private EditText scoreEdit;
@@ -54,7 +54,7 @@ public class JeuFrag extends Fragment {
     private setJoueurList mCallBackJoueurList;
     private setPlayers mCallbackPlayers;
 
-    private ArrayList<String> annonceArrayList, joueurArrayList, joueurForScoreArraylist;
+    private ArrayList<String> annonceArrayList, joueurArrayList, joueurForScoreArrayList;
 
     private ListView annonceListView;
 
@@ -327,6 +327,8 @@ public class JeuFrag extends Fragment {
         // Attribution
         preneurSpinn = (Spinner) view.findViewById(R.id.preneurSpinn);
         preneurTxt = (TextView) view.findViewById(R.id.preneurText);
+
+        donneurTitle = (TextView) view.findViewById(R.id.donneurTitle);
         donneurTxt = (TextView) view.findViewById(R.id.donneurSpinn);
         enchereSpinn = (Spinner) view.findViewById(R.id.enchereSpinn);
         enchereTxt = (TextView) view.findViewById(R.id.enchereText);
@@ -383,7 +385,7 @@ public class JeuFrag extends Fragment {
 
         annonceArrayList = new ArrayList<>();
         joueurArrayList = new ArrayList<>();
-        joueurForScoreArraylist = new ArrayList<>();
+        //joueurForScoreArraylist = new ArrayList<>();
 
         playersArrayList = new ArrayList<>();
 
@@ -391,13 +393,13 @@ public class JeuFrag extends Fragment {
 
         jeu = new Jeu();
 
-        joueurForScoreArraylist = getArguments().getStringArrayList("List");
+        //joueurForScoreArraylist = getArguments().getStringArrayList("List");
 
         jeu.setPlayerList(getArguments().getStringArrayList("List"));
 
         nbJoueur = jeu.getNbJoueur();
 
-        switch (jeu.getNbJoueur()) {
+        switch (nbJoueur) {
             case 7:
                 player7 = new Player();
 
@@ -418,7 +420,13 @@ public class JeuFrag extends Fragment {
                 break;
         }
 
+        if(nbJoueur == 6)
+        {
+            donneurTitle.setText("Donneur / Mort: ");
+        }
+
         donneurTxt.setText(jeu.getPlayerName(pos));
+        jeu.setDonneur(jeu.getPlayerName(pos));
 
         adaptPlayerList = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, jeu.getPlayerList());
         adaptEnchere = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, enchereTab);
@@ -448,14 +456,41 @@ public class JeuFrag extends Fragment {
 
         adapt2Joueur = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, jeu.getPlayerList());
 
-        adaptPreneurForPersonne = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, joueurForScoreArraylist);
+        //adaptPreneurForPersonne = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, joueurForScoreArraylist);
+        adaptPreneurForPersonne = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, jeu.getPlayerList());
 
-        adaptAssocie = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, joueurForScoreArraylist);
+        //adaptAssocie = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, joueurForScoreArraylist);
+        adaptAssocie = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, jeu.getPlayerList());
 
         adaptCalculScore = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, scorePartieTab);
         adaptnbBout = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, nbBoutTab);
 
         adaptPlayerList.add("Personne");
+        //joueurForScoreArraylist.add("NTM");
+
+        if(nbJoueur == 6)
+        {
+            // Remove the donneur / mort
+            adaptPlayerList.remove(adaptPlayerList.getItem(pos).toString());
+            /*boolean donneurRemoved = false;
+            int i = 0;
+            while(donneurRemoved == false)
+            {
+                if(jeu.getPlayerName(pos).equals(adaptPlayerList.getItem(i).toString()))
+                {
+                    adaptPlayerList.remove(adaptPlayerList.getItem(i).toString());
+                    joueurForScoreArraylist.remove(i);
+
+                    donneurRemoved = true;
+                }
+
+                i++;
+            }*/
+
+    }
+
+
+
 
         adaptPlayerList.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
@@ -501,8 +536,10 @@ public class JeuFrag extends Fragment {
         joueur2Spinn.setSelection(jeu.getPlayerListSize() - 1);
 
         preneurForPersonneSpinn.setAdapter(adaptPreneurForPersonne);
+        preneurForPersonneSpinn.setSelection(jeu.getPlayerListSize() - 1);
 
         associeSpinn.setAdapter(adaptAssocie);
+        associeSpinn.setSelection(jeu.getPlayerListSize() - 1);
 
         calculScoreSpinn.setAdapter(adaptCalculScore);
         nbBoutSpinn.setAdapter(adaptnbBout);
@@ -868,17 +905,29 @@ public class JeuFrag extends Fragment {
             @Override
             public void onClick(View v) {
 
-                associeSpinn.setVisibility(View.INVISIBLE);
-                valideAssocieBtn.setVisibility(View.INVISIBLE);
+                if (associeTxt.getText().toString().equals("Personne"))
+                {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+                    adb.setTitle("Information");
+                    adb.setMessage("Veuillez choisir l'associé(e) (Autre que personne)");
+                    adb.setPositiveButton("OK", null);
+                    adb.show();
+                }
 
-                associeTxt.setVisibility(View.VISIBLE);
-                calculScoreTitle.setVisibility(View.VISIBLE);
-                calculScoreSpinn.setVisibility(View.VISIBLE);
-                nbBoutTitle.setVisibility(View.VISIBLE);
-                nbBoutSpinn.setVisibility(View.VISIBLE);
-                scoreTitle.setVisibility(View.VISIBLE);
-                scoreEdit.setVisibility(View.VISIBLE);
-                calculerBtn.setVisibility(View.VISIBLE);
+                else
+                {
+                    associeSpinn.setVisibility(View.INVISIBLE);
+                    valideAssocieBtn.setVisibility(View.INVISIBLE);
+
+                    associeTxt.setVisibility(View.VISIBLE);
+                    calculScoreTitle.setVisibility(View.VISIBLE);
+                    calculScoreSpinn.setVisibility(View.VISIBLE);
+                    nbBoutTitle.setVisibility(View.VISIBLE);
+                    nbBoutSpinn.setVisibility(View.VISIBLE);
+                    scoreTitle.setVisibility(View.VISIBLE);
+                    scoreEdit.setVisibility(View.VISIBLE);
+                    calculerBtn.setVisibility(View.VISIBLE);
+                }
 
             }
         });
@@ -1031,20 +1080,38 @@ public class JeuFrag extends Fragment {
 
 
         calculerBtn.setOnClickListener(new View.OnClickListener() {
+
+            boolean calculer = false;
+
             @Override
             public void onClick(View v) {
 
                 if(preneurTxt.getText().toString().equals("Personne"))
                 {
-                    jeu.setPreneur(preneurForPersonneTxt.getText().toString());
-
-                    if(nbJoueur >= 5)
+                    if (preneurForPersonneTxt.getText().toString().equals("Personne"))
                     {
-                        jeu.setAssocie(preneurForPersonneTxt.getText().toString());
+                        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+                        adb.setTitle("Information");
+                        adb.setMessage("Veuillez choisir la personne ayant le score le plus élevé (Autre que personne)");
+                        adb.setPositiveButton("OK", null);
+                        adb.show();
                     }
 
-                    //nbBout isn't set (default: 3) so we set the score to have something loose to 0
-                    score=55.0;
+                    else
+                    {
+                        jeu.setPreneur(preneurForPersonneTxt.getText().toString());
+
+                        if(nbJoueur >= 5)
+                        {
+                            jeu.setAssocie(preneurForPersonneTxt.getText().toString());
+                        }
+
+                        //nbBout isn't set (default: 3) so we set the score to have something loose to 0
+                        score=55.0;
+
+                        calculer = true;
+                    }
+
                 }
 
                 else
@@ -1055,126 +1122,131 @@ public class JeuFrag extends Fragment {
                     {
                         jeu.setAssocie(associeTxt.getText().toString());
                     }
+
+                    calculer = true;
                 }
 
-                jeu.setEnchere(enchereTxt.getText().toString());
-                jeu.setNbBout(nbBout);
-                jeu.setScore(score);
-                
-                double value;
-                int roundValue;
-
-                jeu.setCalculScoreDe(calculScoreTxt.getText().toString());
-
-                value = jeu.calculScore();
-                roundValue = jeu.getArrondi(value);
-
-                playersArrayList.clear();
-
-                switch (jeu.getNbJoueur()) {
-                    case 7:
-
-                        player7 = jeu.getPlayer7();
-                        if (player7.getNomJoueur().equals(preneurTxt.getText().toString())) {
-                            preneurName = player7.getNomJoueur();
-                        }
-
-                    case 6:
-
-                        player6 = jeu.getPlayer6();
-                        if (player6.getNomJoueur().equals(preneurTxt.getText().toString())) {
-                            preneurName = player6.getNomJoueur();
-                        }
-
-                    case 5:
-                        player5 = jeu.getPlayer5();
-                        if (player5.getNomJoueur().equals(preneurTxt.getText().toString())) {
-                            preneurName = player5.getNomJoueur();
-                        }
-
-                    case 4:
-                        player4 = jeu.getPlayer4();
-                        if (player4.getNomJoueur().equals(preneurTxt.getText().toString())) {
-                            preneurName = player4.getNomJoueur();
-                        }
-
-                    case 3:
-
-                        player3 = jeu.getPlayer3();
-                        if (player3.getNomJoueur().equals(preneurTxt.getText().toString())) {
-                            preneurName = player3.getNomJoueur();
-                        }
-
-                        player2 = jeu.getPlayer2();
-                        if (player2.getNomJoueur().equals(preneurTxt.getText().toString())) {
-                            preneurName = player2.getNomJoueur();
-                        }
-
-                        player1 = jeu.getPlayer1();
-                        if (player1.getNomJoueur().equals(preneurTxt.getText().toString())) {
-                            preneurName = player1.getNomJoueur();
-                        }
-
-                        break;
-
-                    default:
-                        preneurName = "";
-                }
-
-                if(preneurTxt.getText().toString().equals("Personne"))
+                if(calculer == true)
                 {
-                    preneurName = preneurForPersonneTxt.getText().toString();
-                    value = -0.0;
-                    roundValue = 0;
+                    jeu.setEnchere(enchereTxt.getText().toString());
+                    jeu.setNbBout(nbBout);
+                    jeu.setScore(score);
+
+                    double value;
+                    int roundValue;
+
+                    jeu.setCalculScoreDe(calculScoreTxt.getText().toString());
+
+                    value = jeu.calculScore();
+                    roundValue = jeu.getArrondi(value);
+
+                    playersArrayList.clear();
+
+                    switch (jeu.getNbJoueur()) {
+                        case 7:
+
+                            player7 = jeu.getPlayer7();
+                            if (player7.getNomJoueur().equals(preneurTxt.getText().toString())) {
+                                preneurName = player7.getNomJoueur();
+                            }
+
+                        case 6:
+
+                            player6 = jeu.getPlayer6();
+                            if (player6.getNomJoueur().equals(preneurTxt.getText().toString())) {
+                                preneurName = player6.getNomJoueur();
+                            }
+
+                        case 5:
+                            player5 = jeu.getPlayer5();
+                            if (player5.getNomJoueur().equals(preneurTxt.getText().toString())) {
+                                preneurName = player5.getNomJoueur();
+                            }
+
+                        case 4:
+                            player4 = jeu.getPlayer4();
+                            if (player4.getNomJoueur().equals(preneurTxt.getText().toString())) {
+                                preneurName = player4.getNomJoueur();
+                            }
+
+                        case 3:
+
+                            player3 = jeu.getPlayer3();
+                            if (player3.getNomJoueur().equals(preneurTxt.getText().toString())) {
+                                preneurName = player3.getNomJoueur();
+                            }
+
+                            player2 = jeu.getPlayer2();
+                            if (player2.getNomJoueur().equals(preneurTxt.getText().toString())) {
+                                preneurName = player2.getNomJoueur();
+                            }
+
+                            player1 = jeu.getPlayer1();
+                            if (player1.getNomJoueur().equals(preneurTxt.getText().toString())) {
+                                preneurName = player1.getNomJoueur();
+                            }
+
+                            break;
+
+                        default:
+                            preneurName = "";
+                    }
+
+                    if(preneurTxt.getText().toString().equals("Personne"))
+                    {
+                        preneurName = preneurForPersonneTxt.getText().toString();
+                        value = -0.0;
+                        roundValue = 0;
+                    }
+
+                    if (jeu.getResult() == true) {
+                        finishTxt.setText(preneurName + " a gagné de " + Double.toString(value) + " donc de " + Integer.toString(roundValue));
+                    } else {
+                        finishTxt.setText(preneurName + " a perdu de " + Double.toString((-1) * value) + " donc de " + Integer.toString(roundValue));
+                    }
+
+
+                    playerList = new ArrayList<Player>();
+
+
+                    if((annonceArrayList.size() != 0) && (joueurArrayList.size() != 0))
+                    {
+                        jeu.setAnnonceToScore(annonceArrayList, joueurArrayList);
+                    }
+
+                    playerList = jeu.setPlayerInOrder();
+
+                    mCallbackPlayers.setPlayers(playerList);
+
+                    if(preneurTxt.getText().toString().equals("Personne"))
+                    {
+                        preneurForPersonneSpinn.setVisibility(View.INVISIBLE);
+                        preneurForPersonneTxt.setVisibility(View.VISIBLE);
+                    }
+
+                    else
+                    {
+                        calculScoreSpinn.setVisibility(View.INVISIBLE);
+                        calculScoreTxt.setVisibility(View.VISIBLE);
+
+                        nbBoutSpinn.setVisibility(View.INVISIBLE);
+                        nbBoutTxt.setVisibility(View.VISIBLE);
+
+                        scoreEdit.setVisibility(View.INVISIBLE);
+                        scoreTxt.setVisibility(View.VISIBLE);
+                    }
+
+
+
+                    calculerBtn.setVisibility(View.INVISIBLE);
+
+                    finishTxt.setVisibility(View.VISIBLE);
+                    finishBtn.setVisibility(View.VISIBLE);
+
+                    part = 6;
+
+                    calculer = false;
                 }
-
-                if (jeu.getResult() == true) {
-                    finishTxt.setText(preneurName + " a gagné de " + Double.toString(value) + " donc de " + Integer.toString(roundValue));
-                } else {
-                    finishTxt.setText(preneurName + " a perdu de " + Double.toString((-1) * value) + " donc de " + Integer.toString(roundValue));
-                }
-
-
-                playerList = new ArrayList<Player>();
-
-
-                if((annonceArrayList.size() != 0) && (joueurArrayList.size() != 0))
-                {
-                    jeu.setAnnonceToScore(annonceArrayList, joueurArrayList);
-                }
-
-                playerList = jeu.setPlayerInOrder();
-
-                mCallbackPlayers.setPlayers(playerList);
-
-                if(preneurTxt.getText().toString().equals("Personne"))
-                {
-                    preneurForPersonneSpinn.setVisibility(View.INVISIBLE);
-                    preneurForPersonneTxt.setVisibility(View.VISIBLE);
-                }
-
-                else
-                {
-                    calculScoreSpinn.setVisibility(View.INVISIBLE);
-                    calculScoreTxt.setVisibility(View.VISIBLE);
-
-                    nbBoutSpinn.setVisibility(View.INVISIBLE);
-                    nbBoutTxt.setVisibility(View.VISIBLE);
-
-                    scoreEdit.setVisibility(View.INVISIBLE);
-                    scoreTxt.setVisibility(View.VISIBLE);
-                }
-
-
-
-                calculerBtn.setVisibility(View.INVISIBLE);
-
-                finishTxt.setVisibility(View.VISIBLE);
-                finishBtn.setVisibility(View.VISIBLE);
-
-                part = 6;
-
-
             }
         });
 
@@ -1236,6 +1308,15 @@ public class JeuFrag extends Fragment {
                 finishBtn.setVisibility(View.INVISIBLE);
 
                 // Reset all
+
+                if(nbJoueur == 6)
+                {
+                    // Add the previous reseted donneur / mort
+                    //joueurForScoreArraylist.add(pos, donneurTxt.getText().toString());
+                    jeu.addPlayerAtPosition(pos, donneurTxt.getText().toString());
+
+                }
+
                 // Set the order with the distributor as player1
                 pos = jeu.getNextPlayer(pos);
 
@@ -1243,6 +1324,26 @@ public class JeuFrag extends Fragment {
                 list = getArguments().getStringArrayList("List");
 
                 donneurTxt.setText(list.get(pos));
+                jeu.setDonneur(jeu.getPlayerName(pos));
+
+                if(nbJoueur == 6)
+                {
+                    // Remove the donneur / mort
+                    adaptPlayerList.remove(adaptPlayerList.getItem(pos).toString());
+                    /*boolean donneurRemoved = false;
+                    int i = 0;
+                    while(donneurRemoved == false)
+                    {
+
+                        if(jeu.getPlayerName(pos).equals(adaptPlayerList.getItem(i).toString()))
+                        {
+                            adaptPlayerList.remove(adaptPlayerList.getItem(i).toString());
+                            donneurRemoved = true;
+                        }
+
+                        i++;
+                    }*/
+                }
 
                 preneurSpinn.setSelection(jeu.getPlayerListSize() - 1);
                 enchereSpinn.setSelection(2);
@@ -1252,7 +1353,9 @@ public class JeuFrag extends Fragment {
                 joueurSpinn.setSelection(jeu.getPlayerListSize() - 1);
                 annonce2Spinn.setSelection(0);
                 joueur2Spinn.setSelection(jeu.getPlayerListSize() - 1);
-                preneurForPersonneSpinn.setSelection(0);
+                preneurForPersonneSpinn.setSelection(jeu.getPlayerListSize() - 1);
+                associeSpinn.setSelection(jeu.getPlayerListSize() - 1);
+
                 calculScoreSpinn.setSelection(0);
                 nbBoutSpinn.setSelection(0);
                 scoreEdit.setText("");
