@@ -150,6 +150,17 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Ajouter"
+        android:id="@+id/ajouter"
+        android:layout_alignBottom="@+id/terminer"
+        android:layout_toRightOf="@+id/terminer"
+        android:layout_toEndOf="@+id/terminer"
+        android:visibility="invisible"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Terminer"
         android:id="@+id/terminer"
         android:layout_below="@+id/annonceSpinn"
@@ -209,6 +220,18 @@
         android:layout_below="@+id/joueurTxt"
         android:layout_toRightOf="@+id/annonceSpinn"
         android:layout_toEndOf="@+id/annonceSpinn"
+        android:visibility="invisible"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajouter"
+        android:id="@+id/ajouter2"
+        android:layout_alignTop="@+id/terminer2"
+        android:layout_alignLeft="@+id/ajouter"
+        android:layout_alignStart="@+id/ajouter"
+        android:layout_alignRight="@+id/ajouter"
+        android:layout_alignEnd="@+id/ajouter"
         android:visibility="invisible"/>
 
     <Button
@@ -365,8 +388,8 @@
         android:id="@+id/scoreEdit"
         android:layout_below="@+id/nbBoutTitle"
         android:layout_toRightOf="@+id/scoreTitle"
-        android:layout_alignRight="@+id/terminer2"
-        android:layout_alignEnd="@+id/terminer2"
+        android:layout_alignRight="@+id/ajouter2"
+        android:layout_alignEnd="@+id/ajouter2"
         android:visibility="invisible"/>
 
     <Button
