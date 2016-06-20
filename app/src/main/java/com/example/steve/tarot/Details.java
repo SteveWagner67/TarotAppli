@@ -22,6 +22,7 @@ public class Details implements Parcelable{
     private double finalValue;
     private int roundFinalValue;
     private boolean preneurWin;
+    private String playerMort;
 
 
     public Details()
@@ -30,6 +31,13 @@ public class Details implements Parcelable{
         preneur = "";
         associe = "";
         enchere = "";
+        preneurForPersonne = "";
+        nbBout = -1;
+        calculScoreDe = "";
+        scoreCartes = -1.0;
+        finalValue = -1.0;
+        roundFinalValue = -1;
+        playerMort = "";
     }
 
     public void setNumJeu(int numJeu)
@@ -153,6 +161,16 @@ public class Details implements Parcelable{
     public boolean getResult()
     {
         return preneurWin;
+    }
+
+    public void setPlayerMort(String playerMort)
+    {
+        this.playerMort = playerMort;
+    }
+
+    public String getPlayerMort()
+    {
+        return playerMort;
     }
 
 

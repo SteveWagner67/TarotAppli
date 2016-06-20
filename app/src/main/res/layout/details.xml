@@ -9,7 +9,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Preneur: "
         android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:id="@+id/preneurDetailsTitle"
         android:layout_marginLeft="7dp"/>
@@ -31,7 +31,7 @@
         android:text="Associé(e): "
         android:id="@+id/associeDetailsTitle"
         android:layout_below="@+id/preneurDetailsTitle"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -54,7 +54,7 @@
         android:text="Enchère: "
         android:id="@+id/enchereDetailsTitle"
         android:layout_below="@+id/preneurDetailsTitle"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -77,8 +77,8 @@
         android:text="Enchère: "
         android:id="@+id/enchereDetailsTitle2"
         android:layout_below="@+id/associeDetailsTitle"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="7dp"/>
@@ -170,16 +170,86 @@
         android:layout_alignLeft="@+id/joueur1Details"
         android:layout_alignStart="@+id/joueur1Details"
         android:layout_marginLeft="7dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Score preneur: "
+        android:id="@+id/scoreQuiDetailsTitle"
+        android:layout_below="@+id/joueur2Details"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="score preneur ?"
+        android:id="@+id/scoreQuiDetailsTxt"
+        android:layout_below="@+id/joueur2Details"
+        android:layout_toRightOf="@+id/scoreQuiDetailsTitle"
+        android:layout_toEndOf="@+id/scoreQuiDetailsTitle"
         android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="details"
+        android:text="Nombre bout(s): "
+        android:id="@+id/nbBoutDetailsTitle"
+        android:layout_below="@+id/scoreQuiDetailsTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="nb bout ?"
+        android:id="@+id/nbBoutDetailsTxt"
+        android:layout_below="@+id/scoreQuiDetailsTitle"
+        android:layout_toRightOf="@+id/nbBoutDetailsTitle"
+        android:layout_toEndOf="@+id/nbBoutDetailsTitle"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Score à atteindre: "
+        android:id="@+id/scoreAttDetailsTitle"
+        android:layout_below="@+id/nbBoutDetailsTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Score à atteindre ?"
+        android:id="@+id/scoreAttDetailsTxt"
+        android:layout_below="@+id/nbBoutDetailsTitle"
+        android:layout_toRightOf="@+id/scoreAttDetailsTitle"
+        android:layout_toEndOf="@+id/scoreAttDetailsTitle"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Details ? "
         android:id="@+id/detailsScore"
-        android:layout_below="@+id/joueur2Details"
+        android:layout_below="@+id/scoreAttDetailsTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>

@@ -57,6 +57,7 @@ public class DetailsFrag extends Fragment {
                 final View dialogView = inflater.inflate(R.layout.details, null);
 
                 final TextView preneurTxt = (TextView) dialogView.findViewById(R.id.preneurDetailsTxt);
+                final TextView preneurTitle = (TextView) dialogView.findViewById(R.id.preneurDetailsTitle);
 
                 final TextView enchereTitle = (TextView) dialogView.findViewById(R.id.enchereDetailsTitle);
                 final TextView enchereTxt = (TextView) dialogView.findViewById(R.id.enchereDetailsTxt);
@@ -72,6 +73,15 @@ public class DetailsFrag extends Fragment {
 
                 final TextView annonce2Txt = (TextView) dialogView.findViewById(R.id.annonce2Details);
                 final TextView joueur2Txt = (TextView) dialogView.findViewById(R.id.joueur2Details);
+
+                final TextView scoreQuiTitle = (TextView) dialogView.findViewById(R.id.scoreQuiDetailsTitle);
+                final TextView scoreQuiTxt = (TextView) dialogView.findViewById(R.id.scoreQuiDetailsTxt);
+
+                final TextView nbBoutTitle = (TextView) dialogView.findViewById(R.id.nbBoutDetailsTitle);
+                final TextView nbBoutTxt = (TextView) dialogView.findViewById(R.id.nbBoutDetailsTxt);
+
+                final TextView scoreAttTitle = (TextView) dialogView.findViewById(R.id.scoreAttDetailsTitle);
+                final TextView scoreAttTxt = (TextView) dialogView.findViewById(R.id.scoreAttDetailsTxt);
 
                 final TextView detailsScore = (TextView) dialogView.findViewById(R.id.detailsScore);
 
@@ -122,46 +132,107 @@ public class DetailsFrag extends Fragment {
                     joueur2Txt.setVisibility(dialogView.INVISIBLE);
                 }
 
-                if (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur"))
-                {
-                    detailsScore.setText("Le preneur a un score de ");
+
+                if (detailsArrayList.get(position).getPreneur().equals("Personne")) {
+                    preneurTitle.setText("Perdant: ");
+                    scoreQuiTitle.setVisibility(View.INVISIBLE);
+                    scoreQuiTxt.setVisibility(View.INVISIBLE);
+                    nbBoutTitle.setVisibility(View.INVISIBLE);
+                    nbBoutTxt.setVisibility(View.INVISIBLE);
+                    scoreAttTitle.setVisibility(View.INVISIBLE);
+                    scoreAttTxt.setVisibility(View.INVISIBLE);
+                    detailsScore.setVisibility(View.INVISIBLE);
+
+                } else {
+
+                    preneurTitle.setText("Preneur: ");
+
+                    scoreQuiTitle.setVisibility(View.VISIBLE);
+                    scoreQuiTxt.setVisibility(View.VISIBLE);
+                    nbBoutTitle.setVisibility(View.VISIBLE);
+                    nbBoutTxt.setVisibility(View.VISIBLE);
+                    scoreAttTitle.setVisibility(View.VISIBLE);
+                    scoreAttTxt.setVisibility(View.VISIBLE);
+                    detailsScore.setVisibility(View.VISIBLE);
+
+                    if (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur")) {
+                        scoreQuiTitle.setText("Score preneur: ");
+                    } else if (detailsArrayList.get(position).getCalculScoreDe().equals("Défenseurs")) {
+                        scoreQuiTitle.setText("Score défenseurs: ");
+                    }
+
+                    scoreQuiTxt.setText(Double.toString(detailsArrayList.get(position).getScoreCartes()));
+
+                    nbBoutTxt.setText(Integer.toString(detailsArrayList.get(position).getNbBout()));
+
+
+                    switch (detailsArrayList.get(position).getNbBout()) {
+                        case 0:
+                            scoreAttTxt.setText("56 points");
+                            break;
+
+                        case 1:
+                            scoreAttTxt.setText("51 points");
+                            break;
+
+                        case 2:
+                            scoreAttTxt.setText("41 points");
+                            break;
+
+                        case 3:
+                            scoreAttTxt.setText("36 points");
+                            break;
+                    }
+
+                    if ((detailsArrayList.get(position).getResult() == true) && (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur"))) {
+                        detailsScore.setText("Le preneur a gagné ");
+                    } else if ((detailsArrayList.get(position).getResult() == true) && (detailsArrayList.get(position).getCalculScoreDe().equals("Défenseurs"))) {
+                        detailsScore.setText("Le preneur a gagné ");
+                    } else if ((detailsArrayList.get(position).getResult() == false) && (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur"))) {
+                        detailsScore.setText("Le preneur a perdu ");
+                    } else if ((detailsArrayList.get(position).getResult() == false) && (detailsArrayList.get(position).getCalculScoreDe().equals("Défenseurs"))) {
+                        detailsScore.setText("Le preneur a perdu ");
+                    }
+
+
+                    detailsScore.setText(detailsScore.getText() +
+                            "de "
+                            + Integer.toString(detailsArrayList.get(position).getRoundFinalValue())
+                            + " (arrondi de "
+                            + Double.toString(detailsArrayList.get(position).getFinalValue())
+                            + ")");
                 }
-
-                else if (detailsArrayList.get(position).getCalculScoreDe().equals("Défenseurs"))
-                {
-                    detailsScore.setText("Les défenseurs ont un score de ");
-                }
-
-                detailsScore.setText(detailsScore.getText()
-
-                        + Double.toString(detailsArrayList.get(position).getScoreCartes())
-                        + " avec " + Integer.toString(detailsArrayList.get(position).getNbBout())
-                        + " bouts, donc"
-                        + "\r\n\r\n");
-
-                if ((detailsArrayList.get(position).getResult() == true) && (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur"))) {
-                    detailsScore.setText(detailsScore.getText() + "Le preneur a gagné ");
-                } else if ((detailsArrayList.get(position).getResult() == true) && (detailsArrayList.get(position).getCalculScoreDe().equals("Défenseurs"))) {
-                    detailsScore.setText(detailsScore.getText() + "Le preneur a gagné ");
-                } else if ((detailsArrayList.get(position).getResult() == false) && (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur"))) {
-                    detailsScore.setText(detailsScore.getText() + "Le preneur a perdu ");
-                } else if ((detailsArrayList.get(position).getResult() == false) && (detailsArrayList.get(position).getCalculScoreDe().equals("Défenseurs"))) {
-                    detailsScore.setText(detailsScore.getText() + "Le preneur a perdu ");
-                }
-
-                detailsScore.setText(detailsScore.getText() +
-                        "de "
-                        + Double.toString(detailsArrayList.get(position).getFinalValue())
-                        + " donc de "
-                        + Integer.toString(detailsArrayList.get(position).getRoundFinalValue()));
 
                 // Set the layout for the dialog
                 adb.setView(dialogView);
 
-                if (detailsArrayList.get(position).getPreneur().equals("Personne")) {
-                    adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + " (à l'envers)");
-                } else {
-                    adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()));
+                if (detailsArrayList.get(position).getPreneur().equals("Personne"))
+                {
+                    // Means there is at least 6 players (displays the playerMort)
+                    if (!detailsArrayList.get(position).getPlayerMort().equals(""))
+                    {
+                        adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + " (à l'envers)" + "\r\n" + "Mort: " + detailsArrayList.get(position).getPlayerMort());
+                    }
+
+                    else
+                    {
+                        adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + " (à l'envers)");
+                    }
+
+                }
+
+                else
+                {
+                    // Means there is at least 6 players (displays the playerMort)
+                    if (!detailsArrayList.get(position).getPlayerMort().equals(""))
+                    {
+                        adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + "                       " + "\r\n" + "Mort: " + detailsArrayList.get(position).getPlayerMort());
+                    }
+
+                    else
+                    {
+                        adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()));
+                    }
                 }
 
 

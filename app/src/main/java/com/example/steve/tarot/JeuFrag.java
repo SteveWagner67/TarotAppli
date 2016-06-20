@@ -857,13 +857,7 @@ public class JeuFrag extends Fragment {
                             preneurName = "";
                     }
 
-/*                    if(preneurTxt.getText().toString().equals("Personne"))
-                    {
-                        preneurName = preneurForPersonneTxt.getText().toString();
-                        value = 0.0;
-                        roundValue = 0;
-                    }
-*/
+
 
                     if(!preneurTxt.getText().toString().equals("Personne"))
                     {
@@ -986,6 +980,52 @@ public class JeuFrag extends Fragment {
                 finishTxt.setVisibility(View.INVISIBLE);
                 finishBtn.setVisibility(View.INVISIBLE);
 
+                detail = new Details();
+
+                detail.setPreneur(preneurTxt.getText().toString());
+                detail.setEnchere(enchereTxt.getText().toString());
+                if(!associeTxt.getText().toString().equals("Personne"))
+                {
+                    detail.setAssocie(associeTxt.getText().toString());
+                }
+
+                if(nbJoueur >= 6)
+                {
+                    // The playerMort is the donneur
+                    detail.setPlayerMort(donneurTxt.getText().toString());
+                }
+
+
+                detail.setNumJeu(numJeu);
+
+                detail.setAnnonceList(annonceArrayList);
+                detail.setJoueurList(joueurArrayList);
+
+                detail.setNbBout(nbBout);
+
+                detail.setPreneurForPersonne(preneurForPersonneTxt.getText().toString());
+
+                detail.setCalculScoreDe(calculScoreTxt.getText().toString());
+
+                detail.setScoreCartes(score, value, roundValue);
+
+                if (jeu.getResult() == true)
+                {
+                    detail.setResult(true); // preneur won / defenseurs lost
+                }
+
+                else
+                {
+                    detail.setResult(false); // preneur lost / defenseurs won
+                }
+
+                detailsList.add(detail);
+
+                detailsNumList.add("Détails jeu n°" + Integer.toString(numJeu));
+
+                mCallbackDetails.setDetails(detailsList, detailsNumList);
+                numJeu++;
+
                 // Reset all
 
                 if(nbJoueur == 6)
@@ -1024,46 +1064,6 @@ public class JeuFrag extends Fragment {
                 calculScoreSpinn.setSelection(0);
                 nbBoutSpinn.setSelection(0);
                 scoreEdit.setText("");
-
-                detail = new Details();
-
-                detail.setPreneur(preneurTxt.getText().toString());
-                detail.setEnchere(enchereTxt.getText().toString());
-                if(!associeTxt.getText().toString().equals("Personne"))
-                {
-                    detail.setAssocie(associeTxt.getText().toString());
-                }
-
-
-                detail.setNumJeu(numJeu);
-
-                detail.setAnnonceList(annonceArrayList);
-                detail.setJoueurList(joueurArrayList);
-
-                detail.setNbBout(nbBout);
-
-                detail.setPreneurForPersonne(preneurForPersonneTxt.getText().toString());
-
-                detail.setCalculScoreDe(calculScoreTxt.getText().toString());
-
-                detail.setScoreCartes(score, value, roundValue);
-
-                if (jeu.getResult() == true)
-                {
-                    detail.setResult(true); // preneur won / defenseurs lost
-                }
-
-                else
-                {
-                    detail.setResult(false); // preneur lost / defenseurs won
-                }
-
-                detailsList.add(detail);
-
-                detailsNumList.add("Détails jeu n°" + Integer.toString(numJeu));
-
-                mCallbackDetails.setDetails(detailsList, detailsNumList);
-                numJeu++;
 
             }
         });
