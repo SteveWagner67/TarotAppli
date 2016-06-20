@@ -40,33 +40,6 @@ public class MainActivity extends AppCompatActivity {
     int pos;
 
 
-/*    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the player list
-       // savedInstanceState.putStringArrayList("PlayerList", list);
-        // Save the number of player
-        savedInstanceState.putInt("NbPlayer", nbPlayer);
-
-        //savedInstanceState.putParcelable("List", playerList.onSaveInstanceState());
-
-
-        savedInstanceState.putStringArrayList("List", list);
-
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
-    }
-*/
-/*    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
-        super.onRestoreInstanceState(savedInstanceState);
-
-        // Restore state members from saved instance
-        list = savedInstanceState.getStringArrayList("PlayerList");
-        playerList.setAdapter(adapter);
-
-    }
-*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,35 +53,6 @@ public class MainActivity extends AppCompatActivity {
         list = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_1, list);
 
-        // Check whether we're recreating a previously destroyed instance
-  /*      if (savedInstanceState != null)
-        {
-            int i;
-            if(savedInstanceState.containsKey("NbPlayer"))
-            {
-                // Restore the number of player
-                nbPlayer = savedInstanceState.getInt("NbPlayer");
-            }
-
-
-            if(savedInstanceState.containsKey("List"))
-            {
-                // Restore the player list and add it into the adapter to display it
-                list = savedInstanceState.getStringArrayList("List");
-
-                Toast.makeText(getApplicationContext(), "Nb player = "+nbPlayer, Toast.LENGTH_SHORT).show();
-
-                String arr[] = list.toArray(new String[list.size()]);
-
-
-                for(i=0; i<nbPlayer; i++) {
-                    adapter.add(arr[i]);
-                }
-
-                playerList.setAdapter(adapter);
-            }
-        }
-        */
 
         enter.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -136,13 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
                     else
                     {
-
                         /* Be sure the number of maximum player isn't attempt */
-                        if(nbPlayer >= 7)
+                        if(nbPlayer > 6)
                         {
                             AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
                             adb.setTitle("Information");
-                            adb.setMessage("Nombre de joueurs max atteint: 7");
+                            adb.setMessage("Nombre de joueurs max atteint: 6");
                             adb.setPositiveButton("OK", null);
                             adb.show();
                         }
@@ -214,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
                     adb.setTitle("Nombre de joueurs insuffisant");
-                    adb.setMessage("Minimum: 4" + "\r\n" +"Actuellement: " +nbPlayer);
+                    adb.setMessage("Minimum: 3" + "\r\n" +"Actuellement: " +nbPlayer);
                     adb.setPositiveButton("OK", null);
                     adb.show();
                 }
@@ -236,8 +179,6 @@ public class MainActivity extends AppCompatActivity {
                     builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //String arr[] = list.toArray(new String[list.size()]);
-                           // Toast.makeText(getApplicationContext(), "Distributeur: "+arr[pos].toString(), Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
 
@@ -276,19 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-
-        /* Action short click on the list of item */
-        playerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(view.getContext(), ((TextView) view).getText().toString(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
-
 
 
     @Override
@@ -297,14 +226,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
-
-
-
-
-
-
 
 
     @Override

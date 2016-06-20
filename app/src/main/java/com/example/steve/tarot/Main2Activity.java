@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class Main2Activity extends AppCompatActivity implements JeuFrag.setPreneur, JeuFrag.setEnchere, JeuFrag.setAnnonceList, JeuFrag.setJoueurList, JeuFrag.setPlayers {
+public class Main2Activity extends AppCompatActivity implements JeuFrag.setPreneur, JeuFrag.setEnchere, JeuFrag.setAnnonceList, JeuFrag.setJoueurList, JeuFrag.setPlayers, JeuFrag.setDetails {
 
     private ArrayList<String> list, listSelecAnnonce, listSelecJoueur;
 
@@ -36,11 +36,15 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
 
     private JeuFrag jeu;
     private ClassementFrag classement;
-    private DetailsFrag details;
+    private DetailsFrag detailsFrag;
 
     private String preneur, enchere;
 
     private ArrayList<Player> playerList;
+
+    private ArrayList<String> detailsNumList;
+
+    private ArrayList<Details> detailsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +61,7 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Classement"));
         tabLayout.addTab(tabLayout.newTab().setText("Jeu"));
-        tabLayout.addTab(tabLayout.newTab().setText("Details"));
-
+        tabLayout.addTab(tabLayout.newTab().setText("Détails"));
         List<Fragment> frags = new Vector<Fragment>();
 
         frags.add(Fragment.instantiate(this, ClassementFrag.class.getName()));
@@ -98,6 +101,10 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
         list = intent.getStringArrayListExtra("List");
         pos = intent.getIntExtra("Distributor", 0);
 
+        detailsList = new ArrayList<>();
+
+        detailsNumList = new ArrayList<>();
+
     }
 
 
@@ -136,7 +143,7 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
         @Override
         public Fragment getItem(int position) {
             bundle = new Bundle();
-            bundle.putStringArrayList("List",list);
+            bundle.putStringArrayList("List", list);
             bundle.putInt("Distributeur", pos);
             bundle.putParcelableArrayList("playerlist", playerList);
 
@@ -144,6 +151,21 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
             bundle.putString("Enchere", enchere);
             bundle.putStringArrayList("List Annonce", listSelecAnnonce);
             bundle.putStringArrayList("List Joueur", listSelecJoueur);
+
+/*            if(numJeuActu != numJeuPrec)
+            {
+                numJeuPrec = numJeuActu;
+                detailsNumList.add("detailsList jeu n°"+numJeuActu);
+            }
+            
+            
+*/
+            
+
+
+            bundle.putStringArrayList("detailsNumList", detailsNumList);
+            bundle.putParcelableArrayList("detailsList", detailsList);
+
 
             switch (position) {
                 case 0:
@@ -155,9 +177,9 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
                     jeu.setArguments(bundle);
                     return jeu;
                 case 2:
-                    details = new DetailsFrag();
-                    details.setArguments(bundle);
-                    return details;
+                    detailsFrag = new DetailsFrag();
+                    detailsFrag.setArguments(bundle);
+                    return detailsFrag;
                 default:
                     return null;
             }
@@ -197,6 +219,12 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
         // Reset the player list before adding all the player
         playerList = new ArrayList<>();
         playerList.addAll(listPlayer);
+    }
+
+    public void setDetails(ArrayList<Details> detailsList, ArrayList<String> detailsNumList)
+    {
+        this.detailsList = detailsList;
+        this.detailsNumList = detailsNumList;
     }
 
 

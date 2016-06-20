@@ -31,7 +31,7 @@ public class Jeu extends Player {
 
     private boolean neg = false;
 
-    private Player player1, player2, player3, player4, player5, player6, player7;
+    private Player player1, player2, player3, player4, player5, player6;
 
     public Jeu(){
 
@@ -41,7 +41,6 @@ public class Jeu extends Player {
         player4 = new Player();
         player5 = new Player();
         player6 = new Player();
-        player7 = new Player();
     }
 
 
@@ -54,9 +53,6 @@ public class Jeu extends Player {
 
         switch(nbJoueur)
         {
-            case 7:
-                player7.setNomJoueur(listJoueur.get(6));
-
             case 6:
                 player6.setNomJoueur(listJoueur.get(5));
 
@@ -183,6 +179,11 @@ public class Jeu extends Player {
             neg=true;
         }
 
+        else
+        {
+            neg = false;
+        }
+
         division = (int)score / 10;
         modulus = score % 10;
 
@@ -258,23 +259,23 @@ public class Jeu extends Player {
         int scoreDonne = 0;
 
         switch (enchere) {
-            case "Petite":
+            case "Petite (20pts)":
                 scoreDonne += petiteValue;
                 break;
 
-            case "Pouce":
+            case "Pouce (40pts)":
                 scoreDonne += pouceValue;
                 break;
 
-            case "Garde":
+            case "Garde (80pts)":
                 scoreDonne += gardeValue;
                 break;
 
-            case "Garde sans chien":
+            case "Garde sans chien (160pts)":
                 scoreDonne += gardeSansValue;
                 break;
 
-            case "Garde contre chien":
+            case "Garde contre chien (320pts)":
                 scoreDonne += gardeContreValue;
                 break;
 
@@ -288,7 +289,6 @@ public class Jeu extends Player {
             boolean fourIsTrue = false, fiveIsTrue = false, sixIsTrue = false;
 
             switch (nbJoueur) {
-                case 7:
 
                 case 6:
 
@@ -382,7 +382,6 @@ public class Jeu extends Player {
             boolean fourIsTrue = false, fiveIsTrue = false, sixIsTrue = false;
 
             switch (nbJoueur) {
-                case 7:
 
                 case 6:
 
@@ -547,7 +546,6 @@ public class Jeu extends Player {
 
             switch(nbJoueur)
             {
-                case 7:
                 case 6:
 
                     if(playerList.get(i).equals(player6.getNomJoueur()))
@@ -731,7 +729,6 @@ public class Jeu extends Player {
     public Player getPlayer4() { return player4; }
     public Player getPlayer5() { return player5; }
     public Player getPlayer6() { return player6; }
-    public Player getPlayer7() { return player7; }
 
     public ArrayList<Player> setPlayerInOrder()
     {

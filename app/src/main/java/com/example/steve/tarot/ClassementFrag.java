@@ -30,7 +30,7 @@ public class ClassementFrag extends Fragment {
 
     private ListView listViewPlayer, listViewPosition, listViewScore;
 
-    private Player player1, player2, player3, player4, player5, player6, player7;
+    private Player player1, player2, player3, player4, player5, player6;
 
     private boolean firstTime = true;
 
@@ -62,8 +62,6 @@ public class ClassementFrag extends Fragment {
 
         switch(playerArrayList.size())
         {
-            case 7:
-                player7 = playerArrayList.get(6);
             case 6:
                 player6 = playerArrayList.get(5);
             case 5:
@@ -141,18 +139,6 @@ public class ClassementFrag extends Fragment {
                 listScore.add(Integer.toString(player6.getScore()));
             }
 
-            if(playerArrayList.size() == 7)
-            {
-                listPlayerInOrder.add(player4.getNomJoueur());
-                listPlayerInOrder.add(player5.getNomJoueur());
-                listPlayerInOrder.add(player6.getNomJoueur());
-                listPlayerInOrder.add(player7.getNomJoueur());
-
-                listScore.add(Integer.toString(player4.getScore()));
-                listScore.add(Integer.toString(player5.getScore()));
-                listScore.add(Integer.toString(player6.getScore()));
-                listScore.add(Integer.toString(player7.getScore()));
-            }
         }
 
 

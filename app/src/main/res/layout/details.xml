@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Preneur: "
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/preneurDetailsTitle"
+        android:layout_marginLeft="7dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="preneur?"
+        android:id="@+id/preneurDetailsTxt"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/preneurDetailsTitle"
+        android:layout_toEndOf="@+id/preneurDetailsTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Associé(e): "
+        android:id="@+id/associeDetailsTitle"
+        android:layout_below="@+id/preneurDetailsTitle"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="7dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="associé?"
+        android:id="@+id/associeDetailsTxt"
+        android:layout_below="@+id/preneurDetailsTitle"
+        android:layout_toRightOf="@+id/associeDetailsTitle"
+        android:layout_toEndOf="@+id/associeDetailsTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Enchère: "
+        android:id="@+id/enchereDetailsTitle"
+        android:layout_below="@+id/preneurDetailsTitle"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="7dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="enchère?"
+        android:id="@+id/enchereDetailsTxt"
+        android:layout_below="@+id/preneurDetailsTitle"
+        android:layout_toRightOf="@+id/enchereDetailsTitle"
+        android:layout_toEndOf="@+id/enchereDetailsTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Enchère: "
+        android:id="@+id/enchereDetailsTitle2"
+        android:layout_below="@+id/associeDetailsTitle"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="7dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="enchère?"
+        android:id="@+id/enchereDetailsTxt2"
+        android:layout_below="@+id/associeDetailsTitle"
+        android:layout_toRightOf="@+id/enchereDetailsTitle2"
+        android:layout_toEndOf="@+id/enchereDetailsTitle2"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Annonce:"
+        android:id="@+id/annonceDetailsTitle"
+        android:layout_below="@+id/enchereDetailsTitle2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="7dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/textView2"
+        android:layout_alignTop="@+id/annonceDetailsTitle"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Joueur:"
+        android:id="@+id/joueurAnnonceDetailsTitle"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Annonce1"
+        android:id="@+id/annonce1Details"
+        android:layout_below="@+id/annonceDetailsTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="9dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Joueur1"
+        android:id="@+id/joueur1Details"
+        android:layout_alignTop="@+id/annonce1Details"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginLeft="7dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Annonce2"
+        android:id="@+id/annonce2Details"
+        android:layout_below="@+id/annonce1Details"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="9dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Joueur2"
+        android:id="@+id/joueur2Details"
+        android:layout_below="@+id/joueur1Details"
+        android:layout_alignLeft="@+id/joueur1Details"
+        android:layout_alignStart="@+id/joueur1Details"
+        android:layout_marginLeft="7dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="details"
+        android:id="@+id/detailsScore"
+        android:layout_below="@+id/joueur2Details"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
