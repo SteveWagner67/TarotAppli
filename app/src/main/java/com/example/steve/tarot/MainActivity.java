@@ -1,10 +1,12 @@
 package com.example.steve.tarot;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -31,146 +33,150 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     /* Initialization of the variables */
-    Button valid;
-    private ArrayList<String> list;
-    private ArrayAdapter<String> adapter;
-    EditText enter;
-    private ListView playerList;
-    int nbPlayer =0;
-    int pos;
+    private TextView introTitle, joueurJeuTitle, joueurChoixTitle, nomNouvJoueurTitle;
+    private ListView choixJoueurListView, jeuJoueurListView;
+    private Button terminerBtn, ajoutJoueurBtn;
 
+    private ArrayList<String> choixJoueurList, jeuJoueurList;
+    private ArrayAdapter<String> adaptChoixJoueurList, adaptJeuJoueurList;
+
+    private String joueurToAdd, joueurToRemove;
+    int nbJoueur = 0, posDistrib;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if((keyCode == KeyEvent.KEYCODE_ENTER) || (keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            introTitle.setVisibility(View.VISIBLE);
+            joueurChoixTitle.setVisibility(View.VISIBLE);
+            joueurJeuTitle.setVisibility(View.VISIBLE);
+            choixJoueurListView.setVisibility(View.VISIBLE);
+            jeuJoueurListView.setVisibility(View.VISIBLE);
+            ajoutJoueurBtn.setVisibility(View.VISIBLE);
+            terminerBtn.setVisibility(View.VISIBLE);
+
+            nomNouvJoueurTitle.setVisibility(View.INVISIBLE);
+
+            if(keyCode == KeyEvent.KEYCODE_ENTER)
+            {
+            }
+        }
+
+
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         /* Reference of the variable */
-        valid = (Button) findViewById(R.id.button2);
-        playerList = (ListView) findViewById(R.id.listView);
-        enter = (EditText) findViewById(R.id.editText);
+        introTitle = (TextView)findViewById(R.id.intro);
+        joueurJeuTitle = (TextView)findViewById(R.id.joueurJeuTitle);
+        joueurChoixTitle = (TextView)findViewById(R.id.joueurChoixTitle);
+        nomNouvJoueurTitle = (TextView)findViewById(R.id.nomNouvJoueurTitle);
 
-        list = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_1, list);
+        choixJoueurListView = (ListView)findViewById(R.id.joueurChoixList);
+        jeuJoueurListView = (ListView)findViewById(R.id.joueurJeuList);
+
+        terminerBtn = (Button)findViewById(R.id.terminerListBtn);
+        ajoutJoueurBtn = (Button)findViewById(R.id.ajoutJoueurBtn);
+
+        /* Initialization */
+        choixJoueurList = new ArrayList<>();
+        jeuJoueurList = new ArrayList<>();
+
+        adaptChoixJoueurList = new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_1, choixJoueurList);
+        adaptJeuJoueurList = new ArrayAdapter<String>(MainActivity.this, R.layout.simple_list_item_1, jeuJoueurList);
+
+        choixJoueurList.add("André");
+        choixJoueurList.add("Ben");
+        choixJoueurList.add("Céline");
+        choixJoueurList.add("Justine");
+        choixJoueurList.add("Logan");
+        choixJoueurList.add("Néna");
+        choixJoueurList.add("Papé");
+        choixJoueurList.add("Steve");
+        choixJoueurList.add("Tony");
 
 
-        enter.setOnTouchListener(new View.OnTouchListener() {
+        choixJoueurListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                valid.setVisibility(View.INVISIBLE);
-
-                return false;
-            }
-        });
-
-        /* Key action for the edittext*/
-        enter.setOnKeyListener(new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER))
-                {
-
-                    if (enter.getText().toString().equals(""))
-                    {
-                        // Do nothing
-                    }
-
-                    else
-                    {
-                        /* Be sure the number of maximum player isn't attempt */
-                        if(nbPlayer > 6)
-                        {
-                            AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
-                            adb.setTitle("Information");
-                            adb.setMessage("Nombre de joueurs max atteint: 6");
-                            adb.setPositiveButton("OK", null);
-                            adb.show();
-                        }
-
-                        else
-                        {
-
-                            // Be sure the name doesn't already exist
-                            int i;
-                            boolean exist = false;
-                            for(i=0; i<nbPlayer; i++)
-                            {
-                                if(list.get(i).toString().equals(enter.getText().toString()))
-                                {
-                                    exist = true;
-                                }
-                            }
-
-                            if(exist)
-                            {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                // Set the dialog title
-                                builder.setTitle("Information");
-                                builder.setMessage(enter.getText().toString() + " est déjà dans la liste");
-                                builder.setPositiveButton("OK", null);
-                                builder.show();
-                            }
-
-                            else
-                            {
-                                list.add(enter.getText().toString());
-                                playerList.setAdapter(adapter);
-
-                                /* Add a new player */
-                                nbPlayer++;
-                            }
-
-                            // Check if no view has focus:
-                            View view = getCurrentFocus();
-                            if (view != null)
-                            {
-                                // Close the keyboard
-                                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                            }
-
-                        }
-
-                        // Clear the written text
-                        enter.setText("");
-
-                        valid.setVisibility(View.VISIBLE);
-
-                    }
-
-                    return true;
-                }
-
-                return false;
-            }
-        });
-
-        /* Button action */
-        valid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(v.getContext(), "Nb of player = " + nbPlayer, Toast.LENGTH_SHORT).show();
-                if(nbPlayer < 3)
-                {
+                if (nbJoueur >= 6) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
-                    adb.setTitle("Nombre de joueurs insuffisant");
-                    adb.setMessage("Minimum: 3" + "\r\n" +"Actuellement: " +nbPlayer);
+                    adb.setTitle("Information");
+                    adb.setMessage("Nombre de joueurs maximum atteint: 6");
+
                     adb.setPositiveButton("OK", null);
+                    adb.show();
+                } else {
+                    joueurToAdd = choixJoueurList.get(position).toString();
+
+                    AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
+                    adb.setTitle("Information");
+                    adb.setMessage("Ajouter " + joueurToAdd + " à la liste des joueurs en jeu ?");
+
+                    adb.setNegativeButton("Oui", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            adaptJeuJoueurList.add(joueurToAdd);
+                            adaptChoixJoueurList.remove(joueurToAdd);
+                            nbJoueur++;
+                        }
+                    });
+
+                    adb.setPositiveButton("Non", null);
                     adb.show();
                 }
 
-                else
-                {
+            }
+        });
+
+        jeuJoueurListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                joueurToRemove = jeuJoueurList.get(position);
+
+                AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
+                adb.setTitle("Information");
+                adb.setMessage("Supprimer " + joueurToRemove + " de la liste des joueurs en jeu ?");
+
+                adb.setNegativeButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adaptJeuJoueurList.remove(joueurToRemove);
+                        adaptChoixJoueurList.add(joueurToRemove);
+                        nbJoueur--;
+                    }
+                });
+
+                adb.setPositiveButton("Non", null);
+                adb.show();
+            }
+        });
+
+        terminerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (nbJoueur < 3) {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
+                    adb.setTitle("Nombre de joueurs insuffisant");
+                    adb.setMessage("Minimum: 3" + "\r\n" + "Actuellement: " + Integer.toString(nbJoueur));
+                    adb.setPositiveButton("OK", null);
+                    adb.show();
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     // Set the dialog title
                     builder.setTitle("Premier distributeur");
-                    builder.setSingleChoiceItems(list.toArray(new String[list.size()]), 0, new DialogInterface.OnClickListener() {
+                    builder.setSingleChoiceItems(jeuJoueurList.toArray(new String[jeuJoueurList.size()]), 0, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            pos=which;
+                            posDistrib = which;
 
                         }
                     });
@@ -182,8 +188,8 @@ public class MainActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
 
-                            intent.putExtra("List", list);
-                            intent.putExtra("Distributor", pos);
+                            intent.putExtra("List", jeuJoueurList);
+                            intent.putExtra("Distributor", posDistrib);
                             startActivity(intent);
 
                             finish();
@@ -195,51 +201,62 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /* Action long click on the list of item */
-        playerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        ajoutJoueurBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View v) {
 
-                final String rmvStr = ((TextView) view).getText().toString();
-                AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
-                adb.setTitle("Liste des joueurs");
-                adb.setMessage("Êtes vous sûre de vouloir supprimer " + rmvStr + " ?");
-                adb.setNegativeButton("Annuler", null);
-                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        adapter.remove(rmvStr);
-                        adapter.notifyDataSetChanged();
-                        nbPlayer--;
+
+                final Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.add_player);
+                final EditText editTxt = (EditText) dialog.findViewById(R.id.addPlayerEdit);
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                dialog.show();
+
+                editTxt.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        if ((keyCode == KeyEvent.KEYCODE_ENTER) || (keyCode == KeyEvent.KEYCODE_BACK)) {
+
+                            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+
+                                int i = 0;
+                                boolean exist = false;
+                                while (i < choixJoueurList.size()) {
+                                    if (choixJoueurList.get(i).equals(editTxt.getText().toString())) {
+                                        exist = true;
+                                    }
+                                    i++;
+                                }
+
+                                if (exist) {
+                                    AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
+                                    adb.setTitle("Information");
+                                    adb.setMessage("Joueur déjà existant");
+
+                                    adb.setPositiveButton("OK", null);
+                                    adb.show();
+                                } else {
+                                    choixJoueurList.add(editTxt.getText().toString());
+                                }
+
+                            }
+
+                            dialog.dismiss();
+                        }
+
+
+                        return false;
                     }
                 });
-                adb.show();
 
-                return false;
             }
         });
+
+        choixJoueurListView.setAdapter(adaptChoixJoueurList);
+        jeuJoueurListView.setAdapter(adaptJeuJoueurList);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
+
+
+
