@@ -390,7 +390,19 @@
         android:layout_toRightOf="@+id/scoreTitle"
         android:layout_alignRight="@+id/ajouter2"
         android:layout_alignEnd="@+id/ajouter2"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:layout_marginRight="10dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editer score"
+        android:id="@+id/editScoreBtn"
+        android:layout_below="@+id/nbBoutSpinn"
+        android:layout_toRightOf="@+id/scoreEdit"
+        android:layout_toEndOf="@+id/scoreEdit"
+        android:visibility="invisible"
+        android:width="10dp"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -398,8 +410,8 @@
         android:text="Calculer"
         android:id="@+id/calcul"
         android:layout_below="@+id/nbBoutSpinn"
-        android:layout_toRightOf="@+id/annonceList"
-        android:layout_toEndOf="@+id/annonceList"
+        android:layout_toRightOf="@+id/editScoreBtn"
+        android:layout_toEndOf="@+id/editScoreBtn"
         android:visibility="invisible"/>
 
     <TextView
@@ -461,7 +473,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="-1 ?"
+        android:text="-"
         android:id="@+id/scoreTxt"
         android:layout_alignBottom="@+id/scoreEdit"
         android:layout_toLeftOf="@+id/nbBoutSpinn"
