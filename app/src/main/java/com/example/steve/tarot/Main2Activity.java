@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class Main2Activity extends AppCompatActivity implements JeuFrag.setPreneur, JeuFrag.setEnchere, JeuFrag.setAnnonceList, JeuFrag.setJoueurList, JeuFrag.setPlayers, JeuFrag.setDetails {
+public class Main2Activity extends AppCompatActivity implements JeuFrag.setPreneur, JeuFrag.setEnchere, JeuFrag.setAnnonceList, JeuFrag.setJoueurList, JeuFrag.setPlayers, JeuFrag.setDetails, JeuFrag.setJeu, JeuFrag.setNumJeu {
 
     private ArrayList<String> list, listSelecAnnonce, listSelecJoueur;
 
@@ -45,6 +45,10 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
     private ArrayList<String> detailsNumList;
 
     private ArrayList<Details> detailsList;
+
+    private ArrayList<Jeu> jeuList;
+
+    private int numJeu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +83,6 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-
-
             }
 
             @Override
@@ -104,6 +106,8 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
         detailsList = new ArrayList<>();
 
         detailsNumList = new ArrayList<>();
+
+        jeuList = new ArrayList<>();
 
     }
 
@@ -152,19 +156,11 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
             bundle.putStringArrayList("List Annonce", listSelecAnnonce);
             bundle.putStringArrayList("List Joueur", listSelecJoueur);
 
-/*            if(numJeuActu != numJeuPrec)
-            {
-                numJeuPrec = numJeuActu;
-                detailsNumList.add("detailsList jeu n°"+numJeuActu);
-            }
-            
-            
-*/
-            
-
-
             bundle.putStringArrayList("detailsNumList", detailsNumList);
             bundle.putParcelableArrayList("detailsList", detailsList);
+            bundle.putParcelableArrayList("jeuList", jeuList);
+
+            bundle.putInt("NumJeu", numJeu);
 
 
             switch (position) {
@@ -226,6 +222,13 @@ public class Main2Activity extends AppCompatActivity implements JeuFrag.setPrene
         this.detailsList = detailsList;
         this.detailsNumList = detailsNumList;
     }
+
+    public void setJeu(ArrayList<Jeu> jeuList)
+    {
+        this.jeuList = jeuList;
+    }
+
+    public void setNumJeu(int numJeu) {this.numJeu = numJeu; }
 
 
 }

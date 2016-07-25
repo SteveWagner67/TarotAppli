@@ -245,11 +245,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Details ? "
-        android:id="@+id/detailsScore"
+        android:text="Différence: "
+        android:id="@+id/diffTitle"
         android:layout_below="@+id/scoreAttDetailsTitle"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Diff "
+        android:id="@+id/diffTxt"
+        android:layout_below="@+id/scoreAttDetailsTxt"
+        android:layout_toRightOf="@+id/diffTitle"
+        android:layout_toEndOf="@+id/diffTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Victoire/Défaite ?"
+        android:id="@+id/resTxt"
+        android:layout_below="@+id/diffTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Classement"
+        android:id="@+id/classBtn"
+        android:layout_below="@+id/diffTitle"
+        android:layout_toEndOf="@+id/joueur1Details"
+        android:layout_toRightOf="@+id/joueur1Details" />
 
 
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.example.steve.tarot;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +25,15 @@ public class DetailsFrag extends Fragment {
 
     ArrayList<String> detailsNumArraylist;
     ArrayList<Details> detailsArrayList;
+    ArrayList<Jeu> jeuArrayList;
 
     ArrayAdapter<String> adaptDetailsList;
 
     ListView detailsListView;
+
+    int pos;
+
+    boolean dialogClosed = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +45,9 @@ public class DetailsFrag extends Fragment {
         detailsArrayList = new ArrayList<>();
         detailsArrayList = getArguments().getParcelableArrayList("detailsList");
 
+        jeuArrayList = new ArrayList<>();
+        jeuArrayList = getArguments().getParcelableArrayList("jeuList");
+
         detailsListView = (ListView) view.findViewById(R.id.detailsList);
         adaptDetailsList = new ArrayAdapter<String>(getActivity(), R.layout.mylist, detailsNumArraylist);
 
@@ -46,7 +57,7 @@ public class DetailsFrag extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+                final AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
 
 
                 // Get the layout inflater
@@ -83,8 +94,14 @@ public class DetailsFrag extends Fragment {
                 final TextView scoreAttTitle = (TextView) dialogView.findViewById(R.id.scoreAttDetailsTitle);
                 final TextView scoreAttTxt = (TextView) dialogView.findViewById(R.id.scoreAttDetailsTxt);
 
-                final TextView detailsScore = (TextView) dialogView.findViewById(R.id.detailsScore);
+                final TextView diffTitle = (TextView) dialogView.findViewById(R.id.diffTitle);
+                final TextView diffTxt = (TextView) dialogView.findViewById(R.id.diffTxt);
 
+                final TextView resTxt = (TextView) dialogView.findViewById(R.id.resTxt);
+
+                final Button classBtn = (Button) dialogView.findViewById(R.id.classBtn);
+
+                pos = position;
 
                 if (detailsArrayList.get(position).getPreneur().equals("Personne")) {
                     preneurTxt.setText(detailsArrayList.get(position).getPreneurForPersonne());
@@ -141,7 +158,9 @@ public class DetailsFrag extends Fragment {
                     nbBoutTxt.setVisibility(View.INVISIBLE);
                     scoreAttTitle.setVisibility(View.INVISIBLE);
                     scoreAttTxt.setVisibility(View.INVISIBLE);
-                    detailsScore.setVisibility(View.INVISIBLE);
+                    diffTitle.setVisibility(View.INVISIBLE);
+                    diffTxt.setVisibility(View.INVISIBLE);
+                    resTxt.setVisibility(View.INVISIBLE);
 
                 } else {
 
@@ -153,7 +172,9 @@ public class DetailsFrag extends Fragment {
                     nbBoutTxt.setVisibility(View.VISIBLE);
                     scoreAttTitle.setVisibility(View.VISIBLE);
                     scoreAttTxt.setVisibility(View.VISIBLE);
-                    detailsScore.setVisibility(View.VISIBLE);
+                    diffTitle.setVisibility(View.VISIBLE);
+                    diffTxt.setVisibility(View.VISIBLE);
+                    resTxt.setVisibility(View.VISIBLE);
 
                     if (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur")) {
                         scoreQuiTitle.setText("Score preneur: ");
@@ -184,53 +205,37 @@ public class DetailsFrag extends Fragment {
                             break;
                     }
 
+                    diffTxt.setText(Double.toString(detailsArrayList.get(position).getFinalValue()));
+
                     if ((detailsArrayList.get(position).getResult() == true) && (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur"))) {
-                        detailsScore.setText("Le preneur a gagné ");
+                        resTxt.setText("Victoire de ");
                     } else if ((detailsArrayList.get(position).getResult() == true) && (detailsArrayList.get(position).getCalculScoreDe().equals("Défenseurs"))) {
-                        detailsScore.setText("Le preneur a gagné ");
+                        resTxt.setText("Victoire de ");
                     } else if ((detailsArrayList.get(position).getResult() == false) && (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur"))) {
-                        detailsScore.setText("Le preneur a perdu ");
+                        resTxt.setText("Défaite de ");
                     } else if ((detailsArrayList.get(position).getResult() == false) && (detailsArrayList.get(position).getCalculScoreDe().equals("Défenseurs"))) {
-                        detailsScore.setText("Le preneur a perdu ");
+                        resTxt.setText("Défaite de ");
                     }
 
-
-                    detailsScore.setText(detailsScore.getText() +
-                            "de "
-                            + Integer.toString(detailsArrayList.get(position).getRoundFinalValue())
-                            + " (arrondi de "
-                            + Double.toString(detailsArrayList.get(position).getFinalValue())
-                            + ")");
+                    resTxt.setText(resTxt.getText() + Integer.toString(detailsArrayList.get(position).getRoundFinalValue()) + " points");
                 }
 
                 // Set the layout for the dialog
                 adb.setView(dialogView);
 
-                if (detailsArrayList.get(position).getPreneur().equals("Personne"))
-                {
+                if (detailsArrayList.get(position).getPreneur().equals("Personne")) {
                     // Means there is at least 6 players (displays the playerMort)
-                    if (!detailsArrayList.get(position).getPlayerMort().equals(""))
-                    {
+                    if (!detailsArrayList.get(position).getPlayerMort().equals("")) {
                         adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + " (à l'envers)" + "\r\n" + "Mort: " + detailsArrayList.get(position).getPlayerMort());
-                    }
-
-                    else
-                    {
+                    } else {
                         adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + " (à l'envers)");
                     }
 
-                }
-
-                else
-                {
+                } else {
                     // Means there is at least 6 players (displays the playerMort)
-                    if (!detailsArrayList.get(position).getPlayerMort().equals(""))
-                    {
+                    if (!detailsArrayList.get(position).getPlayerMort().equals("")) {
                         adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + "                       " + "\r\n" + "Mort: " + detailsArrayList.get(position).getPlayerMort());
-                    }
-
-                    else
-                    {
+                    } else {
                         adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()));
                     }
                 }
@@ -240,6 +245,59 @@ public class DetailsFrag extends Fragment {
 
                 adb.show();
 
+                classBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+
+                        // Get the layout inflater
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+                        // Inflate the layout for the dialog
+                        // Pass null as the parent view because its going in the dialog layout
+                        final View dialogView2 = inflater.inflate(R.layout.details_classement, null);
+
+                        final TextView class1Txt = (TextView) dialogView2.findViewById(R.id.classP1);
+                        final TextView class2Txt = (TextView) dialogView2.findViewById(R.id.classP2);
+                        final TextView class3Txt = (TextView) dialogView2.findViewById(R.id.classP3);
+                        final TextView class4Txt = (TextView) dialogView2.findViewById(R.id.classP4);
+                        final TextView class5Txt = (TextView) dialogView2.findViewById(R.id.classP5);
+                        final TextView class6Txt = (TextView) dialogView2.findViewById(R.id.classP6);
+
+
+                        switch (jeuArrayList.get(pos).getNbJoueur()) {
+
+                            case 6:
+                                class6Txt.setVisibility(View.VISIBLE);
+                                class6Txt.setText(setClassement(6));
+                            case 5:
+                                class5Txt.setVisibility(View.VISIBLE);
+                                class5Txt.setText(setClassement(5));
+                            case 4:
+                                class4Txt.setVisibility(View.VISIBLE);
+                                class4Txt.setText(setClassement(4));
+                            case 3:
+                                class3Txt.setVisibility(View.VISIBLE);
+                                class3Txt.setText(setClassement(3));
+
+                                class2Txt.setVisibility(View.VISIBLE);
+                                class2Txt.setText(setClassement(2));
+
+                                class1Txt.setVisibility(View.VISIBLE);
+                                class1Txt.setText(setClassement(1));
+                                break;
+                        }
+
+                        dialog.setView(dialogView2);
+
+                        dialog.setTitle("Classement jeu n°" + Integer.toString(detailsArrayList.get(pos).getNumJeu()));
+
+                        dialog.setPositiveButton("Fermer", null);
+
+                        dialog.show();
+                    }
+                });
             }
         });
 
@@ -249,4 +307,41 @@ public class DetailsFrag extends Fragment {
     }
 
 
+    private String setClassement(int placement)
+    {
+        String text = "";
+
+        text = Integer.toString(placement)
+                + "-  "
+                + detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getNomJoueur()
+                + ":          "
+                + Integer.toString(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getScore(pos))
+                + " Pts";
+
+        if (pos != 0)
+        {
+            text = text + "   ->   ";
+            if ((detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos)) > 0)
+            {
+                text = text     +  "-"
+                                + Integer.toString(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos))
+                                + " Place(s)";
+            }
+
+            else if ((detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos)) < 0)
+            {
+                text = text     + "+"
+                                + Integer.toString((-1)*(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos)))
+                                + " Place(s)";
+            }
+
+            else
+            {
+                text = text     + " = Place";
+            }
+
+        }
+
+        return text;
+    }
 }

@@ -1,5 +1,8 @@
 package com.example.steve.tarot;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 
@@ -10,9 +13,10 @@ import java.util.ArrayList;
 
 
 
-public class Jeu extends Player {
+public class Jeu extends Player implements Parcelable {
     private int nbJeu;
     private ArrayList<String> listJoueur;
+    private ArrayList<Player> playersListInOrder;
     private int nbJoueur;
     private String donneur;
     private String preneur;
@@ -27,11 +31,17 @@ public class Jeu extends Player {
     static private int petiteValue = 20, pouceValue = 40, gardeValue = 80, gardeSansValue = 160, gardeContreValue = 320;
     static private int value0Bout = 56, value1Bout = 51, value2Bout = 41, value3Bout = 36;
 
+    private int numJeu;
+
     private double valueDiff;
 
     private boolean neg = false;
 
     private Player player1, player2, player3, player4, player5, player6;
+
+    private ArrayList<Player> classementListJoueur;
+
+    private int scorePlayer6, scorePlayer5, scorePlayer4, scorePlayer3, scorePlayer2, scorePlayer1;
 
     public Jeu(){
 
@@ -41,6 +51,15 @@ public class Jeu extends Player {
         player4 = new Player();
         player5 = new Player();
         player6 = new Player();
+
+        int numJeu = 0;
+
+        scorePlayer6 = 0;
+        scorePlayer5 = 0;
+        scorePlayer4 = 0;
+        scorePlayer3 = 0;
+        scorePlayer2 = 0;
+        scorePlayer1 = 0;
     }
 
 
@@ -281,6 +300,13 @@ public class Jeu extends Player {
 
         }
 
+        scorePlayer6 = 0;
+        scorePlayer5 = 0;
+        scorePlayer4 = 0;
+        scorePlayer3 = 0;
+        scorePlayer2 = 0;
+        scorePlayer1 = 0;
+
         scoreDonne += getArrondi(valueDiff);
 
         // Preneur a Gagné
@@ -301,32 +327,32 @@ public class Jeu extends Player {
                     // Don't change the score for the donneur (which can only be one who loose)
                     if(donneur.equals(player6.getNomJoueur()))
                     {
-                        player6.setScore(scoreDonne);
+                        scorePlayer6 = scoreDonne;
                     }
 
                     if(donneur.equals(player5.getNomJoueur()))
                     {
-                        player5.setScore(scoreDonne);
+                        scorePlayer5 = scoreDonne;
                     }
 
                     if(donneur.equals(player4.getNomJoueur()))
                     {
-                        player4.setScore(scoreDonne);
+                        scorePlayer4 = scoreDonne;
                     }
 
                     if(donneur.equals(player3.getNomJoueur()))
                     {
-                        player3.setScore(scoreDonne);
+                        scorePlayer3 = scoreDonne;
                     }
 
                     if(donneur.equals(player2.getNomJoueur()))
                     {
-                        player2.setScore(scoreDonne);
+                        scorePlayer2 = scoreDonne;
                     }
 
                     if(donneur.equals(player1.getNomJoueur()))
                     {
-                        player1.setScore(scoreDonne);
+                        scorePlayer1 = scoreDonne;
                     }
 
 
@@ -393,32 +419,32 @@ public class Jeu extends Player {
                     // Don't change the score for the donneur (which can only be one who win)
                     if(donneur.equals(player6.getNomJoueur()))
                     {
-                        player6.setScore((-1) * scoreDonne);
+                        scorePlayer6 += (-1) * scoreDonne;
                     }
 
                     if(donneur.equals(player5.getNomJoueur()))
                     {
-                        player5.setScore((-1) * scoreDonne);
+                        scorePlayer5 += (-1) * scoreDonne;
                     }
 
                     if(donneur.equals(player4.getNomJoueur()))
                     {
-                        player4.setScore((-1) * scoreDonne);
+                        scorePlayer4 += (-1) * scoreDonne;
                     }
 
                     if(donneur.equals(player3.getNomJoueur()))
                     {
-                        player3.setScore((-1) * scoreDonne);
+                        scorePlayer3 += (-1) * scoreDonne;
                     }
 
                     if(donneur.equals(player2.getNomJoueur()))
                     {
-                        player2.setScore((-1) * scoreDonne);
+                        scorePlayer2 += (-1) * scoreDonne;
                     }
 
                     if(donneur.equals(player1.getNomJoueur()))
                     {
-                        player1.setScore((-1) * scoreDonne);
+                        scorePlayer1 += (-1) * scoreDonne;
                     }
 
                     sixIsTrue = true;
@@ -462,6 +488,22 @@ public class Jeu extends Player {
                     break;
             }
         }
+
+        switch (nbJoueur)
+        {
+            case 6:
+                player6.setScore(scorePlayer6);
+            case 5:
+                player5.setScore(scorePlayer5);
+            case 4:
+                player4.setScore(scorePlayer4);
+            case 3:
+                player3.setScore(scorePlayer3);
+                player2.setScore(scorePlayer2);
+                player1.setScore(scorePlayer1);
+                break;
+        }
+
     }
 
     public void setAnnonceToScore(ArrayList<String> annonceList, ArrayList<String> playerList)
@@ -550,43 +592,43 @@ public class Jeu extends Player {
 
                     if(playerList.get(i).equals(player6.getNomJoueur()))
                     {
-                        player6.setScore(4*score);
-                        player5.setScore((-1)*score);
-                        player4.setScore((-1)*score);
-                        player3.setScore((-1)*score);
-                        player2.setScore((-1)*score);
-                        player1.setScore((-1)*score);
+                        scorePlayer6 = 4 * score;
+                        scorePlayer5 = (-1) * score;
+                        scorePlayer4 = (-1) * score;
+                        scorePlayer3 = (-1) * score;
+                        scorePlayer2 = (-1) * score;
+                        scorePlayer1 = (-1) * score;
                     }
 
                     //Remove the change for the donneur
                     if(donneur.equals(player6.getNomJoueur()))
                     {
-                        player6.setScore(score);
+                        scorePlayer6 = score;
                     }
 
                     if(donneur.equals(player5.getNomJoueur()))
                     {
-                        player5.setScore(score);
+                        scorePlayer5 = score;
                     }
 
                     if(donneur.equals(player4.getNomJoueur()))
                     {
-                        player4.setScore(score);
+                        scorePlayer4 = score;
                     }
 
                     if(donneur.equals(player3.getNomJoueur()))
                     {
-                        player3.setScore(score);
+                        scorePlayer3 = score;
                     }
 
                     if(donneur.equals(player2.getNomJoueur()))
                     {
-                        player2.setScore(score);
+                        scorePlayer2 = score;
                     }
 
                     if(donneur.equals(player1.getNomJoueur()))
                     {
-                        player1.setScore(score);
+                        scorePlayer1 = score;
                     }
 
                     sixIsTrue = true;
@@ -595,15 +637,15 @@ public class Jeu extends Player {
 
                     if(playerList.get(i).equals(player5.getNomJoueur()))
                     {
-                        player5.setScore(4*score);
-                        player4.setScore((-1)*score);
-                        player3.setScore((-1)*score);
-                        player2.setScore((-1)*score);
-                        player1.setScore((-1)*score);
+                        scorePlayer5 = 4 * score;
+                        scorePlayer4 = (-1) * score;
+                        scorePlayer3 = (-1) * score;
+                        scorePlayer2 = (-1) * score;
+                        scorePlayer1 = (-1) * score;
 
                         if(sixIsTrue)
                         {
-                            player6.setScore((-1) * score);
+                            scorePlayer6 = (-1) * score;
                         }
                     }
 
@@ -613,28 +655,27 @@ public class Jeu extends Player {
                 case 4:
                     if(playerList.get(i).equals(player4.getNomJoueur()))
                     {
+                        if(sixIsTrue)
+                        {
+                            scorePlayer6 = (-1) * score;
+                        }
+
                         if(fiveIsTrue)
                         {
-                            player4.setScore(4*score);
-                            player5.setScore((-1)*score);
-                            player3.setScore((-1)*score);
-                            player2.setScore((-1)*score);
-                            player1.setScore((-1)*score);
+                            scorePlayer4 = 4 * score;
+                            scorePlayer5 = (-1) * score;
+                            scorePlayer3 = (-1) * score;
+                            scorePlayer2 = (-1) * score;
+                            scorePlayer1 = (-1) * score;
                         }
 
                         else
                         {
-                            player4.setScore(3*score);
-                            player3.setScore((-1)*score);
-                            player2.setScore((-1)*score);
-                            player1.setScore((-1)*score);
+                            scorePlayer4 = 3 * score;
+                            scorePlayer3 = (-1) * score;
+                            scorePlayer2 = (-1) * score;
+                            scorePlayer1 = (-1) * score;
                         }
-
-                        if(sixIsTrue)
-                        {
-                            player6.setScore((-1) * score);
-                        }
-
                     }
 
                     fourIsTrue=true;
@@ -643,75 +684,75 @@ public class Jeu extends Player {
 
                     if(playerList.get(i).equals(player3.getNomJoueur()))
                     {
-                        player3.setScore(2*score);
-                        player2.setScore((-1)*score);
-                        player1.setScore((-1)*score);
-
-                        if(fourIsTrue == true)
+                        if(sixIsTrue)
                         {
-                            player3.setScore(score);
-                            player4.setScore((-1)*score);
+                            scorePlayer6 = (-1) * score;
                         }
 
                         if(fiveIsTrue)
                         {
-                            player3.setScore(score);
-                            player5.setScore((-1) * score);
+                            scorePlayer3 = score;
+                            scorePlayer5 = (-1) * score;
                         }
 
-                        if(sixIsTrue)
+                        if(fourIsTrue == true)
                         {
-                            player6.setScore((-1) * score);
+                            scorePlayer3 = score;
+                            scorePlayer4 = (-1) * score;
                         }
+
+                        scorePlayer3 = 2 * score;
+                        scorePlayer2 = (-1) * score;
+                        scorePlayer1 = (-1) * score;
                     }
 
                     if(playerList.get(i).equals(player2.getNomJoueur()))
                     {
-                        player2.setScore(2*score);
-                        player1.setScore((-1)*score);
-                        player3.setScore((-1)*score);
+                        scorePlayer2 = 2 * score;
+                        scorePlayer1 = (-1) * score;
+                        scorePlayer3 = (-1) * score;
 
                         if(fourIsTrue == true)
                         {
-                            player2.setScore(score);
-                            player4.setScore((-1)*score);
+                            scorePlayer2 = score;
+                            scorePlayer4 = (-1) * score;
                         }
 
                         if(fiveIsTrue == true)
                         {
-                            player2.setScore(score);
-                            player5.setScore((-1) * score);
+                            scorePlayer2 = score;
+                            scorePlayer5 = (-1) * score;
                         }
 
                         if(sixIsTrue)
                         {
-                            player6.setScore((-1) * score);
+                            scorePlayer6 = (-1) * score;
                         }
                     }
 
 
                     if(playerList.get(i).equals(player1.getNomJoueur()))
                     {
-                        player1.setScore(2*score);
-                        player2.setScore((-1)*score);
-                        player3.setScore((-1)*score);
-
-                        if(fourIsTrue == true)
+                        if(sixIsTrue)
                         {
-                            player1.setScore(score);
-                            player4.setScore((-1)*score);
+                            scorePlayer6 = (-1) * score;
                         }
 
                         if(fiveIsTrue == true)
                         {
-                            player1.setScore(score);
-                            player5.setScore((-1)*score);
+                            scorePlayer1 = score;
+                            scorePlayer5 = (-1) * score;
                         }
 
-                        if(sixIsTrue)
+                        if(fourIsTrue == true)
                         {
-                            player6.setScore((-1) * score);
+                            scorePlayer1 = score;
+                            scorePlayer4 = (-1) * score;
                         }
+
+                        scorePlayer1 = 2 * score;
+                        scorePlayer2 = (-1) * score;
+                        scorePlayer3 = (-1) * score;
                     }
 
                     break;
@@ -730,19 +771,22 @@ public class Jeu extends Player {
     public Player getPlayer5() { return player5; }
     public Player getPlayer6() { return player6; }
 
-    public ArrayList<Player> setPlayerInOrder()
+    public void setPlayersInOrder()
     {
         boolean playerToAdd = false;
         int i=0, j=0, placeListOut=0, indexPlayer=0;
-        ArrayList<Player> playerListIn, playerListOut;
+        ArrayList<Player> playerListIn;
+        int index, placement;
 
 
         playerListIn = new ArrayList<>();
-        playerListOut = new ArrayList<>();
+        playersListInOrder = new ArrayList<>();
 
         playerListIn.add(0, player1);
         playerListIn.add(1, player2);
         playerListIn.add(2, player3);
+
+        numJeu++;
 
         if(nbJoueur == 4)
         {
@@ -768,9 +812,9 @@ public class Jeu extends Player {
         {
             while(j<placeListOut)
             {
-                if(playerListIn.get(j).getScore() > playerListIn.get(i).getScore())
+                if(playerListIn.get(j).getScore(numJeu-1) > playerListIn.get(i).getScore(numJeu-1))
                 {
-                    if(playerListIn.get(j).getScore() > playerListIn.get(indexPlayer).getScore())
+                    if(playerListIn.get(j).getScore(numJeu-1) > playerListIn.get(indexPlayer).getScore(numJeu-1))
                     {
                         indexPlayer=j;
                         playerToAdd = true;
@@ -780,13 +824,13 @@ public class Jeu extends Player {
             }
             if(playerToAdd == true)
             {
-                playerListOut.add(i, playerListIn.get(indexPlayer));
+                playersListInOrder.add(i, playerListIn.get(indexPlayer));
                 playerListIn.remove(indexPlayer);
             }
 
             else
             {
-                playerListOut.add(i, playerListIn.get(i));
+                playersListInOrder.add(i, playerListIn.get(i));
                 playerListIn.remove(i);
             }
 
@@ -797,23 +841,37 @@ public class Jeu extends Player {
             j=0;
         }
 
-        playerListIn.addAll(playerListOut);
+        playerListIn.addAll(playersListInOrder);
         i=0;
         j=playerListIn.size()-1;
 
         // Reset the playerListOut
-        playerListOut = new ArrayList<>();
+        playersListInOrder = new ArrayList<>();
 
         while(i < playerListIn.size())
         {
-            playerListOut.add(i, playerListIn.get(j));
+            playersListInOrder.add(i, playerListIn.get(j));
 
             j--;
             i++;
         }
 
+        index = nbJoueur - 1;
+        placement = nbJoueur;
 
-        return playerListOut;
+        while(placement > 0)
+        {
+            playersListInOrder.get(index).setActuPos(placement);
+            index--;
+            placement--;
+
+        }
+
+    }
+
+    public ArrayList<Player> getPlayersInOrder()
+    {
+        return playersListInOrder;
     }
 
     private void setScorePlayer6Winner(int scoreDonne)
@@ -821,69 +879,67 @@ public class Jeu extends Player {
         // Joueur 6 est associé (joue seul)
         if(associe.equals(player6.getNomJoueur()))
         {
-            player6.setScore(4 * scoreDonne);
-            player5.setScore((-1) * scoreDonne);
-            player4.setScore((-1) * scoreDonne);
-            player3.setScore((-1) * scoreDonne);
-            player2.setScore((-1) * scoreDonne);
-            player1.setScore((-1) * scoreDonne);
-
-
+            scorePlayer6 += 4 * scoreDonne;
+            scorePlayer5 += (-1) * scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
         }
 
         // Joueur 5 est associé
         if(associe.equals(player5.getNomJoueur()))
         {
-            player6.setScore(2 * scoreDonne);
-            player5.setScore(scoreDonne);
-            player4.setScore((-1) * scoreDonne);
-            player3.setScore((-1) * scoreDonne);
-            player2.setScore((-1) * scoreDonne);
-            player1.setScore((-1) * scoreDonne);
+            scorePlayer6 += 2 * scoreDonne;
+            scorePlayer5 += scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
         }
 
         // Joueur 4 est associé
         if(associe.equals(player4.getNomJoueur()))
         {
-            player6.setScore(2 * scoreDonne);
-            player4.setScore(scoreDonne);
-            player5.setScore((-1) * scoreDonne);
-            player3.setScore((-1) * scoreDonne);
-            player2.setScore((-1) * scoreDonne);
-            player1.setScore((-1) * scoreDonne);
+            scorePlayer6 += 2 * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer5 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
         }
 
         // Joueur 3 est associé
         if(associe.equals(player3.getNomJoueur()))
         {
-            player6.setScore(2 * scoreDonne);
-            player3.setScore(scoreDonne);
-            player5.setScore((-1) * scoreDonne);
-            player4.setScore((-1) * scoreDonne);
-            player2.setScore((-1) * scoreDonne);
-            player1.setScore((-1) * scoreDonne);
+            scorePlayer6 += 2 * scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer5 += (-1) * scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
         }
 
         // Joueur 2 est associé
         if(associe.equals(player2.getNomJoueur()))
         {
-            player6.setScore(2 * scoreDonne);
-            player2.setScore(scoreDonne);
-            player5.setScore((-1) * scoreDonne);
-            player4.setScore((-1) * scoreDonne);
-            player3.setScore((-1) * scoreDonne);
-            player1.setScore((-1) * scoreDonne);
+            scorePlayer6 += 2 * scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer5 += (-1) * scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
         }
 
         // Joueur 1 est associé
         if(associe.equals(player1.getNomJoueur()))
         {
-            player6.setScore(2 * scoreDonne);
-            player1.setScore(scoreDonne);
-            player5.setScore((-1) * scoreDonne);
-            player4.setScore((-1) * scoreDonne);
-            player2.setScore((-1) * scoreDonne);
-            player3.setScore((-1) * scoreDonne);
+            scorePlayer6 += 2 * scoreDonne;
+            scorePlayer1 += scoreDonne;
+            scorePlayer5 += (-1) * scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
         }
 
 
@@ -896,51 +952,51 @@ public class Jeu extends Player {
             // Joueur 5 est associé (joue seul)
             if(associe.equals(player5.getNomJoueur()))
             {
-                player5.setScore(4 * scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer5 += 4 * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 4 est associé
             if(associe.equals(player4.getNomJoueur()))
             {
-                player5.setScore(2 * scoreDonne);
-                player4.setScore(scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer5 += 2 * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 3 est associé
             if(associe.equals(player3.getNomJoueur()))
             {
-                player5.setScore(2 * scoreDonne);
-                player3.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer5 += 2 * scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 2 est associé
             if(associe.equals(player2.getNomJoueur()))
             {
-                player5.setScore(2 * scoreDonne);
-                player2.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer5 += 2 * scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 1 est associé
             if(associe.equals(player1.getNomJoueur()))
             {
-                player5.setScore(2 * scoreDonne);
-                player1.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
+                scorePlayer5 += 2 * scoreDonne;
+                scorePlayer1 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
             }
 
         // Joueur 6 est associé
@@ -948,17 +1004,17 @@ public class Jeu extends Player {
         {
             if(associe.equals(player6.getNomJoueur()))
             {
-                player5.setScore(2 * scoreDonne);
-                player6.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer5 += 2 * scoreDonne;
+                scorePlayer6 += scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             else
             {
-                player6.setScore((-1) * scoreDonne);
+                scorePlayer6 += (-1) * scoreDonne;
             }
         }
     }
@@ -970,51 +1026,51 @@ public class Jeu extends Player {
                 // Joueur 5 associé
                 if(associe.equals(player5.getNomJoueur()))
                 {
-                    player4.setScore(2 * scoreDonne);
-                    player5.setScore(scoreDonne);
-                    player3.setScore((-1) * scoreDonne);
-                    player2.setScore((-1) * scoreDonne);
-                    player1.setScore((-1) * scoreDonne);
+                    scorePlayer4 += 2 * scoreDonne;
+                    scorePlayer5 += scoreDonne;
+                    scorePlayer3 += (-1) * scoreDonne;
+                    scorePlayer2 += (-1) * scoreDonne;
+                    scorePlayer1 += (-1) * scoreDonne;
                 }
 
                 // Joueur 4 associé (joue seul)
                 if(associe.equals(player4.getNomJoueur()))
                 {
-                    player4.setScore(4 * scoreDonne);
-                    player5.setScore((-1) * scoreDonne);
-                    player3.setScore((-1) * scoreDonne);
-                    player2.setScore((-1) * scoreDonne);
-                    player1.setScore((-1) * scoreDonne);
+                    scorePlayer4 += 4 * scoreDonne;
+                    scorePlayer5 += (-1) * scoreDonne;
+                    scorePlayer3 += (-1) * scoreDonne;
+                    scorePlayer2 += (-1) * scoreDonne;
+                    scorePlayer1 += (-1) * scoreDonne;
                 }
 
                 // Joueur 3 associé
                 if(associe.equals(player3.getNomJoueur()))
                 {
-                    player4.setScore(2 * scoreDonne);
-                    player3.setScore(scoreDonne);
-                    player5.setScore((-1) * scoreDonne);
-                    player2.setScore((-1) * scoreDonne);
-                    player1.setScore((-1) * scoreDonne);
+                    scorePlayer4 += 2 * scoreDonne;
+                    scorePlayer3 += scoreDonne;
+                    scorePlayer5 += (-1) * scoreDonne;
+                    scorePlayer2 += (-1) * scoreDonne;
+                    scorePlayer1 += (-1) * scoreDonne;
                 }
 
                 // Joueur 2 associé
                 if(associe.equals(player2.getNomJoueur()))
                 {
-                    player4.setScore(2 * scoreDonne);
-                    player2.setScore(scoreDonne);
-                    player3.setScore((-1) * scoreDonne);
-                    player5.setScore((-1) * scoreDonne);
-                    player1.setScore((-1) * scoreDonne);
+                    scorePlayer4 += 2 * scoreDonne;
+                    scorePlayer2 += scoreDonne;
+                    scorePlayer3 += (-1) * scoreDonne;
+                    scorePlayer5 += (-1) * scoreDonne;
+                    scorePlayer1 += (-1) * scoreDonne;
                 }
 
                 // Joueur 1 associé
                 if(associe.equals(player1.getNomJoueur()))
                 {
-                    player4.setScore(2 * scoreDonne);
-                    player1.setScore(scoreDonne);
-                    player3.setScore((-1) * scoreDonne);
-                    player2.setScore((-1) * scoreDonne);
-                    player5.setScore((-1) * scoreDonne);
+                    scorePlayer4 += 2 * scoreDonne;
+                    scorePlayer1 += scoreDonne;
+                    scorePlayer3 += (-1) * scoreDonne;
+                    scorePlayer2 += (-1) * scoreDonne;
+                    scorePlayer5 += (-1) * scoreDonne;
                 }
 
                 // Joueur 6 est associé
@@ -1022,27 +1078,27 @@ public class Jeu extends Player {
                 {
                     if(associe.equals(player6.getNomJoueur()))
                     {
-                        player4.setScore(2 * scoreDonne);
-                        player6.setScore(scoreDonne);
-                        player5.setScore((-1) * scoreDonne);
-                        player3.setScore((-1) * scoreDonne);
-                        player2.setScore((-1) * scoreDonne);
-                        player1.setScore((-1) * scoreDonne);
+                        scorePlayer4 += 2 * scoreDonne;
+                        scorePlayer6 += scoreDonne;
+                        scorePlayer5 += (-1) * scoreDonne;
+                        scorePlayer3 += (-1) * scoreDonne;
+                        scorePlayer2 += (-1) * scoreDonne;
+                        scorePlayer1 += (-1) * scoreDonne;
                     }
 
                     else
                     {
-                        player6.setScore((-1) * scoreDonne);
+                        scorePlayer6 += (-1) * scoreDonne;
                     }
                 }
             }
 
             else
             {
-                player4.setScore(3 * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer4 += 3 * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
     }
@@ -1054,51 +1110,51 @@ public class Jeu extends Player {
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
-                player3.setScore(2 * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer3 += 2 * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 4 associé
             if(associe.equals(player4.getNomJoueur()))
             {
-                player3.setScore(2 * scoreDonne);
-                player4.setScore(scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer3 += 2 * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 3 associé (joue seul)
             if(associe.equals(player3.getNomJoueur()))
             {
-                player3.setScore(4 * scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer3 += 4 * scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 2 associé
             if(associe.equals(player2.getNomJoueur()))
             {
-                player3.setScore(2 * scoreDonne);
-                player2.setScore(scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer3 += 2 * scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 1 associé
             if(associe.equals(player1.getNomJoueur()))
             {
-                player3.setScore(2 * scoreDonne);
-                player1.setScore(scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
+                scorePlayer3 += 2 * scoreDonne;
+                scorePlayer1 += scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
             }
 
             // Joueur 6 est associé
@@ -1106,31 +1162,31 @@ public class Jeu extends Player {
             {
                 if(associe.equals(player6.getNomJoueur()))
                 {
-                    player3.setScore(2 * scoreDonne);
-                    player6.setScore(scoreDonne);
-                    player4.setScore((-1) * scoreDonne);
-                    player5.setScore((-1) * scoreDonne);
-                    player2.setScore((-1) * scoreDonne);
-                    player1.setScore((-1) * scoreDonne);
+                    scorePlayer3 += 2 * scoreDonne;
+                    scorePlayer6 += scoreDonne;
+                    scorePlayer5 += (-1) * scoreDonne;
+                    scorePlayer4 += (-1) * scoreDonne;
+                    scorePlayer2 += (-1) * scoreDonne;
+                    scorePlayer1 += (-1) * scoreDonne;
                 }
 
                 else
                 {
-                    player6.setScore((-1) * scoreDonne);
+                    scorePlayer6 += (-1) * scoreDonne;
                 }
             }
         }
 
         else
         {
-            player3.setScore(2 * scoreDonne);
-            player2.setScore((-1) * scoreDonne);
-            player1.setScore((-1) * scoreDonne);
+            scorePlayer3 += 2 * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
 
             if (fourIsTrue)
             {
-                player3.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
+                scorePlayer3 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
             }
 
 
@@ -1144,51 +1200,51 @@ public class Jeu extends Player {
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
-                player2.setScore(2 * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer2 += 2 * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 4 associé
             if(associe.equals(player4.getNomJoueur()))
             {
-                player2.setScore(2 * scoreDonne);
-                player4.setScore(scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer2 += 2 * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 3 associé
             if(associe.equals(player5.getNomJoueur()))
             {
-                player2.setScore(2 * scoreDonne);
-                player3.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer2 += 2 * scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 2 associé (joue seul)
             if(associe.equals(player2.getNomJoueur()))
             {
-                player2.setScore(4 * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
+                scorePlayer2 += 4 * scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
             }
 
             // Joueur 1 associé
             if(associe.equals(player1.getNomJoueur()))
             {
-                player2.setScore(2 * scoreDonne);
-                player1.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
+                scorePlayer2 += 2 * scoreDonne;
+                scorePlayer1 += scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
             }
 
             // Joueur 6 est associé
@@ -1196,31 +1252,31 @@ public class Jeu extends Player {
             {
                 if(associe.equals(player6.getNomJoueur()))
                 {
-                    player2.setScore(2 * scoreDonne);
-                    player6.setScore(scoreDonne);
-                    player4.setScore((-1) * scoreDonne);
-                    player3.setScore((-1) * scoreDonne);
-                    player5.setScore((-1) * scoreDonne);
-                    player1.setScore((-1) * scoreDonne);
+                    scorePlayer2 += 2 * scoreDonne;
+                    scorePlayer6 += scoreDonne;
+                    scorePlayer5 += (-1) * scoreDonne;
+                    scorePlayer4 += (-1) * scoreDonne;
+                    scorePlayer3 += (-1) * scoreDonne;
+                    scorePlayer1 += (-1) * scoreDonne;
                 }
 
                 else
                 {
-                    player6.setScore((-1) * scoreDonne);
+                    scorePlayer6 += (-1) * scoreDonne;
                 }
             }
         }
 
         else
         {
-            player2.setScore(2 * scoreDonne);
-            player1.setScore((-1) * scoreDonne);
-            player3.setScore((-1) * scoreDonne);
+            scorePlayer2 += 2 * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
 
             if (fourIsTrue)
             {
-                player2.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
+                scorePlayer2 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
             }
         }
     }
@@ -1232,51 +1288,51 @@ public class Jeu extends Player {
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
-                player1.setScore(2 * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
+                scorePlayer1 += 2 * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
             }
 
             // Joueur 4 associé
             if(associe.equals(player4.getNomJoueur()))
             {
-                player1.setScore(2 * scoreDonne);
-                player4.setScore(scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
+                scorePlayer1 += 2 * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
             }
 
             // Joueur 3 associé
             if(associe.equals(player3.getNomJoueur()))
             {
-                player1.setScore(2 * scoreDonne);
-                player3.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
+                scorePlayer1 += 2 * scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
             }
 
             // Joueur 2 associé
             if(associe.equals(player2.getNomJoueur()))
             {
-                player1.setScore(2 * scoreDonne);
-                player2.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
+                scorePlayer1 += 2 * scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
             }
 
             // Joueur 1 associé (joue seul)
             if(associe.equals(player1.getNomJoueur()))
             {
-                player1.setScore(4 * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
+                scorePlayer1 += 4 * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
             }
 
             // Joueur 6 est associé
@@ -1284,17 +1340,17 @@ public class Jeu extends Player {
             {
                 if(associe.equals(player6.getNomJoueur()))
                 {
-                    player1.setScore(2 * scoreDonne);
-                    player6.setScore(scoreDonne);
-                    player4.setScore((-1) * scoreDonne);
-                    player3.setScore((-1) * scoreDonne);
-                    player2.setScore((-1) * scoreDonne);
-                    player5.setScore((-1) * scoreDonne);
+                    scorePlayer1 += 2 * scoreDonne;
+                    scorePlayer6 += scoreDonne;
+                    scorePlayer5 += (-1) * scoreDonne;
+                    scorePlayer4 += (-1) * scoreDonne;
+                    scorePlayer3 += (-1) * scoreDonne;
+                    scorePlayer2 += (-1) * scoreDonne;
                 }
 
                 else
                 {
-                    player6.setScore((-1) * scoreDonne);
+                    scorePlayer6 += (-1) * scoreDonne;
                 }
             }
 
@@ -1302,14 +1358,14 @@ public class Jeu extends Player {
 
         else
         {
-            player1.setScore(2 * scoreDonne);
-            player2.setScore((-1) * scoreDonne);
-            player3.setScore((-1) * scoreDonne);
+            scorePlayer1 += 2 * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
 
             if (fourIsTrue)
             {
-                player1.setScore(scoreDonne);
-                player4.setScore((-1) * scoreDonne);
+                scorePlayer1 += scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
             }
         }
     }
@@ -1319,67 +1375,67 @@ public class Jeu extends Player {
         // Joueur 6 est associé (joue seul)
         if(associe.equals(player6.getNomJoueur()))
         {
-            player6.setScore((-4) * scoreDonne);
-            player5.setScore(scoreDonne);
-            player4.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer6 += (-4) * scoreDonne;
+            scorePlayer5 += scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         // Joueur 5 est associé
         if(associe.equals(player5.getNomJoueur()))
         {
-            player6.setScore((-2) * scoreDonne);
-            player5.setScore((-1) * scoreDonne);
-            player4.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer6 += (-2) * scoreDonne;
+            scorePlayer5 += (-1) * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         // Joueur 4 est associé
         if(associe.equals(player4.getNomJoueur()))
         {
-            player6.setScore((-2) * scoreDonne);
-            player4.setScore((-1) * scoreDonne);
-            player5.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer6 += (-2) * scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer5 += scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         // Joueur 3 est associé
         if(associe.equals(player3.getNomJoueur()))
         {
-            player6.setScore((-2) * scoreDonne);
-            player3.setScore((-1) * scoreDonne);
-            player4.setScore(scoreDonne);
-            player5.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer6 += (-2) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer5 += scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         // Joueur 2 est associé
         if(associe.equals(player2.getNomJoueur()))
         {
-            player6.setScore((-2) * scoreDonne);
-            player2.setScore((-1) * scoreDonne);
-            player4.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
-            player5.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer6 += (-2) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer5 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         // Joueur 1 est associé
         if(associe.equals(player1.getNomJoueur()))
         {
-            player6.setScore((-2) * scoreDonne);
-            player1.setScore((-1) * scoreDonne);
-            player4.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
-            player5.setScore(scoreDonne);
+            scorePlayer6 += (-2) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer5 += scoreDonne;
         }
     }
 
@@ -1390,51 +1446,51 @@ public class Jeu extends Player {
         // Joueur 5 est associé (joue seul)
         if(associe.equals(player5.getNomJoueur()))
         {
-            player5.setScore((-4) * scoreDonne);
-            player4.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer5 += (-4) * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         // Joueur 4 est associé
         if(associe.equals(player4.getNomJoueur()))
         {
-            player5.setScore((-2) * scoreDonne);
-            player4.setScore((-1) * scoreDonne);
-            player3.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer5 += (-2) * scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         // Joueur 3 est associé
         if(associe.equals(player3.getNomJoueur()))
         {
-            player5.setScore((-2) * scoreDonne);
-            player3.setScore((-1) * scoreDonne);
-            player4.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer5 += (-2) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         // Joueur 2 est associé
         if(associe.equals(player2.getNomJoueur()))
         {
-            player5.setScore((-2) * scoreDonne);
-            player2.setScore((-1) * scoreDonne);
-            player4.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer5 += (-2) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         // Joueur 1 est associé
         if(associe.equals(player1.getNomJoueur()))
         {
-            player5.setScore((-2) * scoreDonne);
-            player1.setScore((-1) * scoreDonne);
-            player4.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
+            scorePlayer5 += (-2) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer2 += scoreDonne;
         }
 
         if(sixIsTrue)
@@ -1442,17 +1498,17 @@ public class Jeu extends Player {
             // Joueur 6 est associé
             if(associe.equals(player6.getNomJoueur()))
             {
-                player5.setScore((-2) * scoreDonne);
-                player6.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer5 += (-2) * scoreDonne;
+                scorePlayer6 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             else
             {
-                player6.setScore(scoreDonne);
+                scorePlayer6 += scoreDonne;
             }
         }
     }
@@ -1465,60 +1521,60 @@ public class Jeu extends Player {
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
-                player4.setScore((-2) * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player3.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer4 += (-2) * scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 4 associé (joue seul)
             if(associe.equals(player4.getNomJoueur()))
             {
-                player4.setScore((-4) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer4 += (-4) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 3 associé
             if(associe.equals(player3.getNomJoueur()))
             {
-                player4.setScore((-2) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer4 += (-2) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 2 associé
             if(associe.equals(player2.getNomJoueur()))
             {
-                player4.setScore((-2) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player3.setScore(scoreDonne);
-                player5.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer4 += (-2) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 1 associé
             if(associe.equals(player1.getNomJoueur()))
             {
-                player4.setScore((-2) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
-                player3.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player5.setScore(scoreDonne);
+                scorePlayer4 += (-2) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer5 += scoreDonne;
             }
         }
 
         else
         {
-            player4.setScore((-3) * scoreDonne);
-            player3.setScore(scoreDonne);
-            player2.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer4 += ((-3) * scoreDonne);
+            scorePlayer3 += scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer1 += scoreDonne;
         }
 
         if(sixIsTrue)
@@ -1526,17 +1582,17 @@ public class Jeu extends Player {
             // Joueur 6 est associé
             if(associe.equals(player6.getNomJoueur()))
             {
-                player4.setScore((-2) * scoreDonne);
-                player6.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer4 += (-2) * scoreDonne;
+                scorePlayer6 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             else
             {
-                player6.setScore(scoreDonne);
+                scorePlayer6 += scoreDonne;
             }
         }
 
@@ -1549,64 +1605,64 @@ public class Jeu extends Player {
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
-                player3.setScore((-2) * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer3 += (-2) * scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 4 associé
             if(associe.equals(player4.getNomJoueur()))
             {
-                player3.setScore((-2) * scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer3 += (-2) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 3 associé (joue seul)
             if(associe.equals(player3.getNomJoueur()))
             {
-                player3.setScore((-4) * scoreDonne);
-                player4.setScore(scoreDonne);
-                player5.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer3 += (-4) * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 2 associé
             if(associe.equals(player2.getNomJoueur()))
             {
-                player3.setScore((-2) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer3 += (-2) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 1 associé
             if(associe.equals(player1.getNomJoueur()))
             {
-                player3.setScore((-2) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
+                scorePlayer3 += (-2) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer2 += scoreDonne;
             }
         }
 
         else
         {
-            player3.setScore((-2) * scoreDonne);
-            player2.setScore(scoreDonne);
-            player1.setScore(scoreDonne);
+            scorePlayer3 += (-2) * scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer1 += scoreDonne;
 
             if (fourIsTrue)
             {
-                player3.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
             }
         }
 
@@ -1615,17 +1671,17 @@ public class Jeu extends Player {
             // Joueur 6 est associé
             if(associe.equals(player6.getNomJoueur()))
             {
-                player3.setScore((-2) * scoreDonne);
-                player6.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer3 += (-2) * scoreDonne;
+                scorePlayer6 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer2 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             else
             {
-                player6.setScore(scoreDonne);
+                scorePlayer6 += scoreDonne;
             }
         }
     }
@@ -1637,64 +1693,64 @@ public class Jeu extends Player {
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
-                player2.setScore((-2) * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer2 += (-2) * scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 4 associé
             if(associe.equals(player4.getNomJoueur()))
             {
-                player2.setScore((-2) * scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer2 += (-2) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 3 associé
             if(associe.equals(player5.getNomJoueur()))
             {
-                player2.setScore((-2) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
-                player5.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer2 += (-2) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 2 associé (joue seul)
             if(associe.equals(player2.getNomJoueur()))
             {
-                player2.setScore((-4) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer2 += (-4) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             // Joueur 1 associé
             if(associe.equals(player1.getNomJoueur()))
             {
-                player2.setScore((-2) * scoreDonne);
-                player1.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
-                player5.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
+                scorePlayer2 += (-2) * scoreDonne;
+                scorePlayer1 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer3 += scoreDonne;
             }
         }
 
         else
         {
-            player2.setScore((-2) * scoreDonne);
-            player1.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
+            scorePlayer2 += (-2) * scoreDonne;
+            scorePlayer1 += scoreDonne;
+            scorePlayer3 += scoreDonne;
 
             if (fourIsTrue)
             {
-                player2.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
             }
         }
 
@@ -1703,17 +1759,17 @@ public class Jeu extends Player {
             // Joueur 6 est associé
             if(associe.equals(player6.getNomJoueur()))
             {
-                player2.setScore((-2) * scoreDonne);
-                player6.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player1.setScore(scoreDonne);
+                scorePlayer2 += (-2) * scoreDonne;
+                scorePlayer6 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer1 += scoreDonne;
             }
 
             else
             {
-                player6.setScore(scoreDonne);
+                scorePlayer6 += scoreDonne;
             }
         }
     }
@@ -1725,65 +1781,65 @@ public class Jeu extends Player {
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
-                player1.setScore((-2) * scoreDonne);
-                player5.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
+                scorePlayer1 += (-2) * scoreDonne;
+                scorePlayer5 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer2 += scoreDonne;
             }
 
             // Joueur 4 associé
             if(associe.equals(player4.getNomJoueur()))
             {
-                player1.setScore((-2) * scoreDonne);
-                player4.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
+                scorePlayer1 += (-2) * scoreDonne;
+                scorePlayer4 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer2 += scoreDonne;
             }
 
             // Joueur 3 associé
             if(associe.equals(player3.getNomJoueur()))
             {
-                player1.setScore((-2) * scoreDonne);
-                player3.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
-                player5.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
+                scorePlayer1 += (-2) * scoreDonne;
+                scorePlayer3 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer2 += scoreDonne;
             }
 
             // Joueur 2 associé
             if(associe.equals(player2.getNomJoueur()))
             {
-                player1.setScore((-2) * scoreDonne);
-                player2.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player5.setScore(scoreDonne);
+                scorePlayer1 += (-2) * scoreDonne;
+                scorePlayer2 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer5 += scoreDonne;
             }
 
             // Joueur 1 associé (joue seul)
             if(associe.equals(player1.getNomJoueur()))
             {
-                player1.setScore((-4) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
+                scorePlayer1 += (-4) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer2 += scoreDonne;
             }
 
         }
 
         else
         {
-            player1.setScore((-2) * scoreDonne);
-            player2.setScore(scoreDonne);
-            player3.setScore(scoreDonne);
+            scorePlayer1 += (-2) * scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer3 += scoreDonne;
 
             if (fourIsTrue)
             {
-                player1.setScore((-1) * scoreDonne);
-                player4.setScore(scoreDonne);
+                scorePlayer1 += (-1) * scoreDonne;
+                scorePlayer4 += scoreDonne;
             }
         }
 
@@ -1792,18 +1848,51 @@ public class Jeu extends Player {
             // Joueur 6 est associé
             if(associe.equals(player6.getNomJoueur()))
             {
-                player1.setScore((-2) * scoreDonne);
-                player6.setScore((-1) * scoreDonne);
-                player5.setScore(scoreDonne);
-                player4.setScore(scoreDonne);
-                player3.setScore(scoreDonne);
-                player2.setScore(scoreDonne);
+                scorePlayer1 += (-2) * scoreDonne;
+                scorePlayer6 += (-1) * scoreDonne;
+                scorePlayer5 += scoreDonne;
+                scorePlayer4 += scoreDonne;
+                scorePlayer3 += scoreDonne;
+                scorePlayer2 += scoreDonne;
             }
 
             else
             {
-                player6.setScore(scoreDonne);
+                scorePlayer6 += scoreDonne;
             }
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(nbJeu);
+        dest.writeInt(nbJoueur);
+        dest.writeString(donneur);
+        dest.writeString(preneur);
+        dest.writeString(associe);
+        dest.writeString(enchere);
+        dest.writeInt(nbBout);
+        dest.writeString(calculscoreDe);
+        dest.writeDouble(score);
+    }
+
+    protected Jeu(Parcel in)
+    {
+
+    }
+
+    public static final Parcelable.Creator<Jeu> CREATOR = new Parcelable.Creator<Jeu>() {
+        public Jeu createFromParcel(Parcel source) {
+            return new Jeu(source);
+        }
+
+        public Jeu[] newArray(int size) {
+            return new Jeu[size];
+        }
+    };
 }

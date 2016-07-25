@@ -24,6 +24,8 @@ public class Details implements Parcelable{
     private boolean preneurWin;
     private String playerMort;
 
+    private ArrayList<Player> classmntPlayersList;
+
 
     public Details()
     {
@@ -38,6 +40,7 @@ public class Details implements Parcelable{
         finalValue = -1.0;
         roundFinalValue = -1;
         playerMort = "";
+        classmntPlayersList = new ArrayList<>();
     }
 
     public void setNumJeu(int numJeu)
@@ -173,6 +176,10 @@ public class Details implements Parcelable{
         return playerMort;
     }
 
+    public void setClassmtPlayers(ArrayList<Player> classmntPlayersList) { this.classmntPlayersList = classmntPlayersList;}
+
+    public ArrayList<Player> getClassmntPlayersList() {return classmntPlayersList;}
+
 
     @Override
     public int describeContents() {
@@ -181,13 +188,19 @@ public class Details implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(numJeu);
         dest.writeString(preneur);
         dest.writeString(associe);
         dest.writeString(enchere);
-        dest.writeInt(numJeu);
         dest.writeStringList(annonceList);
         dest.writeStringList(joueurList);
         dest.writeString(preneurForPersonne);
+        dest.writeInt(nbBout);
+        dest.writeString(calculScoreDe);
+        dest.writeDouble(scoreCartes);
+        dest.writeDouble(finalValue);
+        dest.writeInt(roundFinalValue);
+        dest.writeString(playerMort);
     }
 
     protected Details(Parcel in)

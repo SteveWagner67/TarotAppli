@@ -37,11 +37,11 @@ public class JeuFrag extends Fragment {
     private int nbBout;
     private double score;
 
-    double value;
-    int roundValue;
+    private double value;
+    private int roundValue;
 
-    int editSize = 0;
-    String scoreString;
+    private int editSize = 0;
+    private String scoreString;
 
     private boolean preneurPersonne;
 
@@ -59,6 +59,8 @@ public class JeuFrag extends Fragment {
     private setJoueurList mCallBackJoueurList;
     private setPlayers mCallbackPlayers;
     private setDetails mCallbackDetails;
+    private setJeu mCallbackJeu;
+    private setNumJeu mCallbackNumJeu;
 
     private ArrayList<String> annonceArrayList, joueurArrayList;
 
@@ -77,6 +79,8 @@ public class JeuFrag extends Fragment {
     private Details detail;
     private ArrayList<Details> detailsList;
     private ArrayList<String> detailsNumList;
+
+    private ArrayList<Jeu> jeuList;
 
 
     @Override
@@ -148,6 +152,8 @@ public class JeuFrag extends Fragment {
 
         detailsList = new ArrayList<>();
         detailsNumList = new ArrayList<>();
+
+        jeuList = new ArrayList<>();
 
         pos = getArguments().getInt("Distributeur");
 
@@ -1254,16 +1260,14 @@ public class JeuFrag extends Fragment {
                         finishTxt.setText("");
                     }
 
-                    playerList = new ArrayList<Player>();
-
                     if((annonceArrayList.size() != 0) && (joueurArrayList.size() != 0))
                     {
                         jeu.setAnnonceToScore(annonceArrayList, joueurArrayList);
                     }
 
-                    playerList = jeu.setPlayerInOrder();
+                    jeu.setPlayersInOrder();
 
-                    mCallbackPlayers.setPlayers(playerList);
+                    mCallbackPlayers.setPlayers(jeu.getPlayersInOrder());
 
                     if(preneurTxt.getText().toString().equals("Personne"))
                     {
@@ -1389,11 +1393,20 @@ public class JeuFrag extends Fragment {
                     detail.setResult(false); // preneur lost / defenseurs won
                 }
 
+                detail.setClassmtPlayers(jeu.getPlayersInOrder());
+
                 detailsList.add(detail);
 
                 detailsNumList.add("Détails jeu n°" + Integer.toString(numJeu));
 
                 mCallbackDetails.setDetails(detailsList, detailsNumList);
+
+                jeuList.add(jeu);
+
+                mCallbackJeu.setJeu(jeuList);
+
+                mCallbackNumJeu.setNumJeu(numJeu);
+
                 numJeu++;
 
                 // Reset all
@@ -1476,6 +1489,14 @@ public class JeuFrag extends Fragment {
         public void setDetails(ArrayList<Details> detailsList, ArrayList<String> detailsNumList);
     }
 
+    public interface setJeu{
+        public void setJeu(ArrayList<Jeu> jeuList);
+    }
+
+    public interface setNumJeu{
+        public void setNumJeu(int numJeu);
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -1489,6 +1510,8 @@ public class JeuFrag extends Fragment {
             mCallBackJoueurList = (setJoueurList) activity;
             mCallbackPlayers = (setPlayers) activity;
             mCallbackDetails = (setDetails) activity;
+            mCallbackJeu = (setJeu) activity;
+            mCallbackNumJeu = (setNumJeu) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement setPreneur, setEnchere, setAnnonceList and/or setJoueurList");
@@ -1503,6 +1526,8 @@ public class JeuFrag extends Fragment {
         mCallBackJoueurList = null;
         mCallbackPlayers = null;
         mCallbackDetails = null;
+        mCallbackJeu = null;
+        mCallbackNumJeu = null;
         super.onDetach();
     }
 }

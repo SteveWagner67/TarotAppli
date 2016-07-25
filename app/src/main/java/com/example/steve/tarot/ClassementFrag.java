@@ -34,6 +34,8 @@ public class ClassementFrag extends Fragment {
 
     private boolean firstTime = true;
 
+    private int numJeu;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_classement, container, false);
@@ -59,6 +61,8 @@ public class ClassementFrag extends Fragment {
         playerArrayList = new ArrayList<>();
 
         playerArrayList = getArguments().getParcelableArrayList("playerlist");
+
+        numJeu = getArguments().getInt("NumJeu");
 
         switch(playerArrayList.size())
         {
@@ -108,15 +112,15 @@ public class ClassementFrag extends Fragment {
             listPlayerInOrder.add(player2.getNomJoueur());
             listPlayerInOrder.add(player3.getNomJoueur());
 
-            listScore.add(Integer.toString(player1.getScore()));
-            listScore.add(Integer.toString(player2.getScore()));
-            listScore.add(Integer.toString(player3.getScore()));
+            listScore.add(Integer.toString(player1.getScore(numJeu-1)));
+            listScore.add(Integer.toString(player2.getScore(numJeu-1)));
+            listScore.add(Integer.toString(player3.getScore(numJeu-1)));
 
             if(playerArrayList.size() == 4)
             {
                 listPlayerInOrder.add(player4.getNomJoueur());
 
-                listScore.add(Integer.toString(player4.getScore()));
+                listScore.add(Integer.toString(player4.getScore(numJeu-1)));
             }
 
             if(playerArrayList.size() == 5)
@@ -124,8 +128,8 @@ public class ClassementFrag extends Fragment {
                 listPlayerInOrder.add(player4.getNomJoueur());
                 listPlayerInOrder.add(player5.getNomJoueur());
 
-                listScore.add(Integer.toString(player4.getScore()));
-                listScore.add(Integer.toString(player5.getScore()));
+                listScore.add(Integer.toString(player4.getScore(numJeu-1)));
+                listScore.add(Integer.toString(player5.getScore(numJeu-1)));
             }
 
             if(playerArrayList.size() == 6)
@@ -134,9 +138,9 @@ public class ClassementFrag extends Fragment {
                 listPlayerInOrder.add(player5.getNomJoueur());
                 listPlayerInOrder.add(player6.getNomJoueur());
 
-                listScore.add(Integer.toString(player4.getScore()));
-                listScore.add(Integer.toString(player5.getScore()));
-                listScore.add(Integer.toString(player6.getScore()));
+                listScore.add(Integer.toString(player4.getScore(numJeu-1)));
+                listScore.add(Integer.toString(player5.getScore(numJeu-1)));
+                listScore.add(Integer.toString(player6.getScore(numJeu-1)));
             }
 
         }
