@@ -652,87 +652,6 @@ public class JeuFrag extends Fragment {
             }
         });
 
-/*        scoreEdit.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                calculScoreTitle.setVisibility(View.INVISIBLE);
-                calculScoreSpinn.setVisibility(View.INVISIBLE);
-                nbBoutTitle.setVisibility(View.INVISIBLE);
-                nbBoutSpinn.setVisibility(View.INVISIBLE);
-                calculerBtn.setVisibility(View.INVISIBLE);
-                editScoreBtn.setVisibility(View.INVISIBLE);
-
-                scoreTxt.setVisibility(View.VISIBLE);
-
-                scoreTxt.setText("0");
-                scoreEdit.setText("");
-
-                return false;
-            }
-        });
-
-        scoreEdit.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    double i = 0;
-                    boolean isEqual = false;
-
-                    if ((scoreEdit.getText().length() == 2) || scoreEdit.getText().length() == 1) {
-                        if ((scoreEdit.getText().toString() == "-") ||
-                                (scoreEdit.getText().toString() == ",") ||
-                                (scoreEdit.getText().toString() == "_") ||
-                                (scoreEdit.getText().toString() == ".")
-                                ) {
-                        } else {
-                            scoreEdit.setText(scoreEdit.getText().toString() + ".0");
-                        }
-
-                    }
-                    while (i <= 91) {
-
-                        if (scoreEdit.getText().toString().equals(Double.toString(i))) {
-                            isEqual = true;
-                            scoreTxt.setText(scoreEdit.getText().toString());
-                        }
-
-                        i += 0.5;
-                    }
-
-                    if (isEqual == false) {
-                        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
-                        adb.setTitle("Information");
-                        adb.setMessage("Les valeurs peuvent être des demi" + "\r\n" + "Exemple: 10.5" + "\r\n\r\n" + "Les valeurs entières doivent être écrites de la manière suivante:" + "\r\n" + "26.0 pour 26" + "\r\n\r\n" + "Les valeurs doivent être comprises entre 0 et 91" + "\r\n\r\n" + "Les autres valeurs ne sont pas autorisées" + "\r\n" + "Exemple: 20.1, 20.2, 20.3, 20.4, 20.6, 20.7, 20.8, 20.9");
-                        adb.setPositiveButton("OK", null);
-                        adb.show();
-                    } else {
-                        try {
-                            score = Double.parseDouble(scoreTxt.getText().toString());
-                        } catch (NumberFormatException nfe) {
-                            System.out.println("Could not parse " + nfe);
-                        }
-                    }
-
-                    calculScoreTitle.setVisibility(View.VISIBLE);
-                    calculScoreSpinn.setVisibility(View.VISIBLE);
-                    nbBoutTitle.setVisibility(View.VISIBLE);
-                    nbBoutSpinn.setVisibility(View.VISIBLE);
-                    calculerBtn.setVisibility(View.VISIBLE);
-                    editScoreBtn.setVisibility(View.VISIBLE);
-
-                    scoreTxt.setVisibility(View.INVISIBLE);
-
-                    return true;
-                }
-
-                scoreTxt.setText(scoreEdit.getText().toString());
-
-                return false;
-            }
-        });
-*/
         editScoreBtn.setOnClickListener(new View.OnClickListener() {
 
 
@@ -1141,6 +1060,8 @@ public class JeuFrag extends Fragment {
                         calculer = true;
                     }
 
+                    jeu.setJeuALenvers(true);
+
                 }
 
                 else
@@ -1169,6 +1090,8 @@ public class JeuFrag extends Fragment {
 
                         calculer = true;
                     }
+
+                    jeu.setJeuALenvers(false);
 
                 }
 

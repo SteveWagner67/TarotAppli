@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Jeu(x) pris: "
+        android:id="@+id/nbJeuPrisTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="7.5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbJeuPrisTxt"
+        android:layout_alignTop="@+id/nbJeuPrisTitle"
+        android:layout_toRightOf="@+id/nbJeuPrisTitle"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Victoire(s):"
+        android:id="@+id/nbVictoireTitle"
+        android:layout_below="@+id/nbJeuPrisTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbVictoireTxt"
+        android:layout_alignTop="@+id/nbVictoireTitle"
+        android:layout_alignLeft="@+id/nbJeuPrisTxt"
+        android:layout_alignStart="@+id/nbJeuPrisTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Défaite(s):"
+        android:id="@+id/nbDefaiteTitle"
+        android:layout_below="@+id/nbVictoireTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbDefaiteTxt"
+        android:layout_alignTop="@+id/nbDefaiteTitle"
+        android:layout_alignLeft="@+id/nbVictoireTxt"
+        android:layout_alignStart="@+id/nbVictoireTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="A l&apos;envers: "
+        android:id="@+id/nbJeuALEnversTitle"
+        android:layout_below="@+id/nbDefaiteTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbJeuALEnversTxt"
+        android:layout_alignTop="@+id/nbJeuALEnversTitle"
+        android:layout_alignLeft="@+id/nbDefaiteTxt"
+        android:layout_alignStart="@+id/nbDefaiteTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Associé(s):"
+        android:id="@+id/nbJeuAssocieTitle"
+        android:layout_below="@+id/nbJeuALEnversTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbJeuAssocieTxt"
+        android:layout_alignTop="@+id/nbJeuAssocieTitle"
+        android:layout_alignLeft="@+id/nbJeuALEnversTxt"
+        android:layout_alignStart="@+id/nbJeuALEnversTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Poignet(s):"
+        android:id="@+id/nbPoignetTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/nbJeuAssocieTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbPoignetTxt"
+        android:layout_alignTop="@+id/nbPoignetTitle"
+        android:layout_alignLeft="@+id/nbJeuAssocieTxt"
+        android:layout_alignStart="@+id/nbJeuAssocieTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Misère(s):"
+        android:id="@+id/nbMisereTitle"
+        android:layout_below="@+id/nbPoignetTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbMisereTxt"
+        android:layout_alignTop="@+id/nbMisereTitle"
+        android:layout_alignLeft="@+id/nbPoignetTxt"
+        android:layout_alignStart="@+id/nbPoignetTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Petite(s):"
+        android:id="@+id/nbPetiteTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/nbMisereTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbPetiteTxt"
+        android:layout_alignTop="@+id/nbPetiteTitle"
+        android:layout_alignLeft="@+id/nbMisereTxt"
+        android:layout_alignStart="@+id/nbMisereTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Pouce(s):"
+        android:id="@+id/nbPouceTitle"
+        android:layout_below="@+id/nbPetiteTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbPouceTxt"
+        android:layout_alignTop="@+id/nbPouceTitle"
+        android:layout_alignLeft="@+id/nbPetiteTxt"
+        android:layout_alignStart="@+id/nbPetiteTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Garde(s):"
+        android:id="@+id/nbGardeTitle"
+        android:layout_below="@+id/nbPouceTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbGardeTxt"
+        android:layout_alignTop="@+id/nbGardeTitle"
+        android:layout_alignLeft="@+id/nbPouceTxt"
+        android:layout_alignStart="@+id/nbPouceTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Sans:"
+        android:id="@+id/nbGardeSansTitle"
+        android:layout_below="@+id/nbGardeTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbGardeSansTxt"
+        android:layout_alignTop="@+id/nbGardeSansTitle"
+        android:layout_alignLeft="@+id/nbGardeTxt"
+        android:layout_alignStart="@+id/nbGardeTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Contre:"
+        android:id="@+id/nbGardContreTitle"
+        android:layout_below="@+id/nbGardeSansTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/nbGardeContreTxt"
+        android:layout_alignTop="@+id/nbGardContreTitle"
+        android:layout_alignLeft="@+id/nbGardeSansTxt"
+        android:layout_alignStart="@+id/nbGardeSansTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbJeuPrisButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbJeuPrisTxt"
+        android:layout_alignTop="@+id/nbJeuPrisTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbVictoireButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbVictoireTxt"
+        android:layout_alignTop="@+id/nbVictoireTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbDefaiteButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbDefaiteTxt"
+        android:layout_alignTop="@+id/nbDefaiteTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbJeuALEnversButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbJeuALEnversTxt"
+        android:layout_alignTop="@+id/nbJeuALEnversTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbJeuAssocieButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbJeuAssocieTxt"
+        android:layout_alignTop="@+id/nbJeuAssocieTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbPoignetButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbPoignetTxt"
+        android:layout_alignTop="@+id/nbPoignetTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbMisereButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbMisereTxt"
+        android:layout_alignTop="@+id/nbMisereTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbPetiteButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbPetiteTxt"
+        android:layout_alignTop="@+id/nbPetiteTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbPouceButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbPouceTxt"
+        android:layout_alignTop="@+id/nbPouceTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbGardeButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbGardeTxt"
+        android:layout_alignTop="@+id/nbGardeTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbGardeSansButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbGardeSansTxt"
+        android:layout_alignTop="@+id/nbGardeSansTxt" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/nbGardeContreButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/nbGardeContreTxt"
+        android:layout_alignTop="@+id/nbGardeContreTxt" />
+
+
+
+
+
+</RelativeLayout>

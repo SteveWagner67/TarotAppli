@@ -12,32 +12,65 @@ public class Player implements Parcelable{
 
     private int score;
     private ArrayList<Integer> scoreList;
-    private int prevScore;
-    private int actuPos;
     private ArrayList<Integer> placementList;
-    private int prevPos;
     private String nom;
     private int nbPoignet;
     private int nbMisere;
-    private int nbVictoire;
-    private int nbDefaite;
     private int nbPetite;
     private int nbPouce;
     private int nbGarde;
     private int nbGardeContre;
     private int nbGardeSans;
     private int nbJeuPris;
-    private int nbJeuAssocie;
+    private int nbVictoire;
+    private int nbDefaite;
+    private int nbJeuALEnvers;
+    private int nbFoisAssocie;
+
+    private ArrayList<Integer> numJeuJeuPrisArrayList;
+    private ArrayList<Integer> numJeuVictoireArrayList;
+    private ArrayList<Integer> numJeuDefaiteArrayList;
+    private ArrayList<Integer> numJeuALEnversArrayList;
+    private ArrayList<Integer> numJeuAssocieArrayList;
+    private ArrayList<Integer> numJeuPoignetArrayList;
+    private ArrayList<Integer> numJeuMisereArrayList;
+    private ArrayList<Integer> numJeuPetiteArrayList;
+    private ArrayList<Integer> numJeuPouceArrayList;
+    private ArrayList<Integer> numJeuGardeArrayList;
+    private ArrayList<Integer> numJeuGardeSansArrayList;
+    private ArrayList<Integer> numJeuGardeContreArrayList;
 
     public Player ()
     {
         score = 0;
-        prevScore = 0;
-        actuPos = 0;
-        prevPos = 0;
         nom = "";
         scoreList = new ArrayList<>();
         placementList = new ArrayList<>();
+        nbPoignet = 0;
+        nbMisere = 0;
+        nbPetite = 0;
+        nbPouce = 0;
+        nbGarde = 0;
+        nbGardeContre = 0;
+        nbGardeSans = 0;
+        nbJeuPris = 0;
+        nbVictoire = 0;
+        nbDefaite = 0;
+        nbJeuALEnvers = 0;
+        nbFoisAssocie = 0;
+
+        numJeuJeuPrisArrayList = new ArrayList<>();
+        numJeuVictoireArrayList = new ArrayList<>();
+        numJeuDefaiteArrayList = new ArrayList<>();
+        numJeuALEnversArrayList = new ArrayList<>();
+        numJeuAssocieArrayList = new ArrayList<>();
+        numJeuPoignetArrayList = new ArrayList<>();
+        numJeuMisereArrayList = new ArrayList<>();
+        numJeuPetiteArrayList = new ArrayList<>();
+        numJeuPouceArrayList = new ArrayList<>();
+        numJeuGardeArrayList = new ArrayList<>();
+        numJeuGardeSansArrayList = new ArrayList<>();
+        numJeuGardeContreArrayList = new ArrayList<>();
     }
 
 
@@ -62,15 +95,6 @@ public class Player implements Parcelable{
         return this.scoreList.get(pos);
     }
 
-    private void setPrevScore(int prevScore) {this.prevScore = prevScore;}
-
-    public int getPrevScore() {return prevScore;}
-
-    private void setPrecPos(int prevPosition)
-    {
-        this.prevPos = prevPosition;
-    }
-
     public int getPrecPos(int pos)
     {
         return placementList.get(pos-1);
@@ -78,14 +102,203 @@ public class Player implements Parcelable{
 
     public void setActuPos(int actuPosition)
     {
-//        setPrecPos(this.actuPos);
         placementList.add(actuPosition);
-//        this.actuPos = actuPosition;
     }
 
     public int getActuPos(int pos)
     {
         return placementList.get(pos);
+    }
+
+    public void addJeuPris(int numJeu)
+    {
+        this.nbJeuPris += 1;
+        numJeuJeuPrisArrayList.add(numJeu);
+    }
+
+    public int getNbJeuPris()
+    {
+        return nbJeuPris;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuJeuPris()
+    {
+        return numJeuJeuPrisArrayList;
+    }
+
+    public void addVictoire(int numJeu)
+    {
+        this.nbVictoire += 1;
+        numJeuVictoireArrayList.add(numJeu);
+    }
+
+    public int getNbVictoire()
+    {
+        return nbVictoire;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuVictoire()
+    {
+        return numJeuVictoireArrayList;
+    }
+
+    public void addDefaite(int numJeu)
+    {
+        this.nbDefaite += 1;
+        numJeuDefaiteArrayList.add(numJeu);
+    }
+
+    public int getNbDefaite()
+    {
+        return nbDefaite;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuDefaite()
+    {
+        return numJeuDefaiteArrayList;
+    }
+
+    public void addJeuALEnvers(int numJeu)
+    {
+        nbJeuALEnvers += 1;
+        numJeuALEnversArrayList.add(numJeu);
+    }
+
+    public int getNbJeuALEnvers()
+    {
+        return nbJeuALEnvers;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuALEnvers()
+    {
+        return numJeuALEnversArrayList;
+    }
+
+    public void add1FoisAssocie(int numJeu)
+    {
+        this.nbFoisAssocie += 1;
+        numJeuAssocieArrayList.add(numJeu);
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuAssocie()
+    {
+        return numJeuAssocieArrayList;
+    }
+
+    public int getNbFoisAssocie()
+    {
+        return nbFoisAssocie;
+    }
+    public void addPoignet(int numJeu)
+    {
+        this.nbPoignet += 1;
+        numJeuPoignetArrayList.add(numJeu);
+    }
+
+    public int getNbPoignet()
+    {
+        return nbPoignet;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuPoignet()
+    {
+        return numJeuPoignetArrayList;
+    }
+
+    public void addMisere(int numJeu)
+    {
+        this.nbMisere += 1;
+        numJeuMisereArrayList.add(numJeu);
+    }
+
+    public int getNbMisere()
+    {
+        return nbMisere;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuMisere()
+    {
+        return numJeuMisereArrayList;
+    }
+
+    public void addPetite(int numJeu)
+    {
+        this.nbPetite += 1;
+        numJeuPetiteArrayList.add(numJeu);
+    }
+
+    public int getNbPetite()
+    {
+        return nbPetite;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuPetite()
+    {
+        return numJeuPetiteArrayList;
+    }
+
+    public void addPouce(int numJeu)
+    {
+        this.nbPouce += 1;
+        numJeuPouceArrayList.add(numJeu);
+    }
+
+    public int getNbPouce()
+    {
+        return nbPouce;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuPouce()
+    {
+        return numJeuPouceArrayList;
+    }
+
+    public void addGarde(int numJeu)
+    {
+        this.nbGarde += 1;
+        numJeuGardeArrayList.add(numJeu);
+    }
+
+    public int getNbGarde()
+    {
+        return nbGarde;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuGarde()
+    {
+        return numJeuGardeArrayList;
+    }
+
+    public void addGardeSans(int numJeu)
+    {
+        this.nbGardeSans += 1;
+        numJeuGardeSansArrayList.add(numJeu);
+    }
+
+    public int getNbGardeSans()
+    {
+        return nbGardeSans;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuGardeSans()
+    {
+        return numJeuGardeSansArrayList;
+    }
+
+    public void addGardeContre(int numJeu)
+    {
+        this.nbGardeContre += 1;
+        numJeuGardeContreArrayList.add(numJeu);
+    }
+
+    public int getNbGardeContre()
+    {
+        return nbGardeContre;
+    }
+
+    public ArrayList<Integer> getArrayListNumJeuGardeContre()
+    {
+        return numJeuGardeContreArrayList;
     }
 
 

@@ -43,6 +43,10 @@ public class Jeu extends Player implements Parcelable {
 
     private int scorePlayer6, scorePlayer5, scorePlayer4, scorePlayer3, scorePlayer2, scorePlayer1;
 
+    private int playerWinner, playerLooser, playerAssocie, playerAnnonce;
+
+    private boolean jeuALEnvers;
+
     public Jeu(){
 
         player1 = new Player();
@@ -62,6 +66,10 @@ public class Jeu extends Player implements Parcelable {
         scorePlayer1 = 0;
     }
 
+    public void setJeuALenvers(boolean jeuALEnvers)
+    {
+        this.jeuALEnvers = jeuALEnvers;
+    }
 
     public void setPlayerList(ArrayList<String> list)
     {
@@ -216,12 +224,6 @@ public class Jeu extends Player implements Parcelable {
             result = division*10;
         }
 
- /*       if(true == neg)
-        {
-            result*=(-1);
-        }
-*/
-
         return result;
     }
 
@@ -277,7 +279,8 @@ public class Jeu extends Player implements Parcelable {
     private void setPlayersScore() {
         int scoreDonne = 0;
 
-        switch (enchere) {
+        switch (enchere)
+        {
             case "Petite (20pts)":
                 scoreDonne += petiteValue;
                 break;
@@ -307,6 +310,10 @@ public class Jeu extends Player implements Parcelable {
         scorePlayer2 = 0;
         scorePlayer1 = 0;
 
+        playerWinner = 0;
+        playerLooser = 0;
+        playerAssocie = 0;
+
         scoreDonne += getArrondi(valueDiff);
 
         // Preneur a Gagné
@@ -321,6 +328,7 @@ public class Jeu extends Player implements Parcelable {
                     // Joueur 6 est preneur
                     if(preneur.equals(player6.getNomJoueur()))
                     {
+                        playerWinner = 6;
                         setScorePlayer6Winner(scoreDonne);
                     }
 
@@ -363,6 +371,7 @@ public class Jeu extends Player implements Parcelable {
                     // Joueur 5 est preneur
                     if(preneur.equals(player5.getNomJoueur()))
                     {
+                        playerWinner = 5;
                         setScorePlayer5Winner(sixIsTrue, scoreDonne);
                     }
 
@@ -373,9 +382,9 @@ public class Jeu extends Player implements Parcelable {
                     // Joueur 4 est preneur
                     if (preneur.equals(player4.getNomJoueur()))
                     {
+                        playerWinner = 4;
                         setScorePlayer4Winner(scoreDonne, sixIsTrue, fiveIsTrue);
                     }
-
 
                     fourIsTrue = true;
 
@@ -383,24 +392,25 @@ public class Jeu extends Player implements Parcelable {
                     // Joueur 3 est preneur
                     if (preneur.equals(player3.getNomJoueur()))
                     {
+                        playerWinner = 3;
                         setScorePlayer3Winner(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
                     }
 
                     // Joueur 2 est preneur
                     if (preneur.equals(player2.getNomJoueur()))
                     {
+                        playerWinner = 2;
                         setScorePlayer2Winner(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
                     }
 
                     // Joueur 1 est preneur
                     if (preneur.equals(player1.getNomJoueur()))
                     {
+                        playerWinner = 1;
                         setScorePlayer1Winner(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
                     }
                     break;
             }
-
-
         }
 
         // Preneur a perdu
@@ -413,6 +423,7 @@ public class Jeu extends Player implements Parcelable {
 
                     if(preneur.equals(player6.getNomJoueur()))
                     {
+                        playerLooser = 6;
                         setScorePlayer6Looser(scoreDonne);
                     }
 
@@ -453,6 +464,7 @@ public class Jeu extends Player implements Parcelable {
 
                     if(preneur.equals(player5.getNomJoueur()))
                     {
+                        playerLooser = 5;
                         setScorePlayer5Looser(scoreDonne, sixIsTrue);
                     }
 
@@ -462,6 +474,7 @@ public class Jeu extends Player implements Parcelable {
                     // Joueur 4 est preneur
                     if (preneur.equals(player4.getNomJoueur()))
                     {
+                        playerLooser = 4;
                         setScorePlayer4Looser(scoreDonne, sixIsTrue, fiveIsTrue);
                     }
 
@@ -471,18 +484,21 @@ public class Jeu extends Player implements Parcelable {
                     // Joueur 3 est preneur
                     if (preneur.equals(player3.getNomJoueur()))
                     {
+                        playerLooser = 3;
                         setScorePlayer3Looser(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
                     }
 
                     // Joueur 2 est preneur
                     if (preneur.equals(player2.getNomJoueur()))
                     {
+                        playerLooser = 2;
                         setScorePlayer2Looser(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
                     }
 
                     // Joueur 1 est preneur
                     if (preneur.equals(player1.getNomJoueur()))
                     {
+                        playerLooser = 1;
                         setScorePlayer1Looser(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
                     }
                     break;
@@ -503,6 +519,11 @@ public class Jeu extends Player implements Parcelable {
                 player1.setScore(scorePlayer1);
                 break;
         }
+
+        setPartPlayerDetail();
+
+        setAssociePlayerDetail();
+
 
     }
 
@@ -585,6 +606,7 @@ public class Jeu extends Player implements Parcelable {
                     break;
             }
 
+            playerAnnonce = 0;
 
             switch(nbJoueur)
             {
@@ -598,6 +620,8 @@ public class Jeu extends Player implements Parcelable {
                         scorePlayer3 = (-1) * score;
                         scorePlayer2 = (-1) * score;
                         scorePlayer1 = (-1) * score;
+
+                        playerAnnonce = 6;
                     }
 
                     //Remove the change for the donneur
@@ -647,6 +671,8 @@ public class Jeu extends Player implements Parcelable {
                         {
                             scorePlayer6 = (-1) * score;
                         }
+
+                        playerAnnonce = 5;
                     }
 
 
@@ -676,6 +702,8 @@ public class Jeu extends Player implements Parcelable {
                             scorePlayer2 = (-1) * score;
                             scorePlayer1 = (-1) * score;
                         }
+
+                        playerAnnonce = 4;
                     }
 
                     fourIsTrue=true;
@@ -704,6 +732,8 @@ public class Jeu extends Player implements Parcelable {
                         scorePlayer3 = 2 * score;
                         scorePlayer2 = (-1) * score;
                         scorePlayer1 = (-1) * score;
+
+                        playerAnnonce = 3;
                     }
 
                     if(playerList.get(i).equals(player2.getNomJoueur()))
@@ -728,6 +758,8 @@ public class Jeu extends Player implements Parcelable {
                         {
                             scorePlayer6 = (-1) * score;
                         }
+
+                        playerAnnonce = 2;
                     }
 
 
@@ -753,6 +785,8 @@ public class Jeu extends Player implements Parcelable {
                         scorePlayer1 = 2 * score;
                         scorePlayer2 = (-1) * score;
                         scorePlayer3 = (-1) * score;
+
+                        playerAnnonce = 1;
                     }
 
                     break;
@@ -760,8 +794,9 @@ public class Jeu extends Player implements Parcelable {
 
             size--;
             i++;
-        }
 
+            setAnnoncePlayerDetail(annonce);
+        }
     }
 
     public Player getPlayer1() { return player1; }
@@ -896,6 +931,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer3 += (-1) * scoreDonne;
             scorePlayer2 += (-1) * scoreDonne;
             scorePlayer1 += (-1) * scoreDonne;
+
+            playerAssocie = 5;
         }
 
         // Joueur 4 est associé
@@ -907,6 +944,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer3 += (-1) * scoreDonne;
             scorePlayer2 += (-1) * scoreDonne;
             scorePlayer1 += (-1) * scoreDonne;
+
+            playerAssocie = 4;
         }
 
         // Joueur 3 est associé
@@ -918,6 +957,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer4 += (-1) * scoreDonne;
             scorePlayer2 += (-1) * scoreDonne;
             scorePlayer1 += (-1) * scoreDonne;
+
+            playerAssocie = 3;
         }
 
         // Joueur 2 est associé
@@ -929,6 +970,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer4 += (-1) * scoreDonne;
             scorePlayer3 += (-1) * scoreDonne;
             scorePlayer1 += (-1) * scoreDonne;
+
+            playerAssocie = 2;
         }
 
         // Joueur 1 est associé
@@ -940,6 +983,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer4 += (-1) * scoreDonne;
             scorePlayer3 += (-1) * scoreDonne;
             scorePlayer2 += (-1) * scoreDonne;
+
+            playerAssocie = 1;
         }
 
 
@@ -967,6 +1012,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 4;
             }
 
             // Joueur 3 est associé
@@ -977,6 +1024,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 3;
             }
 
             // Joueur 2 est associé
@@ -987,6 +1036,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 2;
             }
 
             // Joueur 1 est associé
@@ -997,6 +1048,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
+
+                playerAssocie = 1;
             }
 
         // Joueur 6 est associé
@@ -1010,6 +1063,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 6;
             }
 
             else
@@ -1031,6 +1086,8 @@ public class Jeu extends Player implements Parcelable {
                     scorePlayer3 += (-1) * scoreDonne;
                     scorePlayer2 += (-1) * scoreDonne;
                     scorePlayer1 += (-1) * scoreDonne;
+
+                    playerAssocie = 5;
                 }
 
                 // Joueur 4 associé (joue seul)
@@ -1051,6 +1108,8 @@ public class Jeu extends Player implements Parcelable {
                     scorePlayer5 += (-1) * scoreDonne;
                     scorePlayer2 += (-1) * scoreDonne;
                     scorePlayer1 += (-1) * scoreDonne;
+
+                    playerAssocie = 3;
                 }
 
                 // Joueur 2 associé
@@ -1061,6 +1120,8 @@ public class Jeu extends Player implements Parcelable {
                     scorePlayer3 += (-1) * scoreDonne;
                     scorePlayer5 += (-1) * scoreDonne;
                     scorePlayer1 += (-1) * scoreDonne;
+
+                    playerAssocie = 2;
                 }
 
                 // Joueur 1 associé
@@ -1071,6 +1132,8 @@ public class Jeu extends Player implements Parcelable {
                     scorePlayer3 += (-1) * scoreDonne;
                     scorePlayer2 += (-1) * scoreDonne;
                     scorePlayer5 += (-1) * scoreDonne;
+
+                    playerAssocie = 1;
                 }
 
                 // Joueur 6 est associé
@@ -1084,6 +1147,8 @@ public class Jeu extends Player implements Parcelable {
                         scorePlayer3 += (-1) * scoreDonne;
                         scorePlayer2 += (-1) * scoreDonne;
                         scorePlayer1 += (-1) * scoreDonne;
+
+                        playerAssocie = 6;
                     }
 
                     else
@@ -1115,6 +1180,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 5;
             }
 
             // Joueur 4 associé
@@ -1125,6 +1192,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 4;
             }
 
             // Joueur 3 associé (joue seul)
@@ -1145,6 +1214,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += (-1) * scoreDonne;
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 2;
             }
 
             // Joueur 1 associé
@@ -1155,6 +1226,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += (-1) * scoreDonne;
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
+
+                playerAssocie = 1;
             }
 
             // Joueur 6 est associé
@@ -1168,6 +1241,8 @@ public class Jeu extends Player implements Parcelable {
                     scorePlayer4 += (-1) * scoreDonne;
                     scorePlayer2 += (-1) * scoreDonne;
                     scorePlayer1 += (-1) * scoreDonne;
+
+                    playerAssocie = 6;
                 }
 
                 else
@@ -1205,6 +1280,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 5;
             }
 
             // Joueur 4 associé
@@ -1215,6 +1292,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += (-1) * scoreDonne;
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 4;
             }
 
             // Joueur 3 associé
@@ -1225,6 +1304,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += (-1) * scoreDonne;
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer1 += (-1) * scoreDonne;
+
+                playerAssocie = 3;
             }
 
             // Joueur 2 associé (joue seul)
@@ -1245,6 +1326,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += (-1) * scoreDonne;
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer3 += (-1) * scoreDonne;
+
+                playerAssocie = 1;
             }
 
             // Joueur 6 est associé
@@ -1258,6 +1341,8 @@ public class Jeu extends Player implements Parcelable {
                     scorePlayer4 += (-1) * scoreDonne;
                     scorePlayer3 += (-1) * scoreDonne;
                     scorePlayer1 += (-1) * scoreDonne;
+
+                    playerAssocie = 6;
                 }
 
                 else
@@ -1293,6 +1378,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
+
+                playerAssocie = 5;
             }
 
             // Joueur 4 associé
@@ -1303,6 +1390,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += (-1) * scoreDonne;
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
+
+                playerAssocie = 4;
             }
 
             // Joueur 3 associé
@@ -1313,6 +1402,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer5 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
+
+                playerAssocie = 3;
             }
 
             // Joueur 2 associé
@@ -1323,6 +1414,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer4 += (-1) * scoreDonne;
                 scorePlayer5 += (-1) * scoreDonne;
+
+                playerAssocie = 2;
             }
 
             // Joueur 1 associé (joue seul)
@@ -1346,6 +1439,8 @@ public class Jeu extends Player implements Parcelable {
                     scorePlayer4 += (-1) * scoreDonne;
                     scorePlayer3 += (-1) * scoreDonne;
                     scorePlayer2 += (-1) * scoreDonne;
+
+                    playerAssocie = 6;
                 }
 
                 else
@@ -1392,6 +1487,9 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer3 += scoreDonne;
             scorePlayer2 += scoreDonne;
             scorePlayer1 += scoreDonne;
+
+            playerAssocie = 5;
+
         }
 
         // Joueur 4 est associé
@@ -1403,6 +1501,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer3 += scoreDonne;
             scorePlayer2 += scoreDonne;
             scorePlayer1 += scoreDonne;
+
+            playerAssocie = 4;
         }
 
         // Joueur 3 est associé
@@ -1414,6 +1514,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer5 += scoreDonne;
             scorePlayer2 += scoreDonne;
             scorePlayer1 += scoreDonne;
+
+            playerAssocie = 3;
         }
 
         // Joueur 2 est associé
@@ -1425,6 +1527,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer3 += scoreDonne;
             scorePlayer5 += scoreDonne;
             scorePlayer1 += scoreDonne;
+
+            playerAssocie = 2;
         }
 
         // Joueur 1 est associé
@@ -1436,6 +1540,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer3 += scoreDonne;
             scorePlayer2 += scoreDonne;
             scorePlayer5 += scoreDonne;
+
+            playerAssocie = 1;
         }
     }
 
@@ -1461,6 +1567,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer3 += scoreDonne;
             scorePlayer2 += scoreDonne;
             scorePlayer1 += scoreDonne;
+
+            playerAssocie = 4;
         }
 
         // Joueur 3 est associé
@@ -1471,6 +1579,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer4 += scoreDonne;
             scorePlayer2 += scoreDonne;
             scorePlayer1 += scoreDonne;
+
+            playerAssocie = 3;
         }
 
         // Joueur 2 est associé
@@ -1481,6 +1591,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer4 += scoreDonne;
             scorePlayer3 += scoreDonne;
             scorePlayer1 += scoreDonne;
+
+            playerAssocie = 2;
         }
 
         // Joueur 1 est associé
@@ -1491,6 +1603,8 @@ public class Jeu extends Player implements Parcelable {
             scorePlayer4 += scoreDonne;
             scorePlayer3 += scoreDonne;
             scorePlayer2 += scoreDonne;
+
+            playerAssocie = 1;
         }
 
         if(sixIsTrue)
@@ -1504,6 +1618,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer3 += scoreDonne;
                 scorePlayer2 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 6;
             }
 
             else
@@ -1526,6 +1642,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer3 += scoreDonne;
                 scorePlayer2 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 5;
             }
 
             // Joueur 4 associé (joue seul)
@@ -1546,6 +1664,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += scoreDonne;
                 scorePlayer2 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 3;
             }
 
             // Joueur 2 associé
@@ -1556,6 +1676,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer3 += scoreDonne;
                 scorePlayer5 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 2;
             }
 
             // Joueur 1 associé
@@ -1566,6 +1688,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer3 += scoreDonne;
                 scorePlayer2 += scoreDonne;
                 scorePlayer5 += scoreDonne;
+
+                playerAssocie = 1;
             }
         }
 
@@ -1588,6 +1712,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer3 += scoreDonne;
                 scorePlayer2 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 6;
             }
 
             else
@@ -1610,6 +1736,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer2 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 5;
             }
 
             // Joueur 4 associé
@@ -1620,6 +1748,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += scoreDonne;
                 scorePlayer2 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 4;
             }
 
             // Joueur 3 associé (joue seul)
@@ -1640,6 +1770,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += scoreDonne;
                 scorePlayer4 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 2;
             }
 
             // Joueur 1 associé
@@ -1650,6 +1782,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += scoreDonne;
                 scorePlayer4 += scoreDonne;
                 scorePlayer2 += scoreDonne;
+
+                playerAssocie = 1;
             }
         }
 
@@ -1677,6 +1811,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer2 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 6;
             }
 
             else
@@ -1698,6 +1834,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer3 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 5;
             }
 
             // Joueur 4 associé
@@ -1708,6 +1846,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += scoreDonne;
                 scorePlayer3 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 4;
             }
 
             // Joueur 3 associé
@@ -1718,6 +1858,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer5 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 3;
             }
 
             // Joueur 2 associé (joue seul)
@@ -1738,6 +1880,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer5 += scoreDonne;
                 scorePlayer3 += scoreDonne;
+
+                playerAssocie = 1;
             }
         }
 
@@ -1765,6 +1909,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer3 += scoreDonne;
                 scorePlayer1 += scoreDonne;
+
+                playerAssocie = 6;
             }
 
             else
@@ -1786,6 +1932,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer3 += scoreDonne;
                 scorePlayer2 += scoreDonne;
+
+                playerAssocie = 5;
             }
 
             // Joueur 4 associé
@@ -1796,6 +1944,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer5 += scoreDonne;
                 scorePlayer3 += scoreDonne;
                 scorePlayer2 += scoreDonne;
+
+                playerAssocie = 4;
             }
 
             // Joueur 3 associé
@@ -1806,6 +1956,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer5 += scoreDonne;
                 scorePlayer2 += scoreDonne;
+
+                playerAssocie = 3;
             }
 
             // Joueur 2 associé
@@ -1816,6 +1968,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer3 += scoreDonne;
                 scorePlayer5 += scoreDonne;
+
+                playerAssocie = 2;
             }
 
             // Joueur 1 associé (joue seul)
@@ -1826,6 +1980,8 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer3 += scoreDonne;
                 scorePlayer2 += scoreDonne;
+
+                playerAssocie = 1;
             }
 
         }
@@ -1854,12 +2010,604 @@ public class Jeu extends Player implements Parcelable {
                 scorePlayer4 += scoreDonne;
                 scorePlayer3 += scoreDonne;
                 scorePlayer2 += scoreDonne;
+
+                playerAssocie = 6;
             }
 
             else
             {
                 scorePlayer6 += scoreDonne;
             }
+        }
+    }
+
+    private void setPartPlayerDetail()
+    {
+        switch(playerWinner)
+        {
+            case 6:
+                player6.addJeuPris(numJeu + 1);
+                player6.addVictoire(numJeu + 1);
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player6.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player6.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player6.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player6.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player6.addGardeContre(numJeu + 1);
+                        break;
+                }
+
+                break;
+            case 5:
+                player5.addJeuPris(numJeu + 1);
+                player5.addVictoire(numJeu + 1);
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player5.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player5.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player5.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player5.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player5.addGardeContre(numJeu + 1);
+                        break;
+                }
+
+                break;
+
+            case 4:
+                player4.addJeuPris(numJeu + 1);
+                player4.addVictoire(numJeu + 1);
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player4.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player4.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player4.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player4.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player4.addGardeContre(numJeu + 1);
+                        break;
+                }
+
+                break;
+
+            case 3:
+                player3.addJeuPris(numJeu + 1);
+                player3.addVictoire(numJeu + 1);
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player3.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player3.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player3.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player3.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player3.addGardeContre(numJeu + 1);
+                        break;
+                }
+
+                break;
+
+            case 2:
+                player2.addJeuPris(numJeu + 1);
+                player2.addVictoire(numJeu + 1);
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player2.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player2.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player2.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player2.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player2.addGardeContre(numJeu + 1);
+                        break;
+                }
+
+                break;
+
+            case 1:
+                player1.addJeuPris(numJeu + 1);
+                player1.addVictoire(numJeu + 1);
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player1.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player1.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player1.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player1.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player1.addGardeContre(numJeu + 1);
+                        break;
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+        switch(playerLooser)
+        {
+            case 6:
+
+                player6.addDefaite(numJeu + 1);
+
+                if(jeuALEnvers)
+                {
+                    player6.addJeuALEnvers(numJeu + 1);
+                    break;
+                }
+
+                player6.addJeuPris(numJeu + 1);
+
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player6.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player6.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player6.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player6.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player6.addGardeContre(numJeu + 1);
+                        break;
+                }
+
+                break;
+
+            case 5:
+
+                player5.addDefaite(numJeu + 1);
+
+                if(jeuALEnvers)
+                {
+                    player5.addJeuALEnvers(numJeu + 1);
+                    break;
+                }
+
+                player5.addJeuPris(numJeu + 1);
+
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player5.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player5.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player5.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player5.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player5.addGardeContre(numJeu + 1);
+                        break;
+                }
+
+                break;
+
+            case 4:
+
+                player4.addDefaite(numJeu + 1);
+
+                if(jeuALEnvers)
+                {
+                    player4.addJeuALEnvers(numJeu + 1);
+                    break;
+                }
+
+                player4.addJeuPris(numJeu + 1);
+
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player4.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player4.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player4.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player4.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player4.addGardeContre(numJeu + 1);
+                        break;
+                }
+
+                break;
+
+            case 3:
+
+                player3.addDefaite(numJeu + 1);
+
+                if(jeuALEnvers)
+                {
+                    player3.addJeuALEnvers(numJeu + 1);
+                    break;
+                }
+
+                player3.addJeuPris(numJeu + 1);
+
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player3.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player3.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player3.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player3.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player3.addGardeContre(numJeu + 1);
+                        break;
+                }
+                break;
+
+            case 2:
+
+                player2.addDefaite(numJeu + 1);
+
+                if(jeuALEnvers)
+                {
+                    player2.addJeuALEnvers(numJeu + 1);
+                    break;
+                }
+
+                player2.addJeuPris(numJeu + 1);
+
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player2.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player2.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player2.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player2.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player2.addGardeContre(numJeu + 1);
+                        break;
+                }
+                break;
+
+            case 1:
+
+                player1.addDefaite(numJeu + 1);
+
+                if(jeuALEnvers)
+                {
+                    player1.addJeuALEnvers(numJeu + 1);
+                    break;
+                }
+
+                player1.addJeuPris(numJeu + 1);
+                switch (enchere)
+                {
+                    case "Petite (20pts)":
+                        player1.addPetite(numJeu + 1);
+                        break;
+
+                    case "Pouce (40pts)":
+                        player1.addPouce(numJeu + 1);
+                        break;
+
+                    case "Garde (80pts)":
+                        player1.addGarde(numJeu + 1);
+                        break;
+
+                    case "Garde sans chien (160pts)":
+                        player1.addGardeSans(numJeu + 1);
+                        break;
+
+                    case "Garde contre chien (320pts)":
+                        player1.addGardeContre(numJeu + 1);
+                        break;
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void setAssociePlayerDetail()
+    {
+        switch(playerAssocie)
+        {
+            case 6:
+                player6.add1FoisAssocie(numJeu + 1);
+                break;
+
+            case 5:
+                player5.add1FoisAssocie(numJeu + 1);
+                break;
+
+            case 4:
+                player4.add1FoisAssocie(numJeu + 1);
+                break;
+
+            case 3:
+                player3.add1FoisAssocie(numJeu + 1);
+                break;
+
+            case 2:
+                player2.add1FoisAssocie(numJeu + 1);
+                break;
+
+            case 1:
+                player1.add1FoisAssocie(numJeu + 1);
+                break;
+        }
+    }
+
+    private void setAnnoncePlayerDetail(String annonce)
+    {
+        switch(playerAnnonce)
+        {
+            case 6:
+                switch(annonce)
+                {
+                    case "Simple misère":
+                        player6.addMisere(numJeu + 1);
+                        break;
+
+                    case "Double misère":
+                        player6.addMisere(numJeu + 1);
+                        break;
+
+                    case "Poignet petite":
+                        player6.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet moyenne":
+                        player6.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet grande":
+                        player6.addPoignet(numJeu + 1);
+                        break;
+                }
+                break;
+
+            case 5:
+                switch(annonce)
+                {
+                    case "Simple misère":
+                        player5.addMisere(numJeu + 1);
+                        break;
+
+                    case "Double misère":
+                        player5.addMisere(numJeu + 1);
+                        break;
+
+                    case "Poignet petite":
+                        player5.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet moyenne":
+                        player5.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet grande":
+                        player5.addPoignet(numJeu + 1);
+                        break;
+                }
+                break;
+
+            case 4:
+                switch(annonce)
+                {
+                    case "Simple misère":
+                        player4.addMisere(numJeu + 1);
+                        break;
+
+                    case "Double misère":
+                        player4.addMisere(numJeu + 1);
+                        break;
+
+                    case "Poignet petite":
+                        player4.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet moyenne":
+                        player4.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet grande":
+                        player4.addPoignet(numJeu + 1);
+                        break;
+                }
+
+                break;
+
+            case 3:
+                switch(annonce)
+                {
+                    case "Simple misère":
+                        player3.addMisere(numJeu + 1);
+                        break;
+
+                    case "Double misère":
+                        player3.addMisere(numJeu + 1);
+                        break;
+
+                    case "Poignet petite":
+                        player3.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet moyenne":
+                        player3.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet grande":
+                        player3.addPoignet(numJeu + 1);
+                        break;
+                }
+                break;
+
+            case 2:
+                switch(annonce)
+                {
+                    case "Simple misère":
+                        player2.addMisere(numJeu + 1);
+                        break;
+
+                    case "Double misère":
+                        player2.addMisere(numJeu + 1);
+                        break;
+
+                    case "Poignet petite":
+                        player2.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet moyenne":
+                        player2.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet grande":
+                        player2.addPoignet(numJeu + 1);
+                        break;
+                }
+                break;
+
+            case 1:
+                switch(annonce)
+                {
+                    case "Simple misère":
+                        player1.addMisere(numJeu + 1);
+                        break;
+
+                    case "Double misère":
+                        player1.addMisere(numJeu + 1);
+                        break;
+
+                    case "Poignet petite":
+                        player1.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet moyenne":
+                        player1.addPoignet(numJeu + 1);
+                        break;
+
+                    case "Poignet grande":
+                        player1.addPoignet(numJeu + 1);
+                        break;
+                }
+                break;
+
+            default:
+                break;
         }
     }
 
