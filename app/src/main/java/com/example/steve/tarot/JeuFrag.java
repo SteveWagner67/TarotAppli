@@ -488,63 +488,165 @@ public class JeuFrag extends Fragment {
             }
         });
 
-        terminer2.setOnClickListener(new View.OnClickListener() {
+        terminer2.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
 
+                int annonceCalled = 0;
 
-                if ((joueur2Txt.equals("Personne")) && (!annonce2Txt.equals("-"))) {
-                    AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
-                    adb.setTitle("Information");
-                    adb.setMessage("Aucun joueur sélectionné\r\nChoisissez un joueur ou mettez ' - ' comme annonce");
-                    adb.setPositiveButton("OK", null);
-                    adb.show();
-                } else if ((!joueur2Txt.equals("Personne")) && (annonce2Txt.equals("-"))) {
-                    AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
-                    adb.setTitle("Information");
-                    adb.setMessage("Aucune annonce sélectionnée\r\nChoisissez une annonce ou mettez ' Personne ' comme joueur");
-                    adb.setPositiveButton("OK", null);
-                    adb.show();
-                } else {
-                    if ((!joueur2Txt.equals("Personne") && (!annonce2Txt.equals("-")))) {
-                        annonceArrayList.add(1, annonce2Txt);
-                        joueurArrayList.add(1, joueur2Txt);
+                if(joueur2Txt.equals(joueurTxt))
+                {
+                    /* TODO - This part is used if the player can't have two "Annonces" */
+//                    annonceCalled = 1;
 
-                        annonce2Selected.setVisibility(View.VISIBLE);
-                        joueur2Selected.setVisibility(View.VISIBLE);
-                    } else {
-                        annonce2Selected.setVisibility(View.INVISIBLE);
-                        joueur2Selected.setVisibility(View.INVISIBLE);
-                    }
+                    /* TODO - This part can be used if we want to allow a player to have a "Simple misère" and a "Poignet (x)"
+                       TODO - It should be sure that the "Simple misère" is one without head cards and not without "Atout/bout" */
+                    switch(annonce2Txt)
+                    {
+                        case "Poignet (8)":
+                            if((annonceTxt.equals("Poignet (8)"))
+                                    || (annonceTxt.equals("Poignet (10)"))
+                                    || (annonceTxt.equals("Poignet (13)"))
+                                    || (annonceTxt.equals("Poignet (15)"))
+                                    || (annonceTxt.equals("Double misère")))
+                            {
+                                annonceCalled = 2;
+                            }
+                            break;
+                        case "Poignet (10)":
+                            if((annonceTxt.equals("Poignet (8)"))
+                                    || (annonceTxt.equals("Poignet (10)"))
+                                    || (annonceTxt.equals("Poignet (13)"))
+                                    || (annonceTxt.equals("Poignet (15)"))
+                                    || (annonceTxt.equals("Double misère")))
+                            {
+                                annonceCalled = 2;
+                            }
+                            break;
+                        case "Poignet (13)":
+                            if((annonceTxt.equals("Poignet (8)"))
+                                    || (annonceTxt.equals("Poignet (10)"))
+                                    || (annonceTxt.equals("Poignet (13)"))
+                                    || (annonceTxt.equals("Poignet (15)"))
+                                    || (annonceTxt.equals("Double misère")))
+                            {
+                                annonceCalled = 2;
+                            }
+                            break;
+                        case "Poignet (15)":
+                            if((annonceTxt.equals("Poignet (8)"))
+                                    || (annonceTxt.equals("Poignet (10)"))
+                                    || (annonceTxt.equals("Poignet (13)"))
+                                    || (annonceTxt.equals("Poignet (15)"))
+                                    || (annonceTxt.equals("Double misère")))
+                            {
+                                annonceCalled = 2;
+                            }
+                            break;
 
-                    mCallBackAnnonceList.setAnnonceList(annonceArrayList);
-                    mCallBackJoueurList.setJoueurList(joueurArrayList);
+                        case "Simple misère":
+                            if((annonceTxt.equals("Simple misère"))
+                                    || (annonceTxt.equals("Double misère")))
+                            {
+                                annonceCalled = 2;
+                            }
+                            break;
 
-                    annonce2Spinn.setVisibility(View.INVISIBLE);
-                    joueur2Spinn.setVisibility(View.INVISIBLE);
-
-                    terminer2.setVisibility(View.INVISIBLE);
-
-                    if ((nbJoueur >= 5) && (!preneurTxt.getText().toString().equals("Personne"))) {
-                        associeTitle.setVisibility(View.VISIBLE);
-                        associeSpinn.setVisibility(View.VISIBLE);
-                        valideAssocieBtn.setVisibility(View.VISIBLE);
-                    } else if (preneurTxt.getText().toString().equals("Personne")) {
-                        preneurForPersonneTitle.setVisibility(View.VISIBLE);
-                        preneurForPersonneSpinn.setVisibility(View.VISIBLE);
-                        calculerBtn.setVisibility(View.VISIBLE);
-                        editScoreBtn.setVisibility(View.VISIBLE);
-                    } else {
-                        calculScoreTitle.setVisibility(View.VISIBLE);
-                        calculScoreSpinn.setVisibility(View.VISIBLE);
-                        nbBoutTitle.setVisibility(View.VISIBLE);
-                        nbBoutSpinn.setVisibility(View.VISIBLE);
-                        scoreTitle.setVisibility(View.VISIBLE);
-                        scoreTxt.setVisibility(View.VISIBLE);
-                        calculerBtn.setVisibility(View.VISIBLE);
-                        editScoreBtn.setVisibility(View.VISIBLE);
+                        case "Double misère":
+                            if((annonceTxt.equals("Simple misère"))
+                                    || (annonceTxt.equals("Double misère"))
+                                    || (annonceTxt.equals("Poignet (8)"))
+                                    || (annonceTxt.equals("Poignet (10)"))
+                                    || (annonceTxt.equals("Poignet (13)"))
+                                    || (annonceTxt.equals("Poignet (15)")))
+                            {
+                                annonceCalled = 2;
+                            }
+                            break;
                     }
                 }
+
+
+                if(annonceCalled > 0)
+                {
+
+                    if (annonceCalled == 1)
+                    {
+                        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+                        adb.setTitle("Information");
+                        adb.setMessage(joueur2Txt + " ne peut pas faire 2 annonces dans le même jeu");
+                        adb.setPositiveButton("OK", null);
+                        adb.show();
+                    }
+
+                    else if(annonceCalled == 2)
+                    {
+                        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+                        adb.setTitle("Information");
+                        adb.setMessage(joueur2Txt + " peut uniquement annoncer une simple misère et une poignet" + "\n" + "(si la simple misère est une misère de tête)");
+                        adb.setPositiveButton("OK", null);
+                        adb.show();
+                    }
+
+                }
+
+                else
+                {
+                    if ((joueur2Txt.equals("Personne")) && (!annonce2Txt.equals("-"))) {
+                        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+                        adb.setTitle("Information");
+                        adb.setMessage("Aucun joueur sélectionné\r\nChoisissez un joueur ou mettez ' - ' comme annonce");
+                        adb.setPositiveButton("OK", null);
+                        adb.show();
+                    } else if ((!joueur2Txt.equals("Personne")) && (annonce2Txt.equals("-"))) {
+                        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+                        adb.setTitle("Information");
+                        adb.setMessage("Aucune annonce sélectionnée\r\nChoisissez une annonce ou mettez ' Personne ' comme joueur");
+                        adb.setPositiveButton("OK", null);
+                        adb.show();
+                    } else {
+                        if ((!joueur2Txt.equals("Personne") && (!annonce2Txt.equals("-")))) {
+                            annonceArrayList.add(1, annonce2Txt);
+                            joueurArrayList.add(1, joueur2Txt);
+
+                            annonce2Selected.setVisibility(View.VISIBLE);
+                            joueur2Selected.setVisibility(View.VISIBLE);
+                        } else {
+                            annonce2Selected.setVisibility(View.INVISIBLE);
+                            joueur2Selected.setVisibility(View.INVISIBLE);
+                        }
+
+                        mCallBackAnnonceList.setAnnonceList(annonceArrayList);
+                        mCallBackJoueurList.setJoueurList(joueurArrayList);
+
+                        annonce2Spinn.setVisibility(View.INVISIBLE);
+                        joueur2Spinn.setVisibility(View.INVISIBLE);
+
+                        terminer2.setVisibility(View.INVISIBLE);
+
+                        if ((nbJoueur >= 5) && (!preneurTxt.getText().toString().equals("Personne"))) {
+                            associeTitle.setVisibility(View.VISIBLE);
+                            associeSpinn.setVisibility(View.VISIBLE);
+                            valideAssocieBtn.setVisibility(View.VISIBLE);
+                        } else if (preneurTxt.getText().toString().equals("Personne")) {
+                            preneurForPersonneTitle.setVisibility(View.VISIBLE);
+                            preneurForPersonneSpinn.setVisibility(View.VISIBLE);
+                            calculerBtn.setVisibility(View.VISIBLE);
+                        } else {
+                            calculScoreTitle.setVisibility(View.VISIBLE);
+                            calculScoreSpinn.setVisibility(View.VISIBLE);
+                            nbBoutTitle.setVisibility(View.VISIBLE);
+                            nbBoutSpinn.setVisibility(View.VISIBLE);
+                            scoreTitle.setVisibility(View.VISIBLE);
+                            scoreTxt.setVisibility(View.VISIBLE);
+                            calculerBtn.setVisibility(View.VISIBLE);
+                            editScoreBtn.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+
+
             }
         });
         

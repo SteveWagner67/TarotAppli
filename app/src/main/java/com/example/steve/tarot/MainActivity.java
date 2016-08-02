@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                             adaptJeuJoueurList.add(joueurToAdd);
                             adaptChoixJoueurList.remove(joueurToAdd);
                             nbJoueur++;
+                            updateNbJoueur();
                         }
                     });
 
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                         adaptJeuJoueurList.remove(joueurToRemove);
                         adaptChoixJoueurList.add(joueurToRemove);
                         nbJoueur--;
+                        updateNbJoueur();
                     }
                 });
 
@@ -254,6 +256,11 @@ public class MainActivity extends AppCompatActivity {
 
         choixJoueurListView.setAdapter(adaptChoixJoueurList);
         jeuJoueurListView.setAdapter(adaptJeuJoueurList);
+    }
+
+    private void updateNbJoueur()
+    {
+        joueurJeuTitle.setText("Joueurs en jeu: (" + Integer.toString(nbJoueur) +")");
     }
 
 }

@@ -325,19 +325,19 @@ public class DetailsFrag extends Fragment {
             {
                 text = text     +  "-"
                                 + Integer.toString(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos))
-                                + " Place(s)";
+                                + " Pl.";
             }
 
             else if ((detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos)) < 0)
             {
                 text = text     + "+"
                                 + Integer.toString((-1)*(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos)))
-                                + " Place(s)";
+                                + " Pl.";
             }
 
             else
             {
-                text = text     + " = Place";
+                text = text     + " = Pl.";
             }
 
         }
