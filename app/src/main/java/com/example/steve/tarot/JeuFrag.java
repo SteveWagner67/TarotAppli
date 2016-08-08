@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -27,7 +28,7 @@ public class JeuFrag extends Fragment {
 
     private View view;
     private Spinner preneurSpinn, enchereSpinn, annonceSpinn, joueurSpinn, annonce2Spinn, joueur2Spinn, calculScoreSpinn, nbBoutSpinn, preneurForPersonneSpinn, associeSpinn;
-    private TextView donneurTitle, donneurTxt, preneurTxt, enchereTxt, annonceTitle, joueurTitle, annonceSelected, joueurSelected, annonce2Selected, joueur2Selected, calculScoreTitle, nbBoutTitle, scoreTitle, nbBoutTxt, calculScoreTxt, scoreTxt, finishTxt, preneurForPersonneTitle, preneurForPersonneTxt, associeTitle, associeTxt;
+    private TextView donneurTitle, donneurTxt, preneurTxt, enchereTxt, annonceTitle, joueurTitle, annonceSelected, joueurSelected, annonce2Selected, joueur2Selected, calculScoreTitle, nbBoutTitle, scoreTitle, nbBoutTxt, calculScoreTxt, scoreTxt, finishTxt, preneurForPersonneTitle, preneurForPersonneTxt, associeTitle, associeTxt , petitAuBoutTxt;
     private ArrayAdapter<String> adaptPlayerList, adaptEnchere, adaptAnnonce, adaptJoueur, adaptAnnoncList, adapt2Annonce, adapt2Joueur, adaptCalculScore, adaptnbBout, adaptPreneurForPersonne, adaptAssocie;
     private int pos, firstPos, nbJoueur;
     private Button valideFirstPartBtn, terminer, terminer2, editScoreBtn, calculerBtn, finishBtn, valideAssocieBtn;
@@ -81,6 +82,8 @@ public class JeuFrag extends Fragment {
     private ArrayList<String> detailsNumList;
 
     private ArrayList<Jeu> jeuList;
+
+    private boolean petitAuBout = false;
 
 
     @Override
@@ -144,6 +147,8 @@ public class JeuFrag extends Fragment {
 
         finishTxt = (TextView) view.findViewById(R.id.finishTxt);
         finishBtn = (Button) view.findViewById(R.id.finishBtn);
+
+        petitAuBoutTxt = (TextView) view.findViewById(R.id.petitAuBoutTxt);
 
         annonceArrayList = new ArrayList<>();
         joueurArrayList = new ArrayList<>();
@@ -784,6 +789,8 @@ public class JeuFrag extends Fragment {
                 final Button numA = (Button) dialog.findViewById(R.id.annulBtn);
                 final Button numV = (Button) dialog.findViewById(R.id.validBtn);
 
+                final CheckBox petitAuBoutCheck = (CheckBox) dialog.findViewById(R.id.petitAuBoutCheck);
+
                 scoreEditTxt.setText("");
 
                 num0.setOnClickListener(new View.OnClickListener() {
@@ -1117,6 +1124,19 @@ public class JeuFrag extends Fragment {
                             System.out.println("Could not parse " + nfe);
                         }
 
+                        if(petitAuBoutCheck.isChecked())
+                        {
+                            petitAuBout = true;
+                            finishTxt.setVisibility(View.VISIBLE);
+                            finishTxt.setText("-- Petit au bout --");
+                        }
+
+                        else
+                        {
+                            petitAuBout = false;
+                            finishTxt.setVisibility(View.INVISIBLE);
+                        }
+
                         dialog.dismiss();
                     }
                 });
@@ -1199,6 +1219,18 @@ public class JeuFrag extends Fragment {
 
                 if(calculer == true)
                 {
+                    jeu.setPetitAuBout(petitAuBout);
+
+                    if(petitAuBout)
+                    {
+                        petitAuBoutTxt.setVisibility(View.VISIBLE);
+                    }
+
+                    else
+                    {
+                        petitAuBoutTxt.setVisibility(View.INVISIBLE);
+                    }
+
                     jeu.setEnchere(enchereTxt.getText().toString());
                     jeu.setNbBout(nbBout);
                     jeu.setScore(score);
@@ -1274,9 +1306,14 @@ public class JeuFrag extends Fragment {
                             finishTxt.setText(preneurName + " a gagné de " + Double.toString(value) + " donc de " + Integer.toString(roundValue));
                         }
 
-                        else
+                        else if ((jeu.getResult() == false) && (petitAuBout == false))
                         {
                             finishTxt.setText(preneurName + " a perdu de " + Double.toString(value) + " donc de " + Integer.toString(roundValue));
+                        }
+
+                        else
+                        {
+                            finishTxt.setText(preneurName + " a annulé la partie grâce au petit au bout ");
                         }
                     }
 
@@ -1319,6 +1356,96 @@ public class JeuFrag extends Fragment {
                     finishBtn.setVisibility(View.VISIBLE);
 
                     calculer = false;
+
+                    detail = new Details();
+
+                    detail.setPreneur(preneurTxt.getText().toString());
+                    detail.setEnchere(enchereTxt.getText().toString());
+                    if(!associeTxt.getText().toString().equals("Personne"))
+                    {
+                        detail.setAssocie(associeTxt.getText().toString());
+                    }
+
+                    if(nbJoueur >= 6)
+                    {
+                        // The playerMort is the donneur
+                        detail.setPlayerMort(donneurTxt.getText().toString());
+                    }
+
+                    detail.setNumJeu(numJeu);
+
+                    detail.setAnnonceList(annonceArrayList);
+                    detail.setJoueurList(joueurArrayList);
+
+                    detail.setNbBout(nbBout);
+
+                    detail.setPreneurForPersonne(preneurForPersonneTxt.getText().toString());
+
+                    detail.setCalculScoreDe(calculScoreTxt.getText().toString());
+
+                    detail.setScoreCartes(score, value, roundValue);
+
+                    if (jeu.getResult() == true)
+                    {
+                        detail.setResult(true); // preneur won / defenseurs lost
+                    }
+
+                    else
+                    {
+                        detail.setResult(false); // preneur lost / defenseurs won
+                    }
+
+                    detail.setClassmtPlayers(jeu.getPlayersInOrder());
+
+                    detail.setPetitAuBout(petitAuBout);
+
+                    if((jeu.getResult() == false) && (petitAuBout == true))
+                    {
+                        detail.setPartieAnnule(true);
+                    }
+
+                    else
+                    {
+                        detail.setPartieAnnule(false);
+                    }
+
+                    detailsList.add(detail);
+
+                    detailsNumList.add("Détails jeu n°" + Integer.toString(numJeu));
+
+                    mCallbackDetails.setDetails(detailsList, detailsNumList);
+
+                    jeuList.add(jeu);
+
+                    mCallbackJeu.setJeu(jeuList);
+
+                    mCallbackNumJeu.setNumJeu(numJeu);
+
+                    numJeu++;
+
+                    // Reset all
+
+                    if(nbJoueur == 6)
+                    {
+                        // Add the previous reseted donneur / mort
+                        jeu.addPlayerAtPosition(pos, donneurTxt.getText().toString());
+
+                    }
+
+                    // Set the order with the distributor as player1
+                    pos = jeu.getNextPlayer(pos);
+
+                    ArrayList<String> list = new ArrayList<String>();
+                    list = getArguments().getStringArrayList("List");
+
+                    donneurTxt.setText(list.get(pos));
+                    jeu.setDonneur(jeu.getPlayerName(pos));
+
+                    if(nbJoueur == 6)
+                    {
+                        // Remove the donneur / mort
+                        adaptPlayerList.remove(adaptPlayerList.getItem(pos).toString());
+                    }
                 }
             }
         });
@@ -1379,84 +1506,8 @@ public class JeuFrag extends Fragment {
                 finishTxt.setVisibility(View.INVISIBLE);
                 finishBtn.setVisibility(View.INVISIBLE);
 
-                detail = new Details();
+                petitAuBoutTxt.setVisibility(View.INVISIBLE);
 
-                detail.setPreneur(preneurTxt.getText().toString());
-                detail.setEnchere(enchereTxt.getText().toString());
-                if(!associeTxt.getText().toString().equals("Personne"))
-                {
-                    detail.setAssocie(associeTxt.getText().toString());
-                }
-
-                if(nbJoueur >= 6)
-                {
-                    // The playerMort is the donneur
-                    detail.setPlayerMort(donneurTxt.getText().toString());
-                }
-
-
-                detail.setNumJeu(numJeu);
-
-                detail.setAnnonceList(annonceArrayList);
-                detail.setJoueurList(joueurArrayList);
-
-                detail.setNbBout(nbBout);
-
-                detail.setPreneurForPersonne(preneurForPersonneTxt.getText().toString());
-
-                detail.setCalculScoreDe(calculScoreTxt.getText().toString());
-
-                detail.setScoreCartes(score, value, roundValue);
-
-                if (jeu.getResult() == true)
-                {
-                    detail.setResult(true); // preneur won / defenseurs lost
-                }
-
-                else
-                {
-                    detail.setResult(false); // preneur lost / defenseurs won
-                }
-
-                detail.setClassmtPlayers(jeu.getPlayersInOrder());
-
-                detailsList.add(detail);
-
-                detailsNumList.add("Détails jeu n°" + Integer.toString(numJeu));
-
-                mCallbackDetails.setDetails(detailsList, detailsNumList);
-
-                jeuList.add(jeu);
-
-                mCallbackJeu.setJeu(jeuList);
-
-                mCallbackNumJeu.setNumJeu(numJeu);
-
-                numJeu++;
-
-                // Reset all
-
-                if(nbJoueur == 6)
-                {
-                    // Add the previous reseted donneur / mort
-                    jeu.addPlayerAtPosition(pos, donneurTxt.getText().toString());
-
-                }
-
-                // Set the order with the distributor as player1
-                pos = jeu.getNextPlayer(pos);
-
-                ArrayList<String> list = new ArrayList<String>();
-                list = getArguments().getStringArrayList("List");
-
-                donneurTxt.setText(list.get(pos));
-                jeu.setDonneur(jeu.getPlayerName(pos));
-
-                if(nbJoueur == 6)
-                {
-                    // Remove the donneur / mort
-                    adaptPlayerList.remove(adaptPlayerList.getItem(pos).toString());
-                }
 
                 preneurSpinn.setSelection(jeu.getPlayerListSize() - 1);
                 enchereSpinn.setSelection(2);

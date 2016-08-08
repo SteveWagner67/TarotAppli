@@ -418,6 +418,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="-- Petit au bout --"
+        android:id="@+id/petitAuBoutTxt"
+        android:layout_alignBottom="@+id/scoreEdit"
+        android:layout_toRightOf="@+id/scoreEdit"
+        android:visibility="invisible"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Score de ?"
         android:id="@+id/calculScoreTxt"
         android:layout_alignBottom="@+id/calculScoreTitle"
@@ -441,10 +453,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/preneurForPersonneSpinn"
-        android:layout_alignBottom="@+id/preneurForPersonneTitle"
+        android:visibility="invisible"
+        android:layout_above="@+id/finishBtn"
         android:layout_toRightOf="@+id/preneurForPersonneTitle"
-        android:layout_toEndOf="@+id/preneurForPersonneTitle"
-        android:visibility="invisible"/>
+        android:layout_toEndOf="@+id/preneurForPersonneTitle" />
 
     <TextView
         android:layout_width="wrap_content"

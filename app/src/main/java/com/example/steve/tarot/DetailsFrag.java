@@ -2,6 +2,7 @@ package com.example.steve.tarot;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -176,6 +177,8 @@ public class DetailsFrag extends Fragment {
                     diffTxt.setVisibility(View.VISIBLE);
                     resTxt.setVisibility(View.VISIBLE);
 
+
+
                     if (detailsArrayList.get(position).getCalculScoreDe().equals("Preneur")) {
                         scoreQuiTitle.setText("Score preneur: ");
                     } else if (detailsArrayList.get(position).getCalculScoreDe().equals("Défenseurs")) {
@@ -217,29 +220,84 @@ public class DetailsFrag extends Fragment {
                         resTxt.setText("Défaite de ");
                     }
 
+
                     resTxt.setText(resTxt.getText() + Integer.toString(detailsArrayList.get(position).getRoundFinalValue()) + " points");
+
+                    if(detailsArrayList.get(position).getPetitAuBout())
+                    {
+                        resTxt.setText(resTxt.getText() + "\r\n" + "-- Petit au bout --");
+                    }
+
+                    if(detailsArrayList.get(position).getPartieAnnule())
+                    {
+                        preneurTitle.setPaintFlags(preneurTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        preneurTxt.setPaintFlags(preneurTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        enchereTitle.setPaintFlags(enchereTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        enchereTxt.setPaintFlags(enchereTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        enchereTitle2.setPaintFlags(enchereTitle2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        enchereTxt2.setPaintFlags(enchereTxt2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        associeTitle.setPaintFlags(associeTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        associeTxt.setPaintFlags(associeTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        annonce1Txt.setPaintFlags(annonce1Txt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        joueur1Txt.setPaintFlags(joueur1Txt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        annonce2Txt.setPaintFlags(annonce2Txt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        joueur2Txt.setPaintFlags(joueur2Txt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        scoreQuiTitle.setPaintFlags(scoreQuiTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        scoreQuiTxt.setPaintFlags(scoreQuiTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        nbBoutTitle.setPaintFlags(nbBoutTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        nbBoutTxt.setPaintFlags(nbBoutTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        scoreAttTitle.setPaintFlags(scoreAttTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        scoreAttTxt.setPaintFlags(scoreAttTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        diffTitle.setPaintFlags(diffTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        diffTxt.setPaintFlags(diffTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                        resTxt.setPaintFlags(resTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
                 }
 
                 // Set the layout for the dialog
                 adb.setView(dialogView);
 
+                String title = "";
+
                 if (detailsArrayList.get(position).getPreneur().equals("Personne")) {
+                    title = "Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + " (à l'envers)";
+
                     // Means there is at least 6 players (displays the playerMort)
-                    if (!detailsArrayList.get(position).getPlayerMort().equals("")) {
-                        adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + " (à l'envers)" + "\r\n" + "Mort: " + detailsArrayList.get(position).getPlayerMort());
-                    } else {
-                        adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + " (à l'envers)");
+                    if (!detailsArrayList.get(position).getPlayerMort().equals(""))
+                    {
+                        title += "\r\n" + "Mort: " + detailsArrayList.get(position).getPlayerMort();
                     }
 
-                } else {
+                }
+
+                else
+                {
+
+                    title = "Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu());
+
+                    if(detailsArrayList.get(position).getPartieAnnule())
+                    {
+                        title += " - Annulé ";
+                    }
+
                     // Means there is at least 6 players (displays the playerMort)
-                    if (!detailsArrayList.get(position).getPlayerMort().equals("")) {
-                        adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()) + "                       " + "\r\n" + "Mort: " + detailsArrayList.get(position).getPlayerMort());
-                    } else {
-                        adb.setTitle("Jeu n°" + Integer.toString(detailsArrayList.get(position).getNumJeu()));
+                    if (!detailsArrayList.get(position).getPlayerMort().equals(""))
+                    {
+                        title += "                       " + "\r\n" + "Mort: " + detailsArrayList.get(position).getPlayerMort();
                     }
                 }
 
+                adb.setTitle(title);
 
                 adb.setPositiveButton("Fermer", null);
 

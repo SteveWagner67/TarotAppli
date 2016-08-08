@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 
 public class Jeu extends Player implements Parcelable {
-    private int nbJeu;
     private ArrayList<String> listJoueur;
     private ArrayList<Player> playersListInOrder;
     private int nbJoueur;
@@ -25,11 +24,12 @@ public class Jeu extends Player implements Parcelable {
     private boolean chelemAnnonce;
     private String chelemDone;
     private int nbBout;
-    private String petitAuBout;
+    private boolean petitAuBout;
     private String calculscoreDe;
     private double score;
     static private int petiteValue = 20, pouceValue = 40, gardeValue = 80, gardeSansValue = 160, gardeContreValue = 320;
     static private int value0Bout = 56, value1Bout = 51, value2Bout = 41, value3Bout = 36;
+    static private int valuePetitAuBout = 10;
 
     private int numJeu;
 
@@ -162,6 +162,8 @@ public class Jeu extends Player implements Parcelable {
     {
         this.associe = associe;
     }
+
+    public void setPetitAuBout (boolean petitAuBout) { this.petitAuBout = petitAuBout; }
 
     public double calculScore()
     {
@@ -332,35 +334,65 @@ public class Jeu extends Player implements Parcelable {
                         setScorePlayer6Winner(scoreDonne);
                     }
 
-                    // Don't change the score for the donneur (which can only be one who loose)
+                    // Don't change the score for the donneur = "Mort" (which can only be one who loose)
                     if(donneur.equals(player6.getNomJoueur()))
                     {
                         scorePlayer6 = scoreDonne;
+
+                        if(petitAuBout)
+                        {
+                            scorePlayer6 += valuePetitAuBout; // Player6 doesn't give point because is "Mort"
+                        }
                     }
 
                     if(donneur.equals(player5.getNomJoueur()))
                     {
                         scorePlayer5 = scoreDonne;
+
+                        if(petitAuBout)
+                        {
+                            scorePlayer5 += valuePetitAuBout; // Player5 doesn't give point because is "Mort"
+                        }
                     }
 
                     if(donneur.equals(player4.getNomJoueur()))
                     {
                         scorePlayer4 = scoreDonne;
+
+                        if(petitAuBout)
+                        {
+                            scorePlayer4 += valuePetitAuBout; // Player4 doesn't give point because is "Mort"
+                        }
                     }
 
                     if(donneur.equals(player3.getNomJoueur()))
                     {
                         scorePlayer3 = scoreDonne;
+
+                        if(petitAuBout)
+                        {
+                            scorePlayer3 += valuePetitAuBout; // Player3 doesn't give point because is "Mort"
+                        }
                     }
 
                     if(donneur.equals(player2.getNomJoueur()))
                     {
                         scorePlayer2 = scoreDonne;
+
+                        if(petitAuBout)
+                        {
+                            scorePlayer2 += valuePetitAuBout; // Player2 doesn't give point because is "Mort"
+                        }
                     }
 
                     if(donneur.equals(player1.getNomJoueur()))
                     {
                         scorePlayer1 = scoreDonne;
+
+                        if(petitAuBout)
+                        {
+                            scorePlayer1 += valuePetitAuBout; // Player1 doesn't give point because is "Mort"
+                        }
                     }
 
 
@@ -417,92 +449,90 @@ public class Jeu extends Player implements Parcelable {
         else {
             boolean fourIsTrue = false, fiveIsTrue = false, sixIsTrue = false;
 
-            switch (nbJoueur) {
+            if(!petitAuBout)
+            {
+                switch (nbJoueur) {
 
-                case 6:
+                    case 6:
 
-                    if(preneur.equals(player6.getNomJoueur()))
-                    {
-                        playerLooser = 6;
-                        setScorePlayer6Looser(scoreDonne);
-                    }
+                        if (preneur.equals(player6.getNomJoueur())) {
+                            playerLooser = 6;
+                            setScorePlayer6Looser(scoreDonne);
+                        }
 
-                    // Don't change the score for the donneur (which can only be one who win)
-                    if(donneur.equals(player6.getNomJoueur()))
-                    {
-                        scorePlayer6 += (-1) * scoreDonne;
-                    }
+                        // Don't change the score for the donneur (which can only be one who win)
+                        if (donneur.equals(player6.getNomJoueur())) {
+                            scorePlayer6 += (-1) * scoreDonne;
+                        }
 
-                    if(donneur.equals(player5.getNomJoueur()))
-                    {
-                        scorePlayer5 += (-1) * scoreDonne;
-                    }
+                        if (donneur.equals(player5.getNomJoueur())) {
+                            scorePlayer5 += (-1) * scoreDonne;
+                        }
 
-                    if(donneur.equals(player4.getNomJoueur()))
-                    {
-                        scorePlayer4 += (-1) * scoreDonne;
-                    }
+                        if (donneur.equals(player4.getNomJoueur())) {
+                            scorePlayer4 += (-1) * scoreDonne;
+                        }
 
-                    if(donneur.equals(player3.getNomJoueur()))
-                    {
-                        scorePlayer3 += (-1) * scoreDonne;
-                    }
+                        if (donneur.equals(player3.getNomJoueur())) {
+                            scorePlayer3 += (-1) * scoreDonne;
+                        }
 
-                    if(donneur.equals(player2.getNomJoueur()))
-                    {
-                        scorePlayer2 += (-1) * scoreDonne;
-                    }
+                        if (donneur.equals(player2.getNomJoueur())) {
+                            scorePlayer2 += (-1) * scoreDonne;
+                        }
 
-                    if(donneur.equals(player1.getNomJoueur()))
-                    {
-                        scorePlayer1 += (-1) * scoreDonne;
-                    }
+                        if (donneur.equals(player1.getNomJoueur())) {
+                            scorePlayer1 += (-1) * scoreDonne;
+                        }
 
-                    sixIsTrue = true;
+                        sixIsTrue = true;
 
-                case 5:
+                    case 5:
 
-                    if(preneur.equals(player5.getNomJoueur()))
-                    {
-                        playerLooser = 5;
-                        setScorePlayer5Looser(scoreDonne, sixIsTrue);
-                    }
+                        if (preneur.equals(player5.getNomJoueur())) {
+                            playerLooser = 5;
+                            setScorePlayer5Looser(scoreDonne, sixIsTrue);
+                        }
 
-                    fiveIsTrue = true;
+                        fiveIsTrue = true;
 
-                case 4:
-                    // Joueur 4 est preneur
-                    if (preneur.equals(player4.getNomJoueur()))
-                    {
-                        playerLooser = 4;
-                        setScorePlayer4Looser(scoreDonne, sixIsTrue, fiveIsTrue);
-                    }
+                    case 4:
+                        // Joueur 4 est preneur
+                        if (preneur.equals(player4.getNomJoueur())) {
+                            playerLooser = 4;
+                            setScorePlayer4Looser(scoreDonne, sixIsTrue, fiveIsTrue);
+                        }
 
-                    fourIsTrue = true;
+                        fourIsTrue = true;
 
-                case 3:
-                    // Joueur 3 est preneur
-                    if (preneur.equals(player3.getNomJoueur()))
-                    {
-                        playerLooser = 3;
-                        setScorePlayer3Looser(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
-                    }
+                    case 3:
+                        // Joueur 3 est preneur
+                        if (preneur.equals(player3.getNomJoueur())) {
+                            playerLooser = 3;
+                            setScorePlayer3Looser(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
+                        }
 
-                    // Joueur 2 est preneur
-                    if (preneur.equals(player2.getNomJoueur()))
-                    {
-                        playerLooser = 2;
-                        setScorePlayer2Looser(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
-                    }
+                        // Joueur 2 est preneur
+                        if (preneur.equals(player2.getNomJoueur())) {
+                            playerLooser = 2;
+                            setScorePlayer2Looser(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
+                        }
 
-                    // Joueur 1 est preneur
-                    if (preneur.equals(player1.getNomJoueur()))
-                    {
-                        playerLooser = 1;
-                        setScorePlayer1Looser(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
-                    }
-                    break;
+                        // Joueur 1 est preneur
+                        if (preneur.equals(player1.getNomJoueur())) {
+                            playerLooser = 1;
+                            setScorePlayer1Looser(scoreDonne, sixIsTrue, fiveIsTrue, fourIsTrue);
+                        }
+                        break;
+                }
             }
+
+            // Partie annulé
+            else
+            {
+
+            }
+
         }
 
         switch (nbJoueur)
@@ -795,7 +825,11 @@ public class Jeu extends Player implements Parcelable {
             size--;
             i++;
 
-            setAnnoncePlayerDetail(annonce);
+            if(!petitAuBout)
+            {
+                setAnnoncePlayerDetail(annonce);
+            }
+
         }
     }
 
@@ -911,6 +945,15 @@ public class Jeu extends Player implements Parcelable {
 
     private void setScorePlayer6Winner(int scoreDonne)
     {
+        if(petitAuBout)
+        {
+            scorePlayer6 += valuePetitAuBout * (nbJoueur - 2); // Player6 doesn't give point to himself + the "mort" neither
+            scorePlayer5 += (-1) * valuePetitAuBout;
+            scorePlayer4 += (-1) * valuePetitAuBout;
+            scorePlayer3 += (-1) * valuePetitAuBout;
+            scorePlayer2 += (-1) * valuePetitAuBout;
+            scorePlayer1 += (-1) * valuePetitAuBout;
+        }
         // Joueur 6 est associé (joue seul)
         if(associe.equals(player6.getNomJoueur()))
         {
@@ -993,68 +1036,82 @@ public class Jeu extends Player implements Parcelable {
 
     private void setScorePlayer5Winner(boolean sixIsTrue, int scoreDonne)
     {
+        if(petitAuBout)
+        {
+            scorePlayer5 += valuePetitAuBout * (nbJoueur - 1); // Player6 doesn't give point to himself
+            scorePlayer4 += (-1) * valuePetitAuBout;
+            scorePlayer3 += (-1) * valuePetitAuBout;
+            scorePlayer2 += (-1) * valuePetitAuBout;
+            scorePlayer1 += (-1) * valuePetitAuBout;
+        }
 
-            // Joueur 5 est associé (joue seul)
-            if(associe.equals(player5.getNomJoueur()))
-            {
-                scorePlayer5 += 4 * scoreDonne;
-                scorePlayer4 += (-1) * scoreDonne;
-                scorePlayer3 += (-1) * scoreDonne;
-                scorePlayer2 += (-1) * scoreDonne;
-                scorePlayer1 += (-1) * scoreDonne;
-            }
+        // Joueur 5 est associé (joue seul)
+        if(associe.equals(player5.getNomJoueur()))
+        {
+            scorePlayer5 += 4 * scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
+        }
 
-            // Joueur 4 est associé
-            if(associe.equals(player4.getNomJoueur()))
-            {
-                scorePlayer5 += 2 * scoreDonne;
-                scorePlayer4 += scoreDonne;
-                scorePlayer3 += (-1) * scoreDonne;
-                scorePlayer2 += (-1) * scoreDonne;
-                scorePlayer1 += (-1) * scoreDonne;
+        // Joueur 4 est associé
+        if(associe.equals(player4.getNomJoueur()))
+        {
+            scorePlayer5 += 2 * scoreDonne;
+            scorePlayer4 += scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
 
-                playerAssocie = 4;
-            }
+            playerAssocie = 4;
+        }
 
-            // Joueur 3 est associé
-            if(associe.equals(player3.getNomJoueur()))
-            {
-                scorePlayer5 += 2 * scoreDonne;
-                scorePlayer3 += scoreDonne;
-                scorePlayer4 += (-1) * scoreDonne;
-                scorePlayer2 += (-1) * scoreDonne;
-                scorePlayer1 += (-1) * scoreDonne;
+        // Joueur 3 est associé
+        if(associe.equals(player3.getNomJoueur()))
+        {
+            scorePlayer5 += 2 * scoreDonne;
+            scorePlayer3 += scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
 
-                playerAssocie = 3;
-            }
+            playerAssocie = 3;
+        }
 
-            // Joueur 2 est associé
-            if(associe.equals(player2.getNomJoueur()))
-            {
-                scorePlayer5 += 2 * scoreDonne;
-                scorePlayer2 += scoreDonne;
-                scorePlayer4 += (-1) * scoreDonne;
-                scorePlayer3 += (-1) * scoreDonne;
-                scorePlayer1 += (-1) * scoreDonne;
+        // Joueur 2 est associé
+        if(associe.equals(player2.getNomJoueur()))
+        {
+            scorePlayer5 += 2 * scoreDonne;
+            scorePlayer2 += scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer1 += (-1) * scoreDonne;
 
-                playerAssocie = 2;
-            }
+            playerAssocie = 2;
+        }
 
-            // Joueur 1 est associé
-            if(associe.equals(player1.getNomJoueur()))
-            {
-                scorePlayer5 += 2 * scoreDonne;
-                scorePlayer1 += scoreDonne;
-                scorePlayer4 += (-1) * scoreDonne;
-                scorePlayer3 += (-1) * scoreDonne;
-                scorePlayer2 += (-1) * scoreDonne;
+        // Joueur 1 est associé
+        if(associe.equals(player1.getNomJoueur()))
+        {
+            scorePlayer5 += 2 * scoreDonne;
+            scorePlayer1 += scoreDonne;
+            scorePlayer4 += (-1) * scoreDonne;
+            scorePlayer3 += (-1) * scoreDonne;
+            scorePlayer2 += (-1) * scoreDonne;
 
-                playerAssocie = 1;
-            }
+            playerAssocie = 1;
+        }
 
         // Joueur 6 est associé
         if(sixIsTrue)
         {
+            if(petitAuBout)
+            {
+                scorePlayer5 += (-1) * valuePetitAuBout; // The "Mort" doesn't give point
+                scorePlayer6 += (-1) * valuePetitAuBout;
+            }
+
             if(associe.equals(player6.getNomJoueur()))
             {
                 scorePlayer5 += 2 * scoreDonne;
@@ -1078,6 +1135,14 @@ public class Jeu extends Player implements Parcelable {
     {
             if(fiveIsTrue)
             {
+                if(petitAuBout)
+                {
+                    scorePlayer4 += valuePetitAuBout * (nbJoueur - 1); // Player5 doesn't give point to himself
+                    scorePlayer5 += (-1) * valuePetitAuBout;
+                    scorePlayer3 += (-1) * valuePetitAuBout;
+                    scorePlayer2 += (-1) * valuePetitAuBout;
+                    scorePlayer1 += (-1) * valuePetitAuBout;
+                }
                 // Joueur 5 associé
                 if(associe.equals(player5.getNomJoueur()))
                 {
@@ -1139,6 +1204,12 @@ public class Jeu extends Player implements Parcelable {
                 // Joueur 6 est associé
                 if(sixIsTrue)
                 {
+                    if(petitAuBout)
+                    {
+                        scorePlayer4 += (-1) * valuePetitAuBout; // The "Mort" doesn't give point
+                        scorePlayer6 += (-1) * valuePetitAuBout;
+                    }
+
                     if(associe.equals(player6.getNomJoueur()))
                     {
                         scorePlayer4 += 2 * scoreDonne;
@@ -1160,6 +1231,14 @@ public class Jeu extends Player implements Parcelable {
 
             else
             {
+                if(petitAuBout)
+                {
+                    scorePlayer4 += valuePetitAuBout * (nbJoueur - 1); // Player4 doesn't give point to himself
+                    scorePlayer3 += (-1) * valuePetitAuBout;
+                    scorePlayer2 += (-1) * valuePetitAuBout;
+                    scorePlayer1 += (-1) * valuePetitAuBout;
+                }
+
                 scorePlayer4 += 3 * scoreDonne;
                 scorePlayer3 += (-1) * scoreDonne;
                 scorePlayer2 += (-1) * scoreDonne;
@@ -1172,6 +1251,15 @@ public class Jeu extends Player implements Parcelable {
     {
         if(fiveIsTrue)
         {
+            if(petitAuBout)
+            {
+                scorePlayer3 += valuePetitAuBout * (nbJoueur - 1); // Player3 doesn't give point to himself
+                scorePlayer5 += (-1) * valuePetitAuBout;
+                scorePlayer4 += (-1) * valuePetitAuBout;
+                scorePlayer2 += (-1) * valuePetitAuBout;
+                scorePlayer1 += (-1) * valuePetitAuBout;
+            }
+
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
@@ -1233,6 +1321,12 @@ public class Jeu extends Player implements Parcelable {
             // Joueur 6 est associé
             if(sixIsTrue)
             {
+                if(petitAuBout)
+                {
+                    scorePlayer3 += (-1) * valuePetitAuBout; // The "Mort" doesn't give point
+                    scorePlayer6 += (-1) * valuePetitAuBout;
+                }
+
                 if(associe.equals(player6.getNomJoueur()))
                 {
                     scorePlayer3 += 2 * scoreDonne;
@@ -1254,12 +1348,24 @@ public class Jeu extends Player implements Parcelable {
 
         else
         {
+            if(petitAuBout)
+            {
+                scorePlayer3 += valuePetitAuBout * (nbJoueur - 1); // Player3 doesn't give point to himself
+                scorePlayer2 += (-1) * valuePetitAuBout;
+                scorePlayer1 += (-1) * valuePetitAuBout;
+            }
+
             scorePlayer3 += 2 * scoreDonne;
             scorePlayer2 += (-1) * scoreDonne;
             scorePlayer1 += (-1) * scoreDonne;
 
             if (fourIsTrue)
             {
+                if(petitAuBout)
+                {
+                    scorePlayer4 += (-1) * valuePetitAuBout;
+                }
+
                 scorePlayer3 += scoreDonne;
                 scorePlayer4 += (-1) * scoreDonne;
             }
@@ -1272,6 +1378,15 @@ public class Jeu extends Player implements Parcelable {
     {
         if(fiveIsTrue)
         {
+            if(petitAuBout)
+            {
+                scorePlayer2 += valuePetitAuBout * (nbJoueur - 1); // Player2 doesn't give point to himself
+                scorePlayer5 += (-1) * valuePetitAuBout;
+                scorePlayer4 += (-1) * valuePetitAuBout;
+                scorePlayer3 += (-1) * valuePetitAuBout;
+                scorePlayer1 += (-1) * valuePetitAuBout;
+            }
+
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
@@ -1333,6 +1448,12 @@ public class Jeu extends Player implements Parcelable {
             // Joueur 6 est associé
             if(sixIsTrue)
             {
+                if(petitAuBout)
+                {
+                    scorePlayer2 += (-1) * valuePetitAuBout; // The "Mort" doesn't give point
+                    scorePlayer6 += (-1) * valuePetitAuBout;
+                }
+
                 if(associe.equals(player6.getNomJoueur()))
                 {
                     scorePlayer2 += 2 * scoreDonne;
@@ -1354,12 +1475,24 @@ public class Jeu extends Player implements Parcelable {
 
         else
         {
+            if(petitAuBout)
+            {
+                scorePlayer2 += valuePetitAuBout * (nbJoueur - 1); // Player2 doesn't give point to himself
+                scorePlayer3 += (-1) * valuePetitAuBout;
+                scorePlayer1 += (-1) * valuePetitAuBout;
+            }
+
             scorePlayer2 += 2 * scoreDonne;
             scorePlayer1 += (-1) * scoreDonne;
             scorePlayer3 += (-1) * scoreDonne;
 
             if (fourIsTrue)
             {
+                if(petitAuBout)
+                {
+                    scorePlayer4 += (-1) * valuePetitAuBout;
+                }
+
                 scorePlayer2 += scoreDonne;
                 scorePlayer4 += (-1) * scoreDonne;
             }
@@ -1370,6 +1503,15 @@ public class Jeu extends Player implements Parcelable {
     {
         if(fiveIsTrue)
         {
+            if(petitAuBout)
+            {
+                scorePlayer1 += valuePetitAuBout * (nbJoueur - 1); // Player1 doesn't give point to himself
+                scorePlayer5 += (-1) * valuePetitAuBout;
+                scorePlayer4 += (-1) * valuePetitAuBout;
+                scorePlayer3 += (-1) * valuePetitAuBout;
+                scorePlayer2 += (-1) * valuePetitAuBout;
+            }
+
             // Joueur 5 associé
             if(associe.equals(player5.getNomJoueur()))
             {
@@ -1431,6 +1573,12 @@ public class Jeu extends Player implements Parcelable {
             // Joueur 6 est associé
             if(sixIsTrue)
             {
+                if(petitAuBout)
+                {
+                    scorePlayer1 += (-1) * valuePetitAuBout; // The "Mort" doesn't give point
+                    scorePlayer6 += (-1) * valuePetitAuBout;
+                }
+
                 if(associe.equals(player6.getNomJoueur()))
                 {
                     scorePlayer1 += 2 * scoreDonne;
@@ -1453,12 +1601,24 @@ public class Jeu extends Player implements Parcelable {
 
         else
         {
+            if(petitAuBout)
+            {
+                scorePlayer1 += valuePetitAuBout * (nbJoueur - 1); // Player1 doesn't give point to himself
+                scorePlayer3 += (-1) * valuePetitAuBout;
+                scorePlayer2 += (-1) * valuePetitAuBout;
+            }
+
             scorePlayer1 += 2 * scoreDonne;
             scorePlayer2 += (-1) * scoreDonne;
             scorePlayer3 += (-1) * scoreDonne;
 
             if (fourIsTrue)
             {
+                if(petitAuBout)
+                {
+                    scorePlayer4 += (-1) * valuePetitAuBout;
+                }
+
                 scorePlayer1 += scoreDonne;
                 scorePlayer4 += (-1) * scoreDonne;
             }
@@ -2618,7 +2778,6 @@ public class Jeu extends Player implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(nbJeu);
         dest.writeInt(nbJoueur);
         dest.writeString(donneur);
         dest.writeString(preneur);

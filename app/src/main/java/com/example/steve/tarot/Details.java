@@ -23,6 +23,8 @@ public class Details implements Parcelable{
     private int roundFinalValue;
     private boolean preneurWin;
     private String playerMort;
+    private boolean petitAuBout;
+    private boolean partieAnnule;
 
     private ArrayList<Player> classmntPlayersList;
 
@@ -41,6 +43,7 @@ public class Details implements Parcelable{
         roundFinalValue = -1;
         playerMort = "";
         classmntPlayersList = new ArrayList<>();
+        partieAnnule = false;
     }
 
     public void setNumJeu(int numJeu)
@@ -179,6 +182,14 @@ public class Details implements Parcelable{
     public void setClassmtPlayers(ArrayList<Player> classmntPlayersList) { this.classmntPlayersList = classmntPlayersList;}
 
     public ArrayList<Player> getClassmntPlayersList() {return classmntPlayersList;}
+
+    public void setPetitAuBout(boolean petitAuBout) {this.petitAuBout = petitAuBout; }
+
+    public boolean getPetitAuBout(){ return petitAuBout; }
+
+    public void setPartieAnnule(boolean partieAnnule) {this.partieAnnule = partieAnnule; }
+
+    public boolean getPartieAnnule() { return partieAnnule; }
 
 
     @Override
