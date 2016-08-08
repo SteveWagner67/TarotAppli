@@ -316,34 +316,152 @@ public class DetailsFrag extends Fragment {
                         // Pass null as the parent view because its going in the dialog layout
                         final View dialogView2 = inflater.inflate(R.layout.details_classement, null);
 
-                        final TextView class1Txt = (TextView) dialogView2.findViewById(R.id.classP1);
-                        final TextView class2Txt = (TextView) dialogView2.findViewById(R.id.classP2);
-                        final TextView class3Txt = (TextView) dialogView2.findViewById(R.id.classP3);
-                        final TextView class4Txt = (TextView) dialogView2.findViewById(R.id.classP4);
-                        final TextView class5Txt = (TextView) dialogView2.findViewById(R.id.classP5);
-                        final TextView class6Txt = (TextView) dialogView2.findViewById(R.id.classP6);
+                        final TextView pos1Txt = (TextView) dialogView2.findViewById(R.id.pos1);
+                        final TextView name1Txt = (TextView) dialogView2.findViewById(R.id.name1);
+                        final TextView score1Txt = (TextView) dialogView2.findViewById(R.id.score1);
+                        final TextView f1Txt = (TextView) dialogView2.findViewById(R.id.f1);
+                        final TextView place1Txt = (TextView) dialogView2.findViewById(R.id.place1);
+
+                        final TextView pos2Txt = (TextView) dialogView2.findViewById(R.id.pos2);
+                        final TextView name2Txt = (TextView) dialogView2.findViewById(R.id.name2);
+                        final TextView score2Txt = (TextView) dialogView2.findViewById(R.id.score2);
+                        final TextView f2Txt = (TextView) dialogView2.findViewById(R.id.f2);
+                        final TextView place2Txt = (TextView) dialogView2.findViewById(R.id.place2);
+
+                        final TextView pos3Txt = (TextView) dialogView2.findViewById(R.id.pos3);
+                        final TextView name3Txt = (TextView) dialogView2.findViewById(R.id.name3);
+                        final TextView score3Txt = (TextView) dialogView2.findViewById(R.id.score3);
+                        final TextView f3Txt = (TextView) dialogView2.findViewById(R.id.f3);
+                        final TextView place3Txt = (TextView) dialogView2.findViewById(R.id.place3);
+
+                        final TextView pos4Txt = (TextView) dialogView2.findViewById(R.id.pos4);
+                        final TextView name4Txt = (TextView) dialogView2.findViewById(R.id.name4);
+                        final TextView score4Txt = (TextView) dialogView2.findViewById(R.id.score4);
+                        final TextView f4Txt = (TextView) dialogView2.findViewById(R.id.f4);
+                        final TextView place4Txt = (TextView) dialogView2.findViewById(R.id.place4);
+
+                        final TextView pos5Txt = (TextView) dialogView2.findViewById(R.id.pos5);
+                        final TextView name5Txt = (TextView) dialogView2.findViewById(R.id.name5);
+                        final TextView score5Txt = (TextView) dialogView2.findViewById(R.id.score5);
+                        final TextView f5Txt = (TextView) dialogView2.findViewById(R.id.f5);
+                        final TextView place5Txt = (TextView) dialogView2.findViewById(R.id.place5);
+
+                        final TextView pos6Txt = (TextView) dialogView2.findViewById(R.id.pos6);
+                        final TextView name6Txt = (TextView) dialogView2.findViewById(R.id.name6);
+                        final TextView score6Txt = (TextView) dialogView2.findViewById(R.id.score6);
+                        final TextView f6Txt = (TextView) dialogView2.findViewById(R.id.f6);
+                        final TextView place6Txt = (TextView) dialogView2.findViewById(R.id.place6);
 
 
                         switch (jeuArrayList.get(pos).getNbJoueur()) {
 
                             case 6:
-                                class6Txt.setVisibility(View.VISIBLE);
-                                class6Txt.setText(setClassement(6));
+                                pos6Txt.setVisibility(View.VISIBLE);
+                                pos6Txt.setText(setPosition(6));
+
+                                name6Txt.setVisibility(View.VISIBLE);
+                                name6Txt.setText(setName(6));
+
+                                score6Txt.setVisibility(View.VISIBLE);
+                                score6Txt.setText(setScore(6));
+
+                                if(pos != 0)
+                                {
+                                    f6Txt.setVisibility(View.VISIBLE);
+                                }
+
+                                place6Txt.setVisibility(View.VISIBLE);
+                                place6Txt.setText(setPlacement(6));
+
                             case 5:
-                                class5Txt.setVisibility(View.VISIBLE);
-                                class5Txt.setText(setClassement(5));
+                                pos5Txt.setVisibility(View.VISIBLE);
+                                pos5Txt.setText(setPosition(5));
+
+                                name5Txt.setVisibility(View.VISIBLE);
+                                name5Txt.setText(setName(5));
+
+                                score5Txt.setVisibility(View.VISIBLE);
+                                score5Txt.setText(setScore(5));
+
+                                if(pos != 0)
+                                {
+                                    f5Txt.setVisibility(View.VISIBLE);
+                                }
+
+                                place5Txt.setVisibility(View.VISIBLE);
+                                place5Txt.setText(setPlacement(5));
+
                             case 4:
-                                class4Txt.setVisibility(View.VISIBLE);
-                                class4Txt.setText(setClassement(4));
+                                pos4Txt.setVisibility(View.VISIBLE);
+                                pos4Txt.setText(setPosition(4));
+
+                                name4Txt.setVisibility(View.VISIBLE);
+                                name4Txt.setText(setName(4));
+
+                                score4Txt.setVisibility(View.VISIBLE);
+                                score4Txt.setText(setScore(4));
+
+                                if(pos != 0)
+                                {
+                                    f4Txt.setVisibility(View.VISIBLE);
+                                }
+
+                                place4Txt.setVisibility(View.VISIBLE);
+                                place4Txt.setText(setPlacement(4));
+
                             case 3:
-                                class3Txt.setVisibility(View.VISIBLE);
-                                class3Txt.setText(setClassement(3));
+                                pos3Txt.setVisibility(View.VISIBLE);
+                                pos3Txt.setText(setPosition(3));
 
-                                class2Txt.setVisibility(View.VISIBLE);
-                                class2Txt.setText(setClassement(2));
+                                name3Txt.setVisibility(View.VISIBLE);
+                                name3Txt.setText(setName(3));
 
-                                class1Txt.setVisibility(View.VISIBLE);
-                                class1Txt.setText(setClassement(1));
+                                score3Txt.setVisibility(View.VISIBLE);
+                                score3Txt.setText(setScore(3));
+
+                                if(pos != 0)
+                                {
+                                    f3Txt.setVisibility(View.VISIBLE);
+                                }
+
+                                place3Txt.setVisibility(View.VISIBLE);
+                                place3Txt.setText(setPlacement(3));
+
+
+                                pos2Txt.setVisibility(View.VISIBLE);
+                                pos2Txt.setText(setPosition(2));
+
+                                name2Txt.setVisibility(View.VISIBLE);
+                                name2Txt.setText(setName(2));
+
+                                score2Txt.setVisibility(View.VISIBLE);
+                                score2Txt.setText(setScore(2));
+
+                                if(pos != 0)
+                                {
+                                    f2Txt.setVisibility(View.VISIBLE);
+                                }
+
+                                place2Txt.setVisibility(View.VISIBLE);
+                                place2Txt.setText(setPlacement(2));
+
+
+                                pos1Txt.setVisibility(View.VISIBLE);
+                                pos1Txt.setText(setPosition(1));
+
+                                name1Txt.setVisibility(View.VISIBLE);
+                                name1Txt.setText(setName(1));
+
+                                score1Txt.setVisibility(View.VISIBLE);
+                                score1Txt.setText(setScore(1));
+
+                                if(pos != 0)
+                                {
+                                    f1Txt.setVisibility(View.VISIBLE);
+                                }
+
+                                place1Txt.setVisibility(View.VISIBLE);
+                                place1Txt.setText(setPlacement(1));
                                 break;
                         }
 
@@ -365,37 +483,59 @@ public class DetailsFrag extends Fragment {
     }
 
 
-    private String setClassement(int placement)
+    private String setPosition(int placement)
     {
         String text = "";
 
         text = Integer.toString(placement)
-                + "-  "
-                + detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getNomJoueur()
-                + ":          "
-                + Integer.toString(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getScore(pos))
+                + "-";
+
+        return text;
+    }
+
+    private String setName(int placement)
+    {
+        String text = "";
+
+        text = detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getNomJoueur()
+                + ":";
+
+        return text;
+    }
+
+    private String setScore(int placement)
+    {
+        String text = "";
+
+        text = Integer.toString(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getScore(pos))
                 + " Pts";
+
+        return text;
+    }
+
+    private String setPlacement(int placement)
+    {
+        String text = "";
 
         if (pos != 0)
         {
-            text = text + "   ->   ";
             if ((detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos)) > 0)
             {
-                text = text     +  "-"
-                                + Integer.toString(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos))
-                                + " Pl.";
+                text = "-"
+                        + Integer.toString(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos))
+                        + " Pl.";
             }
 
             else if ((detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos)) < 0)
             {
-                text = text     + "+"
-                                + Integer.toString((-1)*(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos)))
-                                + " Pl.";
+                text = "+"
+                        + Integer.toString((-1)*(detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getActuPos(pos) - detailsArrayList.get(pos).getClassmntPlayersList().get(placement-1).getPrecPos(pos)))
+                        + " Pl.";
             }
 
             else
             {
-                text = text     + " = Pl.";
+                text = "= Pl.";
             }
 
         }
