@@ -31,8 +31,6 @@ public class Jeu extends Player implements Parcelable {
     static private int value0Bout = 56, value1Bout = 51, value2Bout = 41, value3Bout = 36;
     static private int valuePetitAuBout = 10;
 
-    private int numJeu;
-
     private double valueDiff;
 
     private boolean neg = false;
@@ -55,8 +53,6 @@ public class Jeu extends Player implements Parcelable {
         player4 = new Player();
         player5 = new Player();
         player6 = new Player();
-
-        int numJeu = 0;
 
         scorePlayer6 = 0;
         scorePlayer5 = 0;
@@ -190,8 +186,6 @@ public class Jeu extends Player implements Parcelable {
 
         valueDiff = score - valueToDo;
 
-        setPlayersScore();
-
         return valueDiff;
 
     }
@@ -278,7 +272,7 @@ public class Jeu extends Player implements Parcelable {
 
     }
 
-    private void setPlayersScore() {
+    public void setPlayersScore(int numJeu) {
         int scoreDonne = 0;
 
         switch (enchere)
@@ -550,14 +544,14 @@ public class Jeu extends Player implements Parcelable {
                 break;
         }
 
-        setPartPlayerDetail();
+        setPartPlayerDetail(numJeu);
 
-        setAssociePlayerDetail();
+        setAssociePlayerDetail(numJeu);
 
 
     }
 
-    public void setAnnonceToScore(ArrayList<String> annonceList, ArrayList<String> playerList)
+    public void setAnnonceToScore(int numJeu, ArrayList<String> annonceList, ArrayList<String> playerList)
     {
         int size=0, i=0, score=0;
         String annonce="";
@@ -827,7 +821,7 @@ public class Jeu extends Player implements Parcelable {
 
             if(!petitAuBout)
             {
-                setAnnoncePlayerDetail(annonce);
+                setAnnoncePlayerDetail(numJeu, annonce);
             }
 
         }
@@ -840,7 +834,7 @@ public class Jeu extends Player implements Parcelable {
     public Player getPlayer5() { return player5; }
     public Player getPlayer6() { return player6; }
 
-    public void setPlayersInOrder()
+    public void setPlayersInOrder(int numJeu)
     {
         boolean playerToAdd = false;
         int i=0, j=0, placeListOut=0, indexPlayer=0;
@@ -854,8 +848,6 @@ public class Jeu extends Player implements Parcelable {
         playerListIn.add(0, player1);
         playerListIn.add(1, player2);
         playerListIn.add(2, player3);
-
-        numJeu++;
 
         if(nbJoueur == 4)
         {
@@ -881,9 +873,9 @@ public class Jeu extends Player implements Parcelable {
         {
             while(j<placeListOut)
             {
-                if(playerListIn.get(j).getScore(numJeu-1) > playerListIn.get(i).getScore(numJeu-1))
+                if(playerListIn.get(j).getScore(numJeu) > playerListIn.get(i).getScore(numJeu))
                 {
-                    if(playerListIn.get(j).getScore(numJeu-1) > playerListIn.get(indexPlayer).getScore(numJeu-1))
+                    if(playerListIn.get(j).getScore(numJeu) > playerListIn.get(indexPlayer).getScore(numJeu))
                     {
                         indexPlayer=j;
                         playerToAdd = true;
@@ -2181,172 +2173,172 @@ public class Jeu extends Player implements Parcelable {
         }
     }
 
-    private void setPartPlayerDetail()
+    private void setPartPlayerDetail(int numJeu)
     {
         switch(playerWinner)
         {
             case 6:
-                player6.addJeuPris(numJeu + 1);
-                player6.addVictoire(numJeu + 1);
+                player6.addJeuPris(numJeu);
+                player6.addVictoire(numJeu);
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player6.addPetite(numJeu + 1);
+                        player6.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player6.addPouce(numJeu + 1);
+                        player6.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player6.addGarde(numJeu + 1);
+                        player6.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player6.addGardeSans(numJeu + 1);
+                        player6.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player6.addGardeContre(numJeu + 1);
+                        player6.addGardeContre(numJeu);
                         break;
                 }
 
                 break;
             case 5:
-                player5.addJeuPris(numJeu + 1);
-                player5.addVictoire(numJeu + 1);
+                player5.addJeuPris(numJeu);
+                player5.addVictoire(numJeu);
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player5.addPetite(numJeu + 1);
+                        player5.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player5.addPouce(numJeu + 1);
+                        player5.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player5.addGarde(numJeu + 1);
+                        player5.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player5.addGardeSans(numJeu + 1);
+                        player5.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player5.addGardeContre(numJeu + 1);
+                        player5.addGardeContre(numJeu);
                         break;
                 }
 
                 break;
 
             case 4:
-                player4.addJeuPris(numJeu + 1);
-                player4.addVictoire(numJeu + 1);
+                player4.addJeuPris(numJeu);
+                player4.addVictoire(numJeu);
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player4.addPetite(numJeu + 1);
+                        player4.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player4.addPouce(numJeu + 1);
+                        player4.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player4.addGarde(numJeu + 1);
+                        player4.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player4.addGardeSans(numJeu + 1);
+                        player4.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player4.addGardeContre(numJeu + 1);
+                        player4.addGardeContre(numJeu);
                         break;
                 }
 
                 break;
 
             case 3:
-                player3.addJeuPris(numJeu + 1);
-                player3.addVictoire(numJeu + 1);
+                player3.addJeuPris(numJeu);
+                player3.addVictoire(numJeu);
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player3.addPetite(numJeu + 1);
+                        player3.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player3.addPouce(numJeu + 1);
+                        player3.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player3.addGarde(numJeu + 1);
+                        player3.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player3.addGardeSans(numJeu + 1);
+                        player3.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player3.addGardeContre(numJeu + 1);
+                        player3.addGardeContre(numJeu);
                         break;
                 }
 
                 break;
 
             case 2:
-                player2.addJeuPris(numJeu + 1);
-                player2.addVictoire(numJeu + 1);
+                player2.addJeuPris(numJeu);
+                player2.addVictoire(numJeu);
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player2.addPetite(numJeu + 1);
+                        player2.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player2.addPouce(numJeu + 1);
+                        player2.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player2.addGarde(numJeu + 1);
+                        player2.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player2.addGardeSans(numJeu + 1);
+                        player2.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player2.addGardeContre(numJeu + 1);
+                        player2.addGardeContre(numJeu);
                         break;
                 }
 
                 break;
 
             case 1:
-                player1.addJeuPris(numJeu + 1);
-                player1.addVictoire(numJeu + 1);
+                player1.addJeuPris(numJeu);
+                player1.addVictoire(numJeu);
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player1.addPetite(numJeu + 1);
+                        player1.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player1.addPouce(numJeu + 1);
+                        player1.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player1.addGarde(numJeu + 1);
+                        player1.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player1.addGardeSans(numJeu + 1);
+                        player1.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player1.addGardeContre(numJeu + 1);
+                        player1.addGardeContre(numJeu);
                         break;
                 }
 
@@ -2360,36 +2352,36 @@ public class Jeu extends Player implements Parcelable {
         {
             case 6:
 
-                player6.addDefaite(numJeu + 1);
+                player6.addDefaite(numJeu);
 
                 if(jeuALEnvers)
                 {
-                    player6.addJeuALEnvers(numJeu + 1);
+                    player6.addJeuALEnvers(numJeu);
                     break;
                 }
 
-                player6.addJeuPris(numJeu + 1);
+                player6.addJeuPris(numJeu);
 
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player6.addPetite(numJeu + 1);
+                        player6.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player6.addPouce(numJeu + 1);
+                        player6.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player6.addGarde(numJeu + 1);
+                        player6.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player6.addGardeSans(numJeu + 1);
+                        player6.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player6.addGardeContre(numJeu + 1);
+                        player6.addGardeContre(numJeu);
                         break;
                 }
 
@@ -2397,36 +2389,36 @@ public class Jeu extends Player implements Parcelable {
 
             case 5:
 
-                player5.addDefaite(numJeu + 1);
+                player5.addDefaite(numJeu);
 
                 if(jeuALEnvers)
                 {
-                    player5.addJeuALEnvers(numJeu + 1);
+                    player5.addJeuALEnvers(numJeu);
                     break;
                 }
 
-                player5.addJeuPris(numJeu + 1);
+                player5.addJeuPris(numJeu);
 
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player5.addPetite(numJeu + 1);
+                        player5.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player5.addPouce(numJeu + 1);
+                        player5.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player5.addGarde(numJeu + 1);
+                        player5.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player5.addGardeSans(numJeu + 1);
+                        player5.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player5.addGardeContre(numJeu + 1);
+                        player5.addGardeContre(numJeu);
                         break;
                 }
 
@@ -2434,36 +2426,36 @@ public class Jeu extends Player implements Parcelable {
 
             case 4:
 
-                player4.addDefaite(numJeu + 1);
+                player4.addDefaite(numJeu);
 
                 if(jeuALEnvers)
                 {
-                    player4.addJeuALEnvers(numJeu + 1);
+                    player4.addJeuALEnvers(numJeu);
                     break;
                 }
 
-                player4.addJeuPris(numJeu + 1);
+                player4.addJeuPris(numJeu);
 
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player4.addPetite(numJeu + 1);
+                        player4.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player4.addPouce(numJeu + 1);
+                        player4.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player4.addGarde(numJeu + 1);
+                        player4.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player4.addGardeSans(numJeu + 1);
+                        player4.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player4.addGardeContre(numJeu + 1);
+                        player4.addGardeContre(numJeu);
                         break;
                 }
 
@@ -2471,107 +2463,107 @@ public class Jeu extends Player implements Parcelable {
 
             case 3:
 
-                player3.addDefaite(numJeu + 1);
+                player3.addDefaite(numJeu);
 
                 if(jeuALEnvers)
                 {
-                    player3.addJeuALEnvers(numJeu + 1);
+                    player3.addJeuALEnvers(numJeu);
                     break;
                 }
 
-                player3.addJeuPris(numJeu + 1);
+                player3.addJeuPris(numJeu);
 
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player3.addPetite(numJeu + 1);
+                        player3.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player3.addPouce(numJeu + 1);
+                        player3.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player3.addGarde(numJeu + 1);
+                        player3.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player3.addGardeSans(numJeu + 1);
+                        player3.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player3.addGardeContre(numJeu + 1);
+                        player3.addGardeContre(numJeu);
                         break;
                 }
                 break;
 
             case 2:
 
-                player2.addDefaite(numJeu + 1);
+                player2.addDefaite(numJeu);
 
                 if(jeuALEnvers)
                 {
-                    player2.addJeuALEnvers(numJeu + 1);
+                    player2.addJeuALEnvers(numJeu);
                     break;
                 }
 
-                player2.addJeuPris(numJeu + 1);
+                player2.addJeuPris(numJeu);
 
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player2.addPetite(numJeu + 1);
+                        player2.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player2.addPouce(numJeu + 1);
+                        player2.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player2.addGarde(numJeu + 1);
+                        player2.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player2.addGardeSans(numJeu + 1);
+                        player2.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player2.addGardeContre(numJeu + 1);
+                        player2.addGardeContre(numJeu);
                         break;
                 }
                 break;
 
             case 1:
 
-                player1.addDefaite(numJeu + 1);
+                player1.addDefaite(numJeu);
 
                 if(jeuALEnvers)
                 {
-                    player1.addJeuALEnvers(numJeu + 1);
+                    player1.addJeuALEnvers(numJeu);
                     break;
                 }
 
-                player1.addJeuPris(numJeu + 1);
+                player1.addJeuPris(numJeu);
                 switch (enchere)
                 {
                     case "Petite (20pts)":
-                        player1.addPetite(numJeu + 1);
+                        player1.addPetite(numJeu);
                         break;
 
                     case "Pouce (40pts)":
-                        player1.addPouce(numJeu + 1);
+                        player1.addPouce(numJeu);
                         break;
 
                     case "Garde (80pts)":
-                        player1.addGarde(numJeu + 1);
+                        player1.addGarde(numJeu);
                         break;
 
                     case "Garde sans chien (160pts)":
-                        player1.addGardeSans(numJeu + 1);
+                        player1.addGardeSans(numJeu);
                         break;
 
                     case "Garde contre chien (320pts)":
-                        player1.addGardeContre(numJeu + 1);
+                        player1.addGardeContre(numJeu);
                         break;
                 }
                 break;
@@ -2581,37 +2573,37 @@ public class Jeu extends Player implements Parcelable {
         }
     }
 
-    private void setAssociePlayerDetail()
+    private void setAssociePlayerDetail(int numJeu)
     {
         switch(playerAssocie)
         {
             case 6:
-                player6.add1FoisAssocie(numJeu + 1);
+                player6.add1FoisAssocie(numJeu);
                 break;
 
             case 5:
-                player5.add1FoisAssocie(numJeu + 1);
+                player5.add1FoisAssocie(numJeu);
                 break;
 
             case 4:
-                player4.add1FoisAssocie(numJeu + 1);
+                player4.add1FoisAssocie(numJeu);
                 break;
 
             case 3:
-                player3.add1FoisAssocie(numJeu + 1);
+                player3.add1FoisAssocie(numJeu);
                 break;
 
             case 2:
-                player2.add1FoisAssocie(numJeu + 1);
+                player2.add1FoisAssocie(numJeu);
                 break;
 
             case 1:
-                player1.add1FoisAssocie(numJeu + 1);
+                player1.add1FoisAssocie(numJeu);
                 break;
         }
     }
 
-    private void setAnnoncePlayerDetail(String annonce)
+    private void setAnnoncePlayerDetail(int numJeu, String annonce)
     {
         switch(playerAnnonce)
         {
@@ -2619,23 +2611,23 @@ public class Jeu extends Player implements Parcelable {
                 switch(annonce)
                 {
                     case "Simple misère":
-                        player6.addMisere(numJeu + 1);
+                        player6.addMisere(numJeu);
                         break;
 
                     case "Double misère":
-                        player6.addMisere(numJeu + 1);
+                        player6.addMisere(numJeu);
                         break;
 
                     case "Poignet petite":
-                        player6.addPoignet(numJeu + 1);
+                        player6.addPoignet(numJeu);
                         break;
 
                     case "Poignet moyenne":
-                        player6.addPoignet(numJeu + 1);
+                        player6.addPoignet(numJeu);
                         break;
 
                     case "Poignet grande":
-                        player6.addPoignet(numJeu + 1);
+                        player6.addPoignet(numJeu);
                         break;
                 }
                 break;
@@ -2644,23 +2636,23 @@ public class Jeu extends Player implements Parcelable {
                 switch(annonce)
                 {
                     case "Simple misère":
-                        player5.addMisere(numJeu + 1);
+                        player5.addMisere(numJeu);
                         break;
 
                     case "Double misère":
-                        player5.addMisere(numJeu + 1);
+                        player5.addMisere(numJeu);
                         break;
 
                     case "Poignet petite":
-                        player5.addPoignet(numJeu + 1);
+                        player5.addPoignet(numJeu);
                         break;
 
                     case "Poignet moyenne":
-                        player5.addPoignet(numJeu + 1);
+                        player5.addPoignet(numJeu);
                         break;
 
                     case "Poignet grande":
-                        player5.addPoignet(numJeu + 1);
+                        player5.addPoignet(numJeu);
                         break;
                 }
                 break;
@@ -2669,23 +2661,23 @@ public class Jeu extends Player implements Parcelable {
                 switch(annonce)
                 {
                     case "Simple misère":
-                        player4.addMisere(numJeu + 1);
+                        player4.addMisere(numJeu);
                         break;
 
                     case "Double misère":
-                        player4.addMisere(numJeu + 1);
+                        player4.addMisere(numJeu);
                         break;
 
                     case "Poignet petite":
-                        player4.addPoignet(numJeu + 1);
+                        player4.addPoignet(numJeu);
                         break;
 
                     case "Poignet moyenne":
-                        player4.addPoignet(numJeu + 1);
+                        player4.addPoignet(numJeu);
                         break;
 
                     case "Poignet grande":
-                        player4.addPoignet(numJeu + 1);
+                        player4.addPoignet(numJeu);
                         break;
                 }
 
@@ -2695,23 +2687,23 @@ public class Jeu extends Player implements Parcelable {
                 switch(annonce)
                 {
                     case "Simple misère":
-                        player3.addMisere(numJeu + 1);
+                        player3.addMisere(numJeu);
                         break;
 
                     case "Double misère":
-                        player3.addMisere(numJeu + 1);
+                        player3.addMisere(numJeu);
                         break;
 
                     case "Poignet petite":
-                        player3.addPoignet(numJeu + 1);
+                        player3.addPoignet(numJeu);
                         break;
 
                     case "Poignet moyenne":
-                        player3.addPoignet(numJeu + 1);
+                        player3.addPoignet(numJeu);
                         break;
 
                     case "Poignet grande":
-                        player3.addPoignet(numJeu + 1);
+                        player3.addPoignet(numJeu);
                         break;
                 }
                 break;
@@ -2720,23 +2712,23 @@ public class Jeu extends Player implements Parcelable {
                 switch(annonce)
                 {
                     case "Simple misère":
-                        player2.addMisere(numJeu + 1);
+                        player2.addMisere(numJeu);
                         break;
 
                     case "Double misère":
-                        player2.addMisere(numJeu + 1);
+                        player2.addMisere(numJeu);
                         break;
 
                     case "Poignet petite":
-                        player2.addPoignet(numJeu + 1);
+                        player2.addPoignet(numJeu);
                         break;
 
                     case "Poignet moyenne":
-                        player2.addPoignet(numJeu + 1);
+                        player2.addPoignet(numJeu);
                         break;
 
                     case "Poignet grande":
-                        player2.addPoignet(numJeu + 1);
+                        player2.addPoignet(numJeu);
                         break;
                 }
                 break;
@@ -2745,23 +2737,23 @@ public class Jeu extends Player implements Parcelable {
                 switch(annonce)
                 {
                     case "Simple misère":
-                        player1.addMisere(numJeu + 1);
+                        player1.addMisere(numJeu);
                         break;
 
                     case "Double misère":
-                        player1.addMisere(numJeu + 1);
+                        player1.addMisere(numJeu);
                         break;
 
                     case "Poignet petite":
-                        player1.addPoignet(numJeu + 1);
+                        player1.addPoignet(numJeu);
                         break;
 
                     case "Poignet moyenne":
-                        player1.addPoignet(numJeu + 1);
+                        player1.addPoignet(numJeu);
                         break;
 
                     case "Poignet grande":
-                        player1.addPoignet(numJeu + 1);
+                        player1.addPoignet(numJeu);
                         break;
                 }
                 break;

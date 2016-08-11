@@ -453,10 +453,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/preneurForPersonneSpinn"
-        android:visibility="invisible"
-        android:layout_above="@+id/finishBtn"
+        android:layout_alignBottom="@+id/preneurForPersonneTitle"
         android:layout_toRightOf="@+id/preneurForPersonneTitle"
-        android:layout_toEndOf="@+id/preneurForPersonneTitle" />
+        android:layout_toEndOf="@+id/preneurForPersonneTitle"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="wrap_content"
